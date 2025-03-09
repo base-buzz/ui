@@ -73,8 +73,8 @@ const nextConfig = {
   webpack(config) {
     config.infrastructureLogging = { level: "error" }; // ✅ Reduce logging
     config.watchOptions = {
-      aggregateTimeout: 300, // ✅ Optimize rebuild timing
-      poll: 1000, // ✅ Reduce file polling intensity
+      aggregateTimeout: 500, // ✅ Optimize rebuild timing
+      poll: 2500, // ✅ Reduce file polling intensity
       ignored: "**/node_modules/**", // ✅ Ignore unnecessary files
     };
     return config;
