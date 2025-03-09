@@ -21,7 +21,7 @@ const nextConfig = {
       },
     ],
   },
-  redirects() {
+  async redirects() {
     return [
       {
         source: "/components",
@@ -68,12 +68,21 @@ const nextConfig = {
         destination: "/docs/react-19",
         permanent: true,
       },
-    ]
+    ];
+  },
+  webpack(config) {
+    config.infrastructureLogging = { level: "error" }; // ✅ Reduce logging
+    config.watchOptions = {
+      aggregateTimeout: 300, // ✅ Optimize rebuild timing
+      poll: 1000, // ✅ Reduce file polling intensity
+      ignored: "**/node_modules/**", // ✅ Ignore unnecessary files
+    };
+    return config;
   },
 }
 
 const withContentlayer = createContentlayerPlugin({
   // Additional Contentlayer config options
-})
+});
 
-export default withContentlayer(nextConfig)
+export default withContentlayer(nextConfig);
