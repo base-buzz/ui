@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -14,7 +14,7 @@ export function MainNav() {
 
   return (
     <div className="mr-4 hidden md:flex">
-      {/* BaseBuzz Logo & Sheet Trigger (No useState, ShadCN handles state internally) */}
+      {/* BaseBuzz Logo & Sheet Trigger */}
       <Sheet>
         <SheetTrigger asChild>
           <Button
@@ -26,7 +26,6 @@ export function MainNav() {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="p-6">
-          {/* Navigation Links inside Sheet */}
           <nav className="flex flex-col space-y-3">
             <Link href="/explore" className="text-lg">
               Explore
@@ -44,61 +43,30 @@ export function MainNav() {
         </SheetContent>
       </Sheet>
 
-      {/*       
-      <Link href="/" className="mr-4 flex items-center gap-2 lg:mr-6">
-        <Icons.logo className="h-6 w-6" />
-        <span className="hidden font-bold lg:inline-block">
-          {siteConfig.name}
-        </span>
-      </Link> */}
-
+      {/* Main Navigation */}
       <nav className="ml-2 flex items-center gap-4 text-sm xl:gap-6">
-        <Link
-          href="/docs/installation"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname === "/docs/installation"
-              ? "text-foreground"
-              : "text-foreground/80",
-          )}
-        >
+        <Link href="/mint" className={cn("transition-colors hover:text-foreground/80", pathname === "/mint" ? "text-foreground" : "text-foreground/80")}>
           Mint
         </Link>
-        <Link
-          href="/docs/components"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/docs/components") &&
-              !pathname?.startsWith("/docs/component/chart")
-              ? "text-foreground"
-              : "text-foreground/80",
-          )}
-        >
+        <Link href="/governance" className={cn("transition-colors hover:text-foreground/80", pathname === "/governance" ? "text-foreground" : "text-foreground/80")}>
           Governance
         </Link>
-        <Link
-          href="/blocks"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/blocks")
-              ? "text-foreground"
-              : "text-foreground/80",
-          )}
-        >
+        <Link href="/roadmap" className={cn("transition-colors hover:text-foreground/80", pathname === "/roadmap" ? "text-foreground" : "text-foreground/80")}>
           Roadmap
         </Link>
-        <Link
-          href="/charts"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/docs/component/chart") ||
-              pathname?.startsWith("/charts")
-              ? "text-foreground"
-              : "text-foreground/80",
-          )}
-        >
-          W3 Apps
-        </Link>
+
+        {/* Apps on Base (New) */}
+        <Link href="/apps" className="flex items-center gap-1 transition-colors hover:text-foreground/80">
+  <Image
+    src="/icons/Base_Wordmark_Blue.svg"
+    alt="Base Apps"
+    width={50} // Adjust width for better scaling
+    height={12} // Match text height
+    className="object-contain"
+  />
+  <span className={cn("transition-colors hover:text-foreground/80", pathname === "/roadmap" ? "text-foreground" : "text-foreground/80")}>Apps</span>
+</Link>
+
       </nav>
     </div>
   );
