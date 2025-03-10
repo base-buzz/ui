@@ -12,6 +12,7 @@ import {
   PageHeaderHeading,
 } from "@/components/page-header";
 import { Button } from "@/registry/new-york/ui/button";
+import { HeroSection } from "@/components/ui/hero-section"; // ✅ Import Hero Section
 
 const title =
   "BaseBuzz | Trade crypto and NFT's safely on the top Base platform";
@@ -58,6 +59,10 @@ export default function IndexPage() {
           </Button>
         </PageActions>
       </PageHeader>
+
+      {/* ✅ Add Hero Section Here */}
+      <HeroSection />
+
       <div className="border-grid border-b">
         <div className="container-wrapper">
           <div className="container py-4">
