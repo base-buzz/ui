@@ -1,12 +1,15 @@
 import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
+import WalletConnectDialog from "@/components/ui/wallet-connect-sheet"
 import { CommandMenu } from "@/components/command-menu"
 import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
 import { MobileNav } from "@/components/mobile-nav"
 import { ModeSwitcher } from "@/components/mode-switcher"
 import { Button } from "@/registry/new-york/ui/button"
+
+// Import Wallet Dialog
 
 export function SiteHeader() {
   return (
@@ -19,7 +22,7 @@ export function SiteHeader() {
             <div className="hidden w-full flex-1 md:flex md:w-auto md:flex-none">
               <CommandMenu />
             </div>
-            <nav className="flex items-center gap-0.5">
+            <nav className="flex items-center gap-2">
               <Button
                 asChild
                 variant="ghost"
@@ -36,6 +39,8 @@ export function SiteHeader() {
                 </Link>
               </Button>
               <ModeSwitcher />
+              {/* Wallet Connect Button */}
+              <WalletConnectDialog />
             </nav>
           </div>
         </div>

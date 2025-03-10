@@ -13,9 +13,10 @@ import {
 } from "@/components/page-header"
 import { Button } from "@/registry/new-york/ui/button"
 
-const title = "Build your component library"
+const title =
+  "BaseBuzz | Trade crypto and NFT's safely on the top Base platform"
 const description =
-  "A set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks. Open Source. Open Code."
+  "BaseBuzz is the ultimate hub for AI-driven DeFi, meme speculation, and real-world asset tokenization. Trade, engage, and build—powered by $BUZZ."
 
 export const metadata: Metadata = {
   title,
