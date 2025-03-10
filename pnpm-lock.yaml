@@ -569,6 +569,9 @@ importers:
       postcss:
         specifier: ^8.4.24
         version: 8.5.1
+      prettier-plugin-tailwindcss:
+        specifier: ^0.6.11
+        version: 0.6.11(@ianvs/prettier-plugin-sort-imports@3.7.2(prettier@3.4.2))(prettier@3.4.2)
       rehype:
         specifier: ^12.0.1
         version: 12.0.1

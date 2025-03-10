@@ -62,7 +62,7 @@ export function MainNav() {
               : "text-foreground/80"
           )}
         >
-          Docs
+          Mint
         </Link>
         <Link
           href="/docs/components"
@@ -74,7 +74,7 @@ export function MainNav() {
               : "text-foreground/80"
           )}
         >
-          Components
+          Governance
         </Link>
         <Link
           href="/blocks"
@@ -85,7 +85,7 @@ export function MainNav() {
               : "text-foreground/80"
           )}
         >
-          Blocks
+          Roadmap
         </Link>
         <Link
           href="/charts"
@@ -97,29 +97,7 @@ export function MainNav() {
               : "text-foreground/80"
           )}
         >
-          Charts
-        </Link>
-        <Link
-          href="/themes"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/themes")
-              ? "text-foreground"
-              : "text-foreground/80"
-          )}
-        >
-          Themes
-        </Link>
-        <Link
-          href="/colors"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/colors")
-              ? "text-foreground"
-              : "text-foreground/80"
-          )}
-        >
-          Colors
+          W3 Apps
         </Link>
       </nav>
     </div>
