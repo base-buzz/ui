@@ -3,11 +3,7 @@
   "name": "input-with-text",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "input",
-    "button",
-    "label"
-  ],
+  "registryDependencies": ["input", "button", "label"],
   "files": [
     {
       "path": "examples/input-with-text.tsx",

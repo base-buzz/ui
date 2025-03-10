@@ -1,35 +1,39 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
-import { useMediaQuery } from "@/hooks/use-media-query"
-import { useThemesConfig } from "@/hooks/use-themes-config"
-import { ChartCopyButton } from "@/components/chart-copy-button"
-import { Chart } from "@/components/chart-display"
-import { V0Button } from "@/components/v0-button"
-import { Button } from "@/registry/new-york/ui/button"
+import { cn } from "@/lib/utils";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { useThemesConfig } from "@/hooks/use-themes-config";
+import { ChartCopyButton } from "@/components/chart-copy-button";
+import { Chart } from "@/components/chart-display";
+import { V0Button } from "@/components/v0-button";
+import { Button } from "@/registry/new-york/ui/button";
 import {
   Drawer,
   DrawerContent,
   DrawerTrigger,
-} from "@/registry/new-york/ui/drawer"
-import { Sheet, SheetContent, SheetTrigger } from "@/registry/new-york/ui/sheet"
+} from "@/registry/new-york/ui/drawer";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/registry/new-york/ui/sheet";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/registry/new-york/ui/tabs"
+} from "@/registry/new-york/ui/tabs";
 
 export function ChartCodeViewer({
   chart,
   className,
   children,
 }: {
-  chart: Chart
+  chart: Chart;
 } & React.ComponentProps<"div">) {
-  const [tab, setTab] = React.useState("code")
-  const { themesConfig } = useThemesConfig()
-  const isDesktop = useMediaQuery("(min-width: 768px)")
+  const [tab, setTab] = React.useState("code");
+  const { themesConfig } = useThemesConfig();
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const themeCode = React.useMemo(() => {
     return `\
@@ -46,8 +50,8 @@ ${Object.entries(themesConfig?.activeTheme.cssVars.dark || {})
   .join("\n")}
     }
 }
-`
-  }, [themesConfig])
+`;
+  }, [themesConfig]);
 
   const button = (
     <Button
@@ -57,7 +61,7 @@ ${Object.entries(themesConfig?.activeTheme.cssVars.dark || {})
     >
       View Code
     </Button>
-  )
+  );
 
   const content = (
     <>
@@ -144,7 +148,7 @@ ${Object.entries(themesConfig?.activeTheme.cssVars.dark || {})
         </TabsContent>
       </Tabs>
     </>
-  )
+  );
 
   if (!isDesktop) {
     return (
@@ -153,13 +157,13 @@ ${Object.entries(themesConfig?.activeTheme.cssVars.dark || {})
         <DrawerContent
           className={cn(
             "flex max-h-[80vh] flex-col sm:max-h-[90vh] [&>div.bg-muted]:shrink-0",
-            className
+            className,
           )}
         >
           <div className="flex h-full flex-col overflow-auto">{content}</div>
         </DrawerContent>
       </Drawer>
-    )
+    );
   }
 
   return (
@@ -169,11 +173,11 @@ ${Object.entries(themesConfig?.activeTheme.cssVars.dark || {})
         side="right"
         className={cn(
           "flex flex-col gap-0 border-l-0 p-0 dark:border-l sm:max-w-sm md:w-[700px] md:max-w-[700px]",
-          className
+          className,
         )}
       >
         {content}
       </SheetContent>
     </Sheet>
-  )
+  );
 }

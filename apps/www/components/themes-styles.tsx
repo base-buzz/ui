@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { useThemesConfig } from "@/hooks/use-themes-config"
+import { useThemesConfig } from "@/hooks/use-themes-config";
 
 export function ThemesStyle() {
-  const { themesConfig } = useThemesConfig()
+  const { themesConfig } = useThemesConfig();
 
   if (!themesConfig.activeTheme) {
-    return null
+    return null;
   }
 
   return (
@@ -27,5 +27,5 @@ export function ThemesStyle() {
 }
   `}
     </style>
-  )
+  );
 }

@@ -3,10 +3,7 @@
   "name": "chart-pie-legend",
   "type": "registry:block",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "card",
-    "chart"
-  ],
+  "registryDependencies": ["card", "chart"],
   "files": [
     {
       "path": "charts/chart-pie-legend.tsx",
@@ -15,8 +12,5 @@
       "target": ""
     }
   ],
-  "categories": [
-    "charts",
-    "charts-pie"
-  ]
+  "categories": ["charts", "charts-pie"]
 }

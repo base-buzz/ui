@@ -3,15 +3,8 @@
   "name": "date-picker-with-presets",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "dependencies": [
-    "date-fns"
-  ],
-  "registryDependencies": [
-    "button",
-    "calendar",
-    "popover",
-    "select"
-  ],
+  "dependencies": ["date-fns"],
+  "registryDependencies": ["button", "calendar", "popover", "select"],
   "files": [
     {
       "path": "examples/date-picker-with-presets.tsx",

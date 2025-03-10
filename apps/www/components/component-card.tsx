@@ -1,7 +1,7 @@
-import React from "react"
+import React from "react";
 
-import { cn } from "@/lib/utils"
-import { AspectRatio } from "@/registry/new-york/ui/aspect-ratio"
+import { cn } from "@/lib/utils";
+import { AspectRatio } from "@/registry/new-york/ui/aspect-ratio";
 
 export function ComponentCard({
   className,
@@ -12,10 +12,10 @@ export function ComponentCard({
       <div
         className={cn(
           "flex items-center justify-center rounded-md border p-8",
-          className
+          className,
         )}
         {...props}
       />
     </AspectRatio>
-  )
+  );
 }

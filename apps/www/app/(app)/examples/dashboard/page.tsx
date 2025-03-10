@@ -1,32 +1,32 @@
-import { Metadata } from "next"
-import Image from "next/image"
+import { Metadata } from "next";
+import Image from "next/image";
 
-import { Button } from "@/registry/new-york/ui/button"
+import { Button } from "@/registry/new-york/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york/ui/card"
+} from "@/registry/new-york/ui/card";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/registry/new-york/ui/tabs"
-import { CalendarDateRangePicker } from "@/app/(app)/examples/dashboard/components/date-range-picker"
-import { MainNav } from "@/app/(app)/examples/dashboard/components/main-nav"
-import { Overview } from "@/app/(app)/examples/dashboard/components/overview"
-import { RecentSales } from "@/app/(app)/examples/dashboard/components/recent-sales"
-import { Search } from "@/app/(app)/examples/dashboard/components/search"
-import TeamSwitcher from "@/app/(app)/examples/dashboard/components/team-switcher"
-import { UserNav } from "@/app/(app)/examples/dashboard/components/user-nav"
+} from "@/registry/new-york/ui/tabs";
+import { CalendarDateRangePicker } from "@/app/(app)/examples/dashboard/components/date-range-picker";
+import { MainNav } from "@/app/(app)/examples/dashboard/components/main-nav";
+import { Overview } from "@/app/(app)/examples/dashboard/components/overview";
+import { RecentSales } from "@/app/(app)/examples/dashboard/components/recent-sales";
+import { Search } from "@/app/(app)/examples/dashboard/components/search";
+import TeamSwitcher from "@/app/(app)/examples/dashboard/components/team-switcher";
+import { UserNav } from "@/app/(app)/examples/dashboard/components/user-nav";
 
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "Example dashboard app built using the components.",
-}
+};
 
 export default function DashboardPage() {
   return (
@@ -209,5 +209,5 @@ export default function DashboardPage() {
         </div>
       </div>
     </>
-  )
+  );
 }

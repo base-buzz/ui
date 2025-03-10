@@ -1,19 +1,19 @@
-import { Metadata } from "next"
-import Link from "next/link"
+import { Metadata } from "next";
+import Link from "next/link";
 
-import { Announcement } from "@/components/announcement"
-import { ChartsNav } from "@/components/charts-nav"
+import { Announcement } from "@/components/announcement";
+import { ChartsNav } from "@/components/charts-nav";
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/page-header"
-import { Button } from "@/registry/new-york/ui/button"
+} from "@/components/page-header";
+import { Button } from "@/registry/new-york/ui/button";
 
-const title = "Beautiful Charts"
+const title = "Beautiful Charts";
 const description =
-  "Built using Recharts. Copy and paste into your apps. Open Source."
+  "Built using Recharts. Copy and paste into your apps. Open Source.";
 
 export const metadata: Metadata = {
   title,
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          title
+          title,
         )}&description=${encodeURIComponent(description)}`,
       },
     ],
@@ -32,17 +32,17 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          title
+          title,
         )}&description=${encodeURIComponent(description)}`,
       },
     ],
   },
-}
+};
 
 export default function ChartsLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
@@ -74,5 +74,5 @@ export default function ChartsLayout({
         </div>
       </div>
     </>
-  )
+  );
 }

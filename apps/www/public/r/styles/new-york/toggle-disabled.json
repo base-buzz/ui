@@ -3,9 +3,7 @@
   "name": "toggle-disabled",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "toggle"
-  ],
+  "registryDependencies": ["toggle"],
   "files": [
     {
       "path": "examples/toggle-disabled.tsx",

@@ -3,9 +3,7 @@
   "name": "switch-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "switch"
-  ],
+  "registryDependencies": ["switch"],
   "files": [
     {
       "path": "examples/switch-demo.tsx",

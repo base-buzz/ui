@@ -1,10 +1,10 @@
-import { docsConfig } from "@/config/docs"
-import { DocsNav } from "@/components/docs-nav"
+import { docsConfig } from "@/config/docs";
+import { DocsNav } from "@/components/docs-nav";
 
 export default function DocsLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <div className="container-wrapper">
@@ -17,5 +17,5 @@ export default function DocsLayout({
         {children}
       </div>
     </div>
-  )
+  );
 }

@@ -3,10 +3,7 @@
   "name": "drawer-dialog",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "drawer",
-    "dialog"
-  ],
+  "registryDependencies": ["drawer", "dialog"],
   "files": [
     {
       "path": "examples/drawer-dialog.tsx",

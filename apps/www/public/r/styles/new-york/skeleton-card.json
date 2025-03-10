@@ -3,9 +3,7 @@
   "name": "skeleton-card",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "skeleton"
-  ],
+  "registryDependencies": ["skeleton"],
   "files": [
     {
       "path": "examples/skeleton-card.tsx",

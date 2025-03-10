@@ -3,9 +3,7 @@
   "name": "breadcrumb-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "breadcrumb"
-  ],
+  "registryDependencies": ["breadcrumb"],
   "files": [
     {
       "path": "examples/breadcrumb-demo.tsx",

@@ -3,9 +3,7 @@
   "name": "accordion-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "accordion"
-  ],
+  "registryDependencies": ["accordion"],
   "files": [
     {
       "path": "examples/accordion-demo.tsx",

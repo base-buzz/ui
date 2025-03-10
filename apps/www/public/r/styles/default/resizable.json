@@ -3,9 +3,7 @@
   "name": "resizable",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "dependencies": [
-    "react-resizable-panels"
-  ],
+  "dependencies": ["react-resizable-panels"],
   "files": [
     {
       "path": "ui/resizable.tsx",

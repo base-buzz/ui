@@ -1,9 +1,9 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { BlockDisplay } from "@/components/block-display"
-import { Button } from "@/registry/new-york/ui/button"
+import { BlockDisplay } from "@/components/block-display";
+import { Button } from "@/registry/new-york/ui/button";
 
-const FEATURED_BLOCKS = ["sidebar-07", "sidebar-03", "login-03", "login-04"]
+const FEATURED_BLOCKS = ["sidebar-07", "sidebar-03", "login-03", "login-04"];
 
 export default async function BlocksPage() {
   return (
@@ -24,5 +24,5 @@ export default async function BlocksPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,44 +1,44 @@
-import { notFound } from "next/navigation"
-import { allDocs } from "contentlayer/generated"
+import { notFound } from "next/navigation";
+import { allDocs } from "contentlayer/generated";
 
-import "@/styles/mdx.css"
-import type { Metadata } from "next"
-import Link from "next/link"
-import { ChevronRight, ExternalLink } from "lucide-react"
-import Balancer from "react-wrap-balancer"
+import "@/styles/mdx.css";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ChevronRight, ExternalLink } from "lucide-react";
+import Balancer from "react-wrap-balancer";
 
-import { getTableOfContents } from "@/lib/toc"
-import { absoluteUrl, cn } from "@/lib/utils"
-import { Mdx } from "@/components/mdx-components"
-import { OpenInV0Cta } from "@/components/open-in-v0-cta"
-import { DocsPager } from "@/components/pager"
-import { DashboardTableOfContents } from "@/components/toc"
-import { badgeVariants } from "@/registry/new-york/ui/badge"
+import { getTableOfContents } from "@/lib/toc";
+import { absoluteUrl, cn } from "@/lib/utils";
+import { Mdx } from "@/components/mdx-components";
+import { OpenInV0Cta } from "@/components/open-in-v0-cta";
+import { DocsPager } from "@/components/pager";
+import { DashboardTableOfContents } from "@/components/toc";
+import { badgeVariants } from "@/registry/new-york/ui/badge";
 
 interface DocPageProps {
   params: {
-    slug: string[]
-  }
+    slug: string[];
+  };
 }
 
 async function getDocFromParams({ params }: DocPageProps) {
-  const slug = params.slug?.join("/") || ""
-  const doc = allDocs.find((doc) => doc.slugAsParams === slug)
+  const slug = params.slug?.join("/") || "";
+  const doc = allDocs.find((doc) => doc.slugAsParams === slug);
 
   if (!doc) {
-    return null
+    return null;
   }
 
-  return doc
+  return doc;
 }
 
 export async function generateMetadata({
   params,
 }: DocPageProps): Promise<Metadata> {
-  const doc = await getDocFromParams({ params })
+  const doc = await getDocFromParams({ params });
 
   if (!doc) {
-    return {}
+    return {};
   }
 
   return {
@@ -52,7 +52,7 @@ export async function generateMetadata({
       images: [
         {
           url: `/og?title=${encodeURIComponent(
-            doc.title
+            doc.title,
           )}&description=${encodeURIComponent(doc.description)}`,
         },
       ],
@@ -64,13 +64,13 @@ export async function generateMetadata({
       images: [
         {
           url: `/og?title=${encodeURIComponent(
-            doc.title
+            doc.title,
           )}&description=${encodeURIComponent(doc.description)}`,
         },
       ],
       creator: "@shadcn",
     },
-  }
+  };
 }
 
 export async function generateStaticParams(): Promise<
@@ -78,17 +78,17 @@ export async function generateStaticParams(): Promise<
 > {
   return allDocs.map((doc) => ({
     slug: doc.slugAsParams.split("/"),
-  }))
+  }));
 }
 
 export default async function DocPage({ params }: DocPageProps) {
-  const doc = await getDocFromParams({ params })
+  const doc = await getDocFromParams({ params });
 
   if (!doc) {
-    notFound()
+    notFound();
   }
 
-  const toc = await getTableOfContents(doc.body.raw)
+  const toc = await getTableOfContents(doc.body.raw);
 
   return (
     <main className="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
@@ -150,5 +150,5 @@ export default async function DocPage({ params }: DocPageProps) {
         </div>
       </div>
     </main>
-  )
+  );
 }

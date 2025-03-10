@@ -3,9 +3,7 @@
   "name": "popover-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "popover"
-  ],
+  "registryDependencies": ["popover"],
   "files": [
     {
       "path": "examples/popover-demo.tsx",

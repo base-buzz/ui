@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { ChevronDown, ChevronUp, User2 } from "lucide-react"
+import { ChevronDown, ChevronUp, User2 } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/registry/new-york/ui/dropdown-menu"
+} from "@/registry/new-york/ui/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -19,7 +19,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from "@/registry/new-york/ui/sidebar"
+} from "@/registry/new-york/ui/sidebar";
 
 export default function AppSidebar() {
   return (
@@ -57,10 +57,10 @@ export default function AppSidebar() {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="flex items-center justify-between px-4 h-12">
+        <header className="flex h-12 items-center justify-between px-4">
           <SidebarTrigger />
         </header>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

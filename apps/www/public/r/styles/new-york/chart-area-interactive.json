@@ -3,11 +3,7 @@
   "name": "chart-area-interactive",
   "type": "registry:block",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "card",
-    "chart",
-    "select"
-  ],
+  "registryDependencies": ["card", "chart", "select"],
   "files": [
     {
       "path": "charts/chart-area-interactive.tsx",
@@ -16,8 +12,5 @@
       "target": ""
     }
   ],
-  "categories": [
-    "charts",
-    "charts-area"
-  ]
+  "categories": ["charts", "charts-area"]
 }

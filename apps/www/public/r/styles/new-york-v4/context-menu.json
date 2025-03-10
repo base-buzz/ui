@@ -2,9 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "context-menu",
   "type": "registry:ui",
-  "dependencies": [
-    "@radix-ui/react-context-menu"
-  ],
+  "dependencies": ["@radix-ui/react-context-menu"],
   "files": [
     {
       "path": "registry/new-york-v4/ui/context-menu.tsx",

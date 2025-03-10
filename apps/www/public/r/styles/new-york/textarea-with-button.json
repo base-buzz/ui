@@ -3,10 +3,7 @@
   "name": "textarea-with-button",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "textarea",
-    "button"
-  ],
+  "registryDependencies": ["textarea", "button"],
   "files": [
     {
       "path": "examples/textarea-with-button.tsx",

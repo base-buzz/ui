@@ -2,16 +2,8 @@
   "name": "app-01",
   "type": "registry:block",
   "description": "A simple task app.",
-  "dependencies": [
-    "swr"
-  ],
-  "registryDependencies": [
-    "card",
-    "input",
-    "button",
-    "skeleton",
-    "label"
-  ],
+  "dependencies": ["swr"],
+  "registryDependencies": ["card", "input", "button", "skeleton", "label"],
   "files": [
     {
       "path": "blocks/app-01/page.tsx",
@@ -68,7 +60,5 @@
       "primary-foreground": "0 0% 100%"
     }
   },
-  "categories": [
-    "apps"
-  ]
+  "categories": ["apps"]
 }

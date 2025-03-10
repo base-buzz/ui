@@ -3,9 +3,7 @@
   "name": "menubar-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "menubar"
-  ],
+  "registryDependencies": ["menubar"],
   "files": [
     {
       "path": "examples/menubar-demo.tsx",

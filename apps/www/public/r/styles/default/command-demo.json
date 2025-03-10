@@ -3,9 +3,7 @@
   "name": "command-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "command"
-  ],
+  "registryDependencies": ["command"],
   "files": [
     {
       "path": "examples/command-demo.tsx",

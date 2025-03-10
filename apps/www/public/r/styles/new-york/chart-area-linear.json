@@ -3,10 +3,7 @@
   "name": "chart-area-linear",
   "type": "registry:block",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "card",
-    "chart"
-  ],
+  "registryDependencies": ["card", "chart"],
   "files": [
     {
       "path": "charts/chart-area-linear.tsx",
@@ -15,8 +12,5 @@
       "target": ""
     }
   ],
-  "categories": [
-    "charts",
-    "charts-area"
-  ]
+  "categories": ["charts", "charts-area"]
 }

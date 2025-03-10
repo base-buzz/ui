@@ -3,9 +3,7 @@
   "name": "toggle",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "dependencies": [
-    "@radix-ui/react-toggle"
-  ],
+  "dependencies": ["@radix-ui/react-toggle"],
   "files": [
     {
       "path": "ui/toggle.tsx",

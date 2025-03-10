@@ -1,21 +1,21 @@
-import { Metadata } from "next"
+import { Metadata } from "next";
 
-import { Announcement } from "@/components/announcement"
-import { BlocksNav } from "@/components/blocks-nav"
+import { Announcement } from "@/components/announcement";
+import { BlocksNav } from "@/components/blocks-nav";
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/page-header"
-import { Button } from "@/registry/new-york/ui/button"
+} from "@/components/page-header";
+import { Button } from "@/registry/new-york/ui/button";
 
-import "@/styles/mdx.css"
-import Link from "next/link"
+import "@/styles/mdx.css";
+import Link from "next/link";
 
-const title = "Building Blocks for the Web"
+const title = "Building Blocks for the Web";
 const description =
-  "Clean, modern building blocks. Copy and paste into your apps. Works with all React frameworks. Open Source. Free forever."
+  "Clean, modern building blocks. Copy and paste into your apps. Works with all React frameworks. Open Source. Free forever.";
 
 export const metadata: Metadata = {
   title,
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          title
+          title,
         )}&description=${encodeURIComponent(description)}`,
       },
     ],
@@ -34,17 +34,17 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          title
+          title,
         )}&description=${encodeURIComponent(description)}`,
       },
     ],
   },
-}
+};
 
 export default function BlocksLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
@@ -70,5 +70,5 @@ export default function BlocksLayout({
       </div>
       <div className="container-wrapper flex-1">{children}</div>
     </>
-  )
+  );
 }

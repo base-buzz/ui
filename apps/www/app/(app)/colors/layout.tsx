@@ -1,17 +1,17 @@
-import { Metadata } from "next"
-import Link from "next/link"
+import { Metadata } from "next";
+import Link from "next/link";
 
-import { Announcement } from "@/components/announcement"
+import { Announcement } from "@/components/announcement";
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/page-header"
-import { Button } from "@/registry/new-york/ui/button"
+} from "@/components/page-header";
+import { Button } from "@/registry/new-york/ui/button";
 
-const title = "Color Library"
-const description = "Tailwind CSS colors in HSL, RGB, HEX and OKLCH formats."
+const title = "Color Library";
+const description = "Tailwind CSS colors in HSL, RGB, HEX and OKLCH formats.";
 
 export const metadata: Metadata = {
   title,
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          title
+          title,
         )}&description=${encodeURIComponent(description)}`,
       },
     ],
@@ -30,17 +30,17 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          title
+          title,
         )}&description=${encodeURIComponent(description)}`,
       },
     ],
   },
-}
+};
 
 export default function ColorsLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
@@ -65,5 +65,5 @@ export default function ColorsLayout({
         </div>
       </div>
     </>
-  )
+  );
 }

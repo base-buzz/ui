@@ -1,17 +1,17 @@
-import { Metadata } from "next"
+import { Metadata } from "next";
 
-import { Announcement } from "@/components/announcement"
+import { Announcement } from "@/components/announcement";
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/page-header"
-import { ThemeCustomizer } from "@/components/theme-customizer"
+} from "@/components/page-header";
+import { ThemeCustomizer } from "@/components/theme-customizer";
 
-const title = "Add colors. Make it yours."
+const title = "Add colors. Make it yours.";
 const description =
-  "Hand-picked themes that you can copy and paste into your apps."
+  "Hand-picked themes that you can copy and paste into your apps.";
 
 export const metadata: Metadata = {
   title,
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          title
+          title,
         )}&description=${encodeURIComponent(description)}`,
       },
     ],
@@ -30,17 +30,17 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          title
+          title,
         )}&description=${encodeURIComponent(description)}`,
       },
     ],
   },
-}
+};
 
 export default function ThemesLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
@@ -60,5 +60,5 @@ export default function ThemesLayout({
         </div>
       </div>
     </>
-  )
+  );
 }

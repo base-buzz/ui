@@ -3,9 +3,7 @@
   "name": "pagination-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "pagination"
-  ],
+  "registryDependencies": ["pagination"],
   "files": [
     {
       "path": "examples/pagination-demo.tsx",

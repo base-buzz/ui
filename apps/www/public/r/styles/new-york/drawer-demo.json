@@ -3,9 +3,7 @@
   "name": "drawer-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "drawer"
-  ],
+  "registryDependencies": ["drawer"],
   "files": [
     {
       "path": "examples/drawer-demo.tsx",

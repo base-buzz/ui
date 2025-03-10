@@ -3,9 +3,7 @@
   "name": "aspect-ratio",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "dependencies": [
-    "@radix-ui/react-aspect-ratio"
-  ],
+  "dependencies": ["@radix-ui/react-aspect-ratio"],
   "files": [
     {
       "path": "ui/aspect-ratio.tsx",

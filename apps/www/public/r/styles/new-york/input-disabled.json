@@ -3,9 +3,7 @@
   "name": "input-disabled",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "input"
-  ],
+  "registryDependencies": ["input"],
   "files": [
     {
       "path": "examples/input-disabled.tsx",

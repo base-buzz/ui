@@ -3,9 +3,7 @@
   "name": "progress-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "progress"
-  ],
+  "registryDependencies": ["progress"],
   "files": [
     {
       "path": "examples/progress-demo.tsx",

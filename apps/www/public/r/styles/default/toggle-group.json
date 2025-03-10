@@ -3,12 +3,8 @@
   "name": "toggle-group",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "dependencies": [
-    "@radix-ui/react-toggle-group"
-  ],
-  "registryDependencies": [
-    "toggle"
-  ],
+  "dependencies": ["@radix-ui/react-toggle-group"],
+  "registryDependencies": ["toggle"],
   "files": [
     {
       "path": "ui/toggle-group.tsx",

@@ -1,8 +1,8 @@
-import { getColors } from "@/lib/colors"
-import { ColorPalette } from "@/components/color-palette"
+import { getColors } from "@/lib/colors";
+import { ColorPalette } from "@/components/color-palette";
 
 export default function ColorsPage() {
-  const colors = getColors()
+  const colors = getColors();
 
   return (
     <div className="grid gap-8">
@@ -10,5 +10,5 @@ export default function ColorsPage() {
         <ColorPalette key={colorPalette.name} colorPalette={colorPalette} />
       ))}
     </div>
-  )
+  );
 }

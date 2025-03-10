@@ -3,9 +3,7 @@
   "name": "tabs-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "tabs"
-  ],
+  "registryDependencies": ["tabs"],
   "files": [
     {
       "path": "examples/tabs-demo.tsx",

@@ -3,13 +3,7 @@
   "name": "card-with-form",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "button",
-    "card",
-    "input",
-    "label",
-    "select"
-  ],
+  "registryDependencies": ["button", "card", "input", "label", "select"],
   "files": [
     {
       "path": "examples/card-with-form.tsx",

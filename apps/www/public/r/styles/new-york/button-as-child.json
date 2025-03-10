@@ -3,9 +3,7 @@
   "name": "button-as-child",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "button"
-  ],
+  "registryDependencies": ["button"],
   "files": [
     {
       "path": "examples/button-as-child.tsx",

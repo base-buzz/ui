@@ -2,13 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "chart",
   "type": "registry:ui",
-  "dependencies": [
-    "recharts",
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "card"
-  ],
+  "dependencies": ["recharts", "lucide-react"],
+  "registryDependencies": ["card"],
   "files": [
     {
       "path": "registry/new-york-v4/ui/chart.tsx",

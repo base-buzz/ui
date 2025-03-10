@@ -3,11 +3,7 @@
   "name": "v0-sidebar-04",
   "type": "registry:internal",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "sidebar",
-    "breadcrumb",
-    "separator"
-  ],
+  "registryDependencies": ["sidebar", "breadcrumb", "separator"],
   "files": [
     {
       "path": "internal/sidebar-04.tsx",

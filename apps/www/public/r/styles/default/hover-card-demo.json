@@ -3,9 +3,7 @@
   "name": "hover-card-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "hover-card"
-  ],
+  "registryDependencies": ["hover-card"],
   "files": [
     {
       "path": "examples/hover-card-demo.tsx",

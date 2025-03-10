@@ -1,14 +1,14 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/registry/new-york/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/registry/new-york/ui/button";
 
 export function OpenInV0Cta({ className }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
         "group relative flex flex-col gap-2 rounded-lg border p-4 text-sm",
-        className
+        className,
       )}
     >
       <div className="text-balance text-lg font-semibold leading-tight group-hover:underline">
@@ -31,5 +31,5 @@ export function OpenInV0Cta({ className }: React.ComponentProps<"div">) {
         <span className="sr-only">Deploy to Vercel</span>
       </Link>
     </div>
-  )
+  );
 }

@@ -3,9 +3,7 @@
   "name": "navigation-menu-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "navigation-menu"
-  ],
+  "registryDependencies": ["navigation-menu"],
   "files": [
     {
       "path": "examples/navigation-menu-demo.tsx",
