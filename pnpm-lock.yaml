@@ -569,9 +569,12 @@ importers:
       postcss:
         specifier: ^8.4.24
         version: 8.5.1
+      prettier:
+        specifier: ^3.5.3
+        version: 3.5.3
       prettier-plugin-tailwindcss:
         specifier: ^0.6.11
-        version: 0.6.11(@ianvs/prettier-plugin-sort-imports@3.7.2(prettier@3.4.2))(prettier@3.4.2)
+        version: 0.6.11(@ianvs/prettier-plugin-sort-imports@3.7.2(prettier@3.5.3))(prettier@3.5.3)
       rehype:
         specifier: ^12.0.1
         version: 12.0.1
@@ -6635,6 +6638,11 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
+  prettier@3.5.3:
+    resolution: {integrity: sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   pretty-quick@3.3.1:
     resolution: {integrity: sha512-3b36UXfYQ+IXXqex6mCca89jC8u0mYLqFAN5eTQKoXO6oCQYcIVYZEB/5AlBHI7JPYygReM2Vv6Vom/Gln7fBg==}
     engines: {node: '>=10.13'}
@@ -9175,6 +9183,21 @@ snapshots:
       prettier: 3.4.2
     transitivePeerDependencies:
       - supports-color
+
+  '@ianvs/prettier-plugin-sort-imports@3.7.2(prettier@3.5.3)':
+    dependencies:
+      '@babel/core': 7.26.7
+      '@babel/generator': 7.26.5
+      '@babel/parser': 7.26.7
+      '@babel/traverse': 7.26.7
+      '@babel/types': 7.26.7
+      javascript-natural-sort: 0.7.1
+      lodash.clone: 4.5.0
+      lodash.isequal: 4.5.0
+      prettier: 3.5.3
+    transitivePeerDependencies:
+      - supports-color
+    optional: true
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
@@ -15935,9 +15958,17 @@ snapshots:
     optionalDependencies:
       '@ianvs/prettier-plugin-sort-imports': 3.7.2(prettier@3.4.2)
 
+  prettier-plugin-tailwindcss@0.6.11(@ianvs/prettier-plugin-sort-imports@3.7.2(prettier@3.5.3))(prettier@3.5.3):
+    dependencies:
+      prettier: 3.5.3
+    optionalDependencies:
+      '@ianvs/prettier-plugin-sort-imports': 3.7.2(prettier@3.5.3)
+
   prettier@2.8.8: {}
 
   prettier@3.4.2: {}
+
+  prettier@3.5.3: {}
 
   pretty-quick@3.3.1(prettier@2.8.8):
     dependencies:

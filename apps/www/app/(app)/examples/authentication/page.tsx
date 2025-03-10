@@ -1,15 +1,15 @@
-import { Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
+import { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/registry/new-york/ui/button"
-import { UserAuthForm } from "@/app/(app)/examples/authentication/components/user-auth-form"
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/registry/new-york/ui/button";
+import { UserAuthForm } from "@/app/(app)/examples/authentication/components/user-auth-form";
 
 export const metadata: Metadata = {
   title: "Authentication",
   description: "Authentication forms built using the components.",
-}
+};
 
 export default function AuthenticationPage() {
   return (
@@ -35,7 +35,7 @@ export default function AuthenticationPage() {
           href="/examples/authentication"
           className={cn(
             buttonVariants({ variant: "ghost" }),
-            "absolute right-4 top-4 md:right-8 md:top-8"
+            "absolute right-4 top-4 md:right-8 md:top-8",
           )}
         >
           Login
@@ -100,5 +100,5 @@ export default function AuthenticationPage() {
         </div>
       </div>
     </>
-  )
+  );
 }

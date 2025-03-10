@@ -3,9 +3,7 @@
   "name": "navigation-menu",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "dependencies": [
-    "@radix-ui/react-navigation-menu"
-  ],
+  "dependencies": ["@radix-ui/react-navigation-menu"],
   "files": [
     {
       "path": "ui/navigation-menu.tsx",

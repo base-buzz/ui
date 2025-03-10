@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { ChartCodeViewer } from "@/components/chart-code-viewer"
-import { Separator } from "@/registry/new-york/ui/separator"
+import { cn } from "@/lib/utils";
+import { ChartCodeViewer } from "@/components/chart-code-viewer";
+import { Separator } from "@/registry/new-york/ui/separator";
 
-import "@/styles/mdx.css"
+import "@/styles/mdx.css";
 import {
   AreaChart,
   BarChartBig,
@@ -13,17 +13,17 @@ import {
   MousePointer2,
   PieChart,
   Radar,
-} from "lucide-react"
+} from "lucide-react";
 
-import { ChartCopyButton } from "@/components/chart-copy-button"
-import { Chart } from "@/components/chart-display"
+import { ChartCopyButton } from "@/components/chart-copy-button";
+import { Chart } from "@/components/chart-display";
 
 export function ChartToolbar({
   chart,
   className,
   children,
 }: {
-  chart: Chart
+  chart: Chart;
 } & React.ComponentProps<"div">) {
   return (
     <div className={cn("flex items-center gap-2", className)}>
@@ -41,14 +41,14 @@ export function ChartToolbar({
         <ChartCodeViewer chart={chart}>{children}</ChartCodeViewer>
       </div>
     </div>
-  )
+  );
 }
 
 function ChartTitle({ chart }: { chart: Chart }) {
-  const { categories } = chart
+  const { categories } = chart;
 
   if (!categories?.length) {
-    return null
+    return null;
   }
 
   if (categories.includes("charts-line")) {
@@ -56,7 +56,7 @@ function ChartTitle({ chart }: { chart: Chart }) {
       <>
         <LineChart /> Chart
       </>
-    )
+    );
   }
 
   if (categories.includes("charts-bar")) {
@@ -64,7 +64,7 @@ function ChartTitle({ chart }: { chart: Chart }) {
       <>
         <BarChartBig /> Chart
       </>
-    )
+    );
   }
 
   if (categories.includes("charts-pie")) {
@@ -72,7 +72,7 @@ function ChartTitle({ chart }: { chart: Chart }) {
       <>
         <PieChart /> Chart
       </>
-    )
+    );
   }
 
   if (categories.includes("charts-area")) {
@@ -80,7 +80,7 @@ function ChartTitle({ chart }: { chart: Chart }) {
       <>
         <AreaChart /> Chart
       </>
-    )
+    );
   }
 
   if (categories.includes("charts-radar")) {
@@ -88,7 +88,7 @@ function ChartTitle({ chart }: { chart: Chart }) {
       <>
         <Hexagon /> Chart
       </>
-    )
+    );
   }
 
   if (categories.includes("charts-radial")) {
@@ -96,7 +96,7 @@ function ChartTitle({ chart }: { chart: Chart }) {
       <>
         <Radar /> Chart
       </>
-    )
+    );
   }
 
   if (categories.includes("charts-tooltip")) {
@@ -105,8 +105,8 @@ function ChartTitle({ chart }: { chart: Chart }) {
         <MousePointer2 />
         Tooltip
       </>
-    )
+    );
   }
 
-  return categories[0]
+  return categories[0];
 }

@@ -1,4 +1,4 @@
-import { Button } from "@/registry/new-york/ui/button"
+import { Button } from "@/registry/new-york/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/registry/new-york/ui/dialog"
+} from "@/registry/new-york/ui/dialog";
 
 export function CodeViewer() {
   return (
@@ -85,5 +85,5 @@ export function CodeViewer() {
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

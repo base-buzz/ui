@@ -1,6 +1,6 @@
-import { z } from "zod"
+import { z } from "zod";
 
-import { colors } from "@/registry/registry-colors"
+import { colors } from "@/registry/registry-colors";
 
 const colorSchema = z.object({
   name: z.string(),
@@ -12,14 +12,14 @@ const colorSchema = z.object({
   hsl: z.string(),
   foreground: z.string(),
   oklch: z.string(),
-})
+});
 
 const colorPaletteSchema = z.object({
   name: z.string(),
   colors: z.array(colorSchema),
-})
+});
 
-export type ColorPalette = z.infer<typeof colorPaletteSchema>
+export type ColorPalette = z.infer<typeof colorPaletteSchema>;
 
 export function getColorFormat(color: Color) {
   return {
@@ -28,17 +28,17 @@ export function getColorFormat(color: Color) {
     rgb: color.rgb,
     hsl: color.hsl,
     oklch: color.oklch,
-  }
+  };
 }
 
-export type ColorFormat = keyof ReturnType<typeof getColorFormat>
+export type ColorFormat = keyof ReturnType<typeof getColorFormat>;
 
 export function getColors() {
   const tailwindColors = colorPaletteSchema.array().parse(
     Object.entries(colors)
       .map(([name, color]) => {
         if (!Array.isArray(color)) {
-          return null
+          return null;
         }
 
         return {
@@ -46,8 +46,8 @@ export function getColors() {
           colors: color.map((color) => {
             const rgb = color.rgb.replace(
               /^rgb\((\d+),(\d+),(\d+)\)$/,
-              "$1 $2 $3"
-            )
+              "$1 $2 $3",
+            );
 
             return {
               ...color,
@@ -57,37 +57,37 @@ export function getColors() {
               rgb,
               hsl: color.hsl.replace(
                 /^hsl\(([\d.]+),([\d.]+%),([\d.]+%)\)$/,
-                "$1 $2 $3"
+                "$1 $2 $3",
               ),
               oklch: color.oklch.replace(
                 /^oklch\(([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)\)$/,
-                "$1 $2 $3"
+                "$1 $2 $3",
               ),
               foreground: getForegroundFromBackground(rgb),
-            }
+            };
           }),
-        }
+        };
       })
-      .filter(Boolean)
-  )
+      .filter(Boolean),
+  );
 
-  return tailwindColors
+  return tailwindColors;
 }
 
-export type Color = ReturnType<typeof getColors>[number]["colors"][number]
+export type Color = ReturnType<typeof getColors>[number]["colors"][number];
 
 function getForegroundFromBackground(rgb: string) {
-  const [r, g, b] = rgb.split(" ").map(Number)
+  const [r, g, b] = rgb.split(" ").map(Number);
 
   function toLinear(number: number): number {
-    const base = number / 255
+    const base = number / 255;
     return base <= 0.04045
       ? base / 12.92
-      : Math.pow((base + 0.055) / 1.055, 2.4)
+      : Math.pow((base + 0.055) / 1.055, 2.4);
   }
 
   const luminance =
-    0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b)
+    0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
 
-  return luminance > 0.179 ? "#000" : "#fff"
+  return luminance > 0.179 ? "#000" : "#fff";
 }

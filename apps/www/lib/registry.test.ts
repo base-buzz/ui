@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it } from "vitest";
 
-import { createFileTreeForRegistryItemFiles } from "@/lib/registry"
+import { createFileTreeForRegistryItemFiles } from "@/lib/registry";
 
 describe("createFileTreeForRegistryItemFiles", () => {
   it("should create a nested file tree structure", async () => {
@@ -9,7 +9,7 @@ describe("createFileTreeForRegistryItemFiles", () => {
       { path: "components/foo.tsx" },
       { path: "components/baz.tsx" },
       { path: "components/boo/quip.tsx" },
-    ]
+    ];
 
     const expectedOutput = [
       { name: "page.tsx", path: "page.tsx" },
@@ -24,14 +24,14 @@ describe("createFileTreeForRegistryItemFiles", () => {
           },
         ],
       },
-    ]
+    ];
 
-    const result = await createFileTreeForRegistryItemFiles(files)
-    expect(result).toEqual(expectedOutput)
-  })
+    const result = await createFileTreeForRegistryItemFiles(files);
+    expect(result).toEqual(expectedOutput);
+  });
 
   it("should return an empty array for empty input", async () => {
-    const result = await createFileTreeForRegistryItemFiles([])
-    expect(result).toEqual([])
-  })
-})
+    const result = await createFileTreeForRegistryItemFiles([]);
+    expect(result).toEqual([]);
+  });
+});

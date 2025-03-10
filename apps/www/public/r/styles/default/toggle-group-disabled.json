@@ -3,9 +3,7 @@
   "name": "toggle-group-disabled",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "toggle-group"
-  ],
+  "registryDependencies": ["toggle-group"],
   "files": [
     {
       "path": "examples/toggle-group-disabled.tsx",

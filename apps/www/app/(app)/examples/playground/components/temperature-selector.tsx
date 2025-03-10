@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { SliderProps } from "@radix-ui/react-slider"
+import * as React from "react";
+import { SliderProps } from "@radix-ui/react-slider";
 
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/registry/new-york/ui/hover-card"
-import { Label } from "@/registry/new-york/ui/label"
-import { Slider } from "@/registry/new-york/ui/slider"
+} from "@/registry/new-york/ui/hover-card";
+import { Label } from "@/registry/new-york/ui/label";
+import { Slider } from "@/registry/new-york/ui/slider";
 
 interface TemperatureSelectorProps {
-  defaultValue: SliderProps["defaultValue"]
+  defaultValue: SliderProps["defaultValue"];
 }
 
 export function TemperatureSelector({
   defaultValue,
 }: TemperatureSelectorProps) {
-  const [value, setValue] = React.useState(defaultValue)
+  const [value, setValue] = React.useState(defaultValue);
 
   return (
     <div className="grid gap-2 pt-2">
@@ -53,5 +53,5 @@ export function TemperatureSelector({
         </HoverCardContent>
       </HoverCard>
     </div>
-  )
+  );
 }

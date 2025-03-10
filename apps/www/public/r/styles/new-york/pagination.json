@@ -3,9 +3,7 @@
   "name": "pagination",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "button"
-  ],
+  "registryDependencies": ["button"],
   "files": [
     {
       "path": "ui/pagination.tsx",

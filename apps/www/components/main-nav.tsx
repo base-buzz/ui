@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Icons } from "@/components/icons"
+import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Icons } from "@/components/icons";
 
 export function MainNav() {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <div className="mr-4 hidden md:flex">
@@ -59,7 +59,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname === "/docs/installation"
               ? "text-foreground"
-              : "text-foreground/80"
+              : "text-foreground/80",
           )}
         >
           Mint
@@ -71,7 +71,7 @@ export function MainNav() {
             pathname?.startsWith("/docs/components") &&
               !pathname?.startsWith("/docs/component/chart")
               ? "text-foreground"
-              : "text-foreground/80"
+              : "text-foreground/80",
           )}
         >
           Governance
@@ -82,7 +82,7 @@ export function MainNav() {
             "transition-colors hover:text-foreground/80",
             pathname?.startsWith("/blocks")
               ? "text-foreground"
-              : "text-foreground/80"
+              : "text-foreground/80",
           )}
         >
           Roadmap
@@ -94,12 +94,12 @@ export function MainNav() {
             pathname?.startsWith("/docs/component/chart") ||
               pathname?.startsWith("/charts")
               ? "text-foreground"
-              : "text-foreground/80"
+              : "text-foreground/80",
           )}
         >
           W3 Apps
         </Link>
       </nav>
     </div>
-  )
+  );
 }

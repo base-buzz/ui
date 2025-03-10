@@ -19,7 +19,5 @@
   "meta": {
     "iframeHeight": "300px"
   },
-  "categories": [
-    "misc"
-  ]
+  "categories": ["misc"]
 }

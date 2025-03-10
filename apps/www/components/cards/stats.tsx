@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { Bar, BarChart, Line, LineChart } from "recharts"
+import { Bar, BarChart, Line, LineChart } from "recharts";
 
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york/ui/card"
-import { ChartConfig, ChartContainer } from "@/registry/new-york/ui/chart"
+} from "@/registry/new-york/ui/card";
+import { ChartConfig, ChartContainer } from "@/registry/new-york/ui/chart";
 
 const data = [
   {
@@ -43,7 +43,7 @@ const data = [
     revenue: 26475,
     subscription: 189,
   },
-]
+];
 
 const chartConfig = {
   revenue: {
@@ -54,7 +54,7 @@ const chartConfig = {
     label: "Subscriptions",
     color: "hsl(var(--primary))",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function CardsStats() {
   return (
@@ -112,5 +112,5 @@ export function CardsStats() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

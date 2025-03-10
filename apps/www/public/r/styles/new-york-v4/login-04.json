@@ -3,12 +3,7 @@
   "name": "login-04",
   "type": "registry:block",
   "description": "A login page with form and image.",
-  "registryDependencies": [
-    "button",
-    "card",
-    "input",
-    "label"
-  ],
+  "registryDependencies": ["button", "card", "input", "label"],
   "files": [
     {
       "path": "registry/new-york-v4/blocks/login-04/page.tsx",
@@ -22,8 +17,5 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "authentication",
-    "login"
-  ]
+  "categories": ["authentication", "login"]
 }

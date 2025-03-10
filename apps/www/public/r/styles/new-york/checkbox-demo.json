@@ -3,9 +3,7 @@
   "name": "checkbox-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "checkbox"
-  ],
+  "registryDependencies": ["checkbox"],
   "files": [
     {
       "path": "examples/checkbox-demo.tsx",

@@ -3,11 +3,7 @@
   "name": "calendar-form",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "calendar",
-    "form",
-    "popover"
-  ],
+  "registryDependencies": ["calendar", "form", "popover"],
   "files": [
     {
       "path": "examples/calendar-form.tsx",

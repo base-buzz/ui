@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Index } from "@/__registry__"
+import * as React from "react";
+import { Index } from "@/__registry__";
 
-import { cn } from "@/lib/utils"
-import { useConfig } from "@/hooks/use-config"
-import { Icons } from "@/components/icons"
+import { cn } from "@/lib/utils";
+import { useConfig } from "@/hooks/use-config";
+import { Icons } from "@/components/icons";
 
 interface ThemeComponentProps extends React.HTMLAttributes<HTMLDivElement> {
-  name: string
-  extractClassname?: boolean
-  extractedClassNames?: string
-  align?: "center" | "start" | "end"
+  name: string;
+  extractClassname?: boolean;
+  extractedClassNames?: string;
+  align?: "center" | "start" | "end";
 }
 
 export function ThemeComponent({ name, ...props }: ThemeComponentProps) {
-  const [config] = useConfig()
+  const [config] = useConfig();
 
   const Preview = React.useMemo(() => {
-    const Component = Index[config.style][name]?.component
+    const Component = Index[config.style][name]?.component;
 
     if (!Component) {
       return (
@@ -29,11 +29,11 @@ export function ThemeComponent({ name, ...props }: ThemeComponentProps) {
           </code>{" "}
           not found in registry.
         </p>
-      )
+      );
     }
 
-    return <Component />
-  }, [name, config.style])
+    return <Component />;
+  }, [name, config.style]);
 
   return (
     <div className={cn("relative")} {...props}>
@@ -48,5 +48,5 @@ export function ThemeComponent({ name, ...props }: ThemeComponentProps) {
         {Preview}
       </React.Suspense>
     </div>
-  )
+  );
 }

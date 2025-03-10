@@ -1,22 +1,22 @@
-import { Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
+import { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 
-import { Announcement } from "@/components/announcement"
-import { CardsDemo } from "@/components/cards"
-import { ExamplesNav } from "@/components/examples-nav"
+import { Announcement } from "@/components/announcement";
+import { CardsDemo } from "@/components/cards";
+import { ExamplesNav } from "@/components/examples-nav";
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/page-header"
-import { Button } from "@/registry/new-york/ui/button"
+} from "@/components/page-header";
+import { Button } from "@/registry/new-york/ui/button";
 
 const title =
-  "BaseBuzz | Trade crypto and NFT's safely on the top Base platform"
+  "BaseBuzz | Trade crypto and NFT's safely on the top Base platform";
 const description =
-  "BaseBuzz is the ultimate hub for AI-driven DeFi, meme speculation, and real-world asset tokenization. Trade, engage, and build—powered by $BUZZ."
+  "BaseBuzz is the ultimate hub for AI-driven DeFi, meme speculation, and real-world asset tokenization. Trade, engage, and build—powered by $BUZZ.";
 
 export const metadata: Metadata = {
   title,
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          title
+          title,
         )}&description=${encodeURIComponent(description)}`,
       },
     ],
@@ -35,12 +35,12 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          title
+          title,
         )}&description=${encodeURIComponent(description)}`,
       },
     ],
   },
-}
+};
 
 export default function IndexPage() {
   return (
@@ -96,5 +96,5 @@ export default function IndexPage() {
         </div>
       </div>
     </>
-  )
+  );
 }

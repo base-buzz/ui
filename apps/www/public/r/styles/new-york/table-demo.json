@@ -3,9 +3,7 @@
   "name": "table-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "table"
-  ],
+  "registryDependencies": ["table"],
   "files": [
     {
       "path": "examples/table-demo.tsx",

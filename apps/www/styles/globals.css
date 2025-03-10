@@ -83,7 +83,7 @@
     @apply scroll-smooth;
   }
   body {
-    @apply bg-background text-foreground overscroll-none;
+    @apply overscroll-none bg-background text-foreground;
     /* font-feature-settings: "rlig" 1, "calt" 1; */
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
@@ -118,7 +118,7 @@
   }
 
   .step:before {
-    @apply md:absolute w-8 h-8 md:w-9 md:h-9 bg-muted rounded-full font-mono font-medium text-center text-base inline-flex items-center justify-center -indent-px border-4 mr-2 border-background;
+    @apply mr-2 inline-flex h-8 w-8 items-center justify-center rounded-full border-4 border-background bg-muted text-center -indent-px font-mono text-base font-medium md:absolute md:h-9 md:w-9;
     @apply md:ml-[-50px] md:mt-[-4px];
     content: counter(step);
   }
@@ -129,7 +129,7 @@
 
   .chunk-container::after {
     content: "";
-    @apply absolute -inset-4 shadow-xl rounded-xl border;
+    @apply absolute -inset-4 rounded-xl border shadow-xl;
   }
 
   /* Hide scrollbar for Chrome, Safari and Opera */
@@ -143,19 +143,17 @@
   }
 
   .border-grid {
-    @apply border-border/50 dark:border-border border-dashed;
+    @apply border-dashed border-border/50 dark:border-border;
   }
 
   .container-wrapper {
-    @apply max-w-[1400px] min-[1800px]:max-w-screen-2xl min-[1400px]:border-x border-border/70 dark:border-border mx-auto w-full border-dashed;
+    @apply mx-auto w-full max-w-[1400px] border-dashed border-border/70 dark:border-border min-[1400px]:border-x min-[1800px]:max-w-screen-2xl;
   }
 
   .container {
-    @apply px-4 xl:px-6 mx-auto max-w-screen-2xl;
+    @apply mx-auto max-w-screen-2xl px-4 xl:px-6;
   }
 }
-
-
 
 @layer base {
   * {

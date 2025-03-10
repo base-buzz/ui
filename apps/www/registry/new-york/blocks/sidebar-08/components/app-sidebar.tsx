@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   BookOpen,
   Bot,
@@ -12,12 +12,12 @@ import {
   Send,
   Settings2,
   SquareTerminal,
-} from "lucide-react"
+} from "lucide-react";
 
-import { NavMain } from "@/registry/new-york/blocks/sidebar-08/components/nav-main"
-import { NavProjects } from "@/registry/new-york/blocks/sidebar-08/components/nav-projects"
-import { NavSecondary } from "@/registry/new-york/blocks/sidebar-08/components/nav-secondary"
-import { NavUser } from "@/registry/new-york/blocks/sidebar-08/components/nav-user"
+import { NavMain } from "@/registry/new-york/blocks/sidebar-08/components/nav-main";
+import { NavProjects } from "@/registry/new-york/blocks/sidebar-08/components/nav-projects";
+import { NavSecondary } from "@/registry/new-york/blocks/sidebar-08/components/nav-secondary";
+import { NavUser } from "@/registry/new-york/blocks/sidebar-08/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -26,7 +26,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/registry/new-york/ui/sidebar"
+} from "@/registry/new-york/ui/sidebar";
 
 const data = {
   user: {
@@ -150,7 +150,7 @@ const data = {
       icon: Map,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -160,7 +160,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <a href="#">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -181,5 +181,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { Bell, EyeOff, User } from "lucide-react"
+import { Bell, EyeOff, User } from "lucide-react";
 
 import {
   Card,
@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york/ui/card"
+} from "@/registry/new-york/ui/card";
 
 export function DemoNotifications() {
   return (
@@ -47,5 +47,5 @@ export function DemoNotifications() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

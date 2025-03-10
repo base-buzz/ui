@@ -3,9 +3,7 @@
   "name": "resizable-demo-with-handle",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "resizable"
-  ],
+  "registryDependencies": ["resizable"],
   "files": [
     {
       "path": "examples/resizable-demo-with-handle.tsx",

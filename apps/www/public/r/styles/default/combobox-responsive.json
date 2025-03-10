@@ -3,11 +3,7 @@
   "name": "combobox-responsive",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "combobox",
-    "popover",
-    "drawer"
-  ],
+  "registryDependencies": ["combobox", "popover", "drawer"],
   "files": [
     {
       "path": "examples/combobox-responsive.tsx",

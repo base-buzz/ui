@@ -3,9 +3,7 @@
   "name": "sheet",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "dependencies": [
-    "@radix-ui/react-dialog"
-  ],
+  "dependencies": ["@radix-ui/react-dialog"],
   "files": [
     {
       "path": "ui/sheet.tsx",

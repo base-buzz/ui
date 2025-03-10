@@ -1,32 +1,32 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Image from "next/image"
-import { Index } from "@/__registry__"
+import * as React from "react";
+import Image from "next/image";
+import { Index } from "@/__registry__";
 
-import { cn } from "@/lib/utils"
-import { useConfig } from "@/hooks/use-config"
-import { CopyButton } from "@/components/copy-button"
-import { Icons } from "@/components/icons"
-import { StyleSwitcher } from "@/components/style-switcher"
-import { ThemeWrapper } from "@/components/theme-wrapper"
-import { V0Button } from "@/components/v0-button"
+import { cn } from "@/lib/utils";
+import { useConfig } from "@/hooks/use-config";
+import { CopyButton } from "@/components/copy-button";
+import { Icons } from "@/components/icons";
+import { StyleSwitcher } from "@/components/style-switcher";
+import { ThemeWrapper } from "@/components/theme-wrapper";
+import { V0Button } from "@/components/v0-button";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/registry/new-york/ui/tabs"
-import { styles } from "@/registry/registry-styles"
+} from "@/registry/new-york/ui/tabs";
+import { styles } from "@/registry/registry-styles";
 
 interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
-  name: string
-  extractClassname?: boolean
-  extractedClassNames?: string
-  align?: "center" | "start" | "end"
-  description?: string
-  hideCode?: boolean
-  type?: "block" | "component" | "example"
+  name: string;
+  extractClassname?: boolean;
+  extractedClassNames?: string;
+  align?: "center" | "start" | "end";
+  description?: string;
+  hideCode?: boolean;
+  type?: "block" | "component" | "example";
 }
 
 export function ComponentPreview({
@@ -41,14 +41,14 @@ export function ComponentPreview({
   hideCode = false,
   ...props
 }: ComponentPreviewProps) {
-  const [config] = useConfig()
-  const index = styles.findIndex((style) => style.name === config.style)
+  const [config] = useConfig();
+  const index = styles.findIndex((style) => style.name === config.style);
 
-  const Codes = React.Children.toArray(children) as React.ReactElement[]
-  const Code = Codes[index]
+  const Codes = React.Children.toArray(children) as React.ReactElement[];
+  const Code = Codes[index];
 
   const Preview = React.useMemo(() => {
-    const Component = Index[config.style][name]?.component
+    const Component = Index[config.style][name]?.component;
 
     if (!Component) {
       return (
@@ -59,22 +59,22 @@ export function ComponentPreview({
           </code>{" "}
           not found in registry.
         </p>
-      )
+      );
     }
 
-    return <Component />
-  }, [name, config.style])
+    return <Component />;
+  }, [name, config.style]);
 
   const codeString = React.useMemo(() => {
     if (
       typeof Code?.props["data-rehype-pretty-code-fragment"] !== "undefined"
     ) {
       const [Button] = React.Children.toArray(
-        Code.props.children
-      ) as React.ReactElement[]
-      return Button?.props?.value || Button?.props?.__rawString__ || null
+        Code.props.children,
+      ) as React.ReactElement[];
+      return Button?.props?.value || Button?.props?.__rawString__ || null;
     }
-  }, [Code])
+  }, [Code]);
 
   if (type === "block") {
     return (
@@ -100,7 +100,7 @@ export function ComponentPreview({
           />
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -147,7 +147,7 @@ export function ComponentPreview({
                   "items-center": align === "center",
                   "items-start": align === "start",
                   "items-end": align === "end",
-                }
+                },
               )}
             >
               <React.Suspense
@@ -172,5 +172,5 @@ export function ComponentPreview({
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

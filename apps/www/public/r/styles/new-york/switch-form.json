@@ -3,10 +3,7 @@
   "name": "switch-form",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "switch",
-    "form"
-  ],
+  "registryDependencies": ["switch", "form"],
   "files": [
     {
       "path": "examples/switch-form.tsx",

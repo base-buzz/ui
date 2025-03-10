@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
+import * as React from "react";
+import Link from "next/link";
 import {
   BadgeCheck,
   Bell,
@@ -24,15 +24,15 @@ import {
   Sparkles,
   SquareTerminal,
   Trash2,
-} from "lucide-react"
+} from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Icons } from "@/components/icons"
+import { cn } from "@/lib/utils";
+import { Icons } from "@/components/icons";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/registry/new-york/ui/avatar"
+} from "@/registry/new-york/ui/avatar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -40,13 +40,13 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/registry/new-york/ui/breadcrumb"
-import { Button } from "@/registry/new-york/ui/button"
+} from "@/registry/new-york/ui/breadcrumb";
+import { Button } from "@/registry/new-york/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/registry/new-york/ui/collapsible"
+} from "@/registry/new-york/ui/collapsible";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -55,7 +55,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/registry/new-york/ui/dropdown-menu"
+} from "@/registry/new-york/ui/dropdown-menu";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -64,8 +64,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/registry/new-york/ui/navigation-menu"
-import { Separator } from "@/registry/new-york/ui/separator"
+} from "@/registry/new-york/ui/navigation-menu";
+import { Separator } from "@/registry/new-york/ui/separator";
 import {
   Sidebar,
   SidebarContent,
@@ -85,13 +85,13 @@ import {
   SidebarProvider,
   SidebarTrigger,
   useSidebar,
-} from "@/registry/new-york/ui/sidebar"
+} from "@/registry/new-york/ui/sidebar";
 
-export const iframeHeight = "800px"
+export const iframeHeight = "800px";
 
-export const description = "An inset sidebar with site header navigation."
+export const description = "An inset sidebar with site header navigation.";
 
-const HEADER_HEIGHT = "4rem"
+const HEADER_HEIGHT = "4rem";
 
 const data = {
   user: {
@@ -215,7 +215,7 @@ const data = {
       icon: Map,
     },
   ],
-}
+};
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -253,11 +253,11 @@ const components: { title: string; href: string; description: string }[] = [
     description:
       "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
   },
-]
+];
 
 export default function Page() {
-  const [open, setOpen] = React.useState(true)
-  const { isMobile } = useSidebar()
+  const [open, setOpen] = React.useState(true);
+  const { isMobile } = useSidebar();
 
   return (
     <div
@@ -267,8 +267,8 @@ export default function Page() {
         } as React.CSSProperties
       }
     >
-      <header className="sticky top-0 bg-sidebar flex h-[--header-height] shrink-0 items-center gap-2 border-b px-4 isolate z-20">
-        <div className="flex items-center gap-2 w-full">
+      <header className="bg-sidebar sticky top-0 isolate z-20 flex h-[--header-height] shrink-0 items-center gap-2 border-b px-4">
+        <div className="flex w-full items-center gap-2">
           <Button
             className="hidden md:flex"
             variant="ghost"
@@ -279,7 +279,7 @@ export default function Page() {
           </Button>
 
           <div className="mx-auto flex items-center gap-2">
-            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+            <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
               <Command className="size-4" />
             </div>
             <Separator orientation="vertical" className="ml-4 h-4" />
@@ -357,7 +357,7 @@ export default function Page() {
                     Components
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                       {components.map((component) => (
                         <li>
                           <NavigationMenuLink key={component.title} asChild>
@@ -399,7 +399,7 @@ export default function Page() {
               <SidebarMenuItem>
                 <SidebarMenuButton size="lg" asChild>
                   <a href="#">
-                    <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                    <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                       <Command className="size-4" />
                     </div>
                     <div className="grid flex-1 text-left text-sm leading-tight">
@@ -612,9 +612,9 @@ export default function Page() {
         </Sidebar>
 
         <SidebarInset>
-          <header className=" flex shrink-0 items-center gap-2 border-b py-2">
+          <header className="flex shrink-0 items-center gap-2 border-b py-2">
             <div className="flex items-center gap-2 px-4 py-2">
-              <div className="flex md:hidden items-center gap-2">
+              <div className="flex items-center gap-2 md:hidden">
                 <SidebarTrigger />
                 <Separator orientation="vertical" className="mr-2 h-4" />
               </div>
@@ -644,5 +644,5 @@ export default function Page() {
         </SidebarInset>
       </SidebarProvider>
     </div>
-  )
+  );
 }

@@ -3,9 +3,7 @@
   "name": "carousel-size",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "carousel"
-  ],
+  "registryDependencies": ["carousel"],
   "files": [
     {
       "path": "examples/carousel-size.tsx",

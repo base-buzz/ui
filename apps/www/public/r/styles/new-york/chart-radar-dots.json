@@ -3,10 +3,7 @@
   "name": "chart-radar-dots",
   "type": "registry:block",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "card",
-    "chart"
-  ],
+  "registryDependencies": ["card", "chart"],
   "files": [
     {
       "path": "charts/chart-radar-dots.tsx",
@@ -15,8 +12,5 @@
       "target": ""
     }
   ],
-  "categories": [
-    "charts",
-    "charts-radar"
-  ]
+  "categories": ["charts", "charts-radar"]
 }

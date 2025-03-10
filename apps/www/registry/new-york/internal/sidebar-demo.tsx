@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 
 import {
   Sidebar,
@@ -14,7 +14,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from "@/registry/new-york/ui/sidebar"
+} from "@/registry/new-york/ui/sidebar";
 
 // Menu items.
 const items = [
@@ -43,7 +43,7 @@ const items = [
     url: "#",
     icon: Settings,
   },
-]
+];
 
 export default function AppSidebar() {
   return (
@@ -70,10 +70,10 @@ export default function AppSidebar() {
         </SidebarContent>
       </Sidebar>
       <SidebarInset>
-        <header className="flex items-center justify-between px-4 h-12">
+        <header className="flex h-12 items-center justify-between px-4">
           <SidebarTrigger />
         </header>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

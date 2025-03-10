@@ -3,9 +3,7 @@
   "name": "menubar",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "dependencies": [
-    "@radix-ui/react-menubar"
-  ],
+  "dependencies": ["@radix-ui/react-menubar"],
   "files": [
     {
       "path": "ui/menubar.tsx",

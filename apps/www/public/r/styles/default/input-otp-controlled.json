@@ -3,9 +3,7 @@
   "name": "input-otp-controlled",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "input-otp"
-  ],
+  "registryDependencies": ["input-otp"],
   "files": [
     {
       "path": "examples/input-otp-controlled.tsx",

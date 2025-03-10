@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { cn } from "@/lib/utils"
-import { ScrollArea, ScrollBar } from "@/registry/new-york/ui/scroll-area"
+import { cn } from "@/lib/utils";
+import { ScrollArea, ScrollBar } from "@/registry/new-york/ui/scroll-area";
 
 const links = [
   {
@@ -39,13 +39,13 @@ const links = [
     name: "Tooltip",
     href: "/charts#tooltip",
   },
-]
+];
 
 export function ChartsNav({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <ScrollArea className="max-w-[600px] lg:max-w-none">
@@ -59,7 +59,7 @@ export function ChartsNav({
               pathname?.startsWith(example.href) ||
                 (index === 0 && pathname === "/charts")
                 ? "bg-muted text-primary"
-                : "text-muted-foreground"
+                : "text-muted-foreground",
             )}
           >
             {example.name}
@@ -68,5 +68,5 @@ export function ChartsNav({
       </div>
       <ScrollBar orientation="horizontal" className="invisible" />
     </ScrollArea>
-  )
+  );
 }

@@ -3,9 +3,7 @@
   "name": "label-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "label"
-  ],
+  "registryDependencies": ["label"],
   "files": [
     {
       "path": "examples/label-demo.tsx",

@@ -3,11 +3,7 @@
   "name": "input-form",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "input",
-    "button",
-    "form"
-  ],
+  "registryDependencies": ["input", "button", "form"],
   "files": [
     {
       "path": "examples/input-form.tsx",

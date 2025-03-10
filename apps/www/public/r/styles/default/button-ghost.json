@@ -3,9 +3,7 @@
   "name": "button-ghost",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "button"
-  ],
+  "registryDependencies": ["button"],
   "files": [
     {
       "path": "examples/button-ghost.tsx",

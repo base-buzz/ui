@@ -1,7 +1,7 @@
-import { BellRing, Check } from "lucide-react"
+import { BellRing, Check } from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/registry/default/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/registry/default/ui/button";
 import {
   Card,
   CardContent,
@@ -9,8 +9,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/registry/default/ui/card"
-import { Switch } from "@/registry/default/ui/switch"
+} from "@/registry/default/ui/card";
+import { Switch } from "@/registry/default/ui/switch";
 
 const notifications = [
   {
@@ -25,9 +25,9 @@ const notifications = [
     title: "Your subscription is expiring soon!",
     description: "2 hours ago",
   },
-]
+];
 
-type CardProps = React.ComponentProps<typeof Card>
+type CardProps = React.ComponentProps<typeof Card>;
 
 export function CardDemo({ className, ...props }: CardProps) {
   return (
@@ -37,7 +37,7 @@ export function CardDemo({ className, ...props }: CardProps) {
         <CardDescription>You have 3 unread messages.</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className=" flex items-center space-x-4 rounded-md border p-4">
+        <div className="flex items-center space-x-4 rounded-md border p-4">
           <BellRing />
           <div className="flex-1 space-y-1">
             <p className="text-sm font-medium leading-none">
@@ -74,5 +74,5 @@ export function CardDemo({ className, ...props }: CardProps) {
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

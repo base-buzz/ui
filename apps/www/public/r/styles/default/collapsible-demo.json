@@ -3,9 +3,7 @@
   "name": "collapsible-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "collapsible"
-  ],
+  "registryDependencies": ["collapsible"],
   "files": [
     {
       "path": "examples/collapsible-demo.tsx",

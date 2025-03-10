@@ -3,10 +3,7 @@
   "name": "checkbox-form-multiple",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "checkbox",
-    "form"
-  ],
+  "registryDependencies": ["checkbox", "form"],
   "files": [
     {
       "path": "examples/checkbox-form-multiple.tsx",

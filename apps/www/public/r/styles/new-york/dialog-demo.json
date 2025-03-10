@@ -3,9 +3,7 @@
   "name": "dialog-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "dialog"
-  ],
+  "registryDependencies": ["dialog"],
   "files": [
     {
       "path": "examples/dialog-demo.tsx",

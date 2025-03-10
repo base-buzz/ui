@@ -3,12 +3,7 @@
   "name": "login-05",
   "type": "registry:block",
   "description": "A simple email-only login page.",
-  "registryDependencies": [
-    "button",
-    "card",
-    "input",
-    "label"
-  ],
+  "registryDependencies": ["button", "card", "input", "label"],
   "files": [
     {
       "path": "registry/new-york-v4/blocks/login-05/page.tsx",
@@ -22,8 +17,5 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "authentication",
-    "login"
-  ]
+  "categories": ["authentication", "login"]
 }

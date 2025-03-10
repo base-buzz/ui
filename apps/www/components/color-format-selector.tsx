@@ -1,31 +1,31 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { getColorFormat, type Color } from "@/lib/colors"
-import { cn } from "@/lib/utils"
-import { useColors } from "@/hooks/use-colors"
+import { getColorFormat, type Color } from "@/lib/colors";
+import { cn } from "@/lib/utils";
+import { useColors } from "@/hooks/use-colors";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/registry/new-york/ui/select"
-import { Skeleton } from "@/registry/new-york/ui/skeleton"
+} from "@/registry/new-york/ui/select";
+import { Skeleton } from "@/registry/new-york/ui/skeleton";
 
 export function ColorFormatSelector({
   color,
   className,
   ...props
 }: Omit<React.ComponentProps<typeof SelectTrigger>, "color"> & {
-  color: Color
+  color: Color;
 }) {
-  const { format, setFormat, isLoading } = useColors()
-  const formats = React.useMemo(() => getColorFormat(color), [color])
+  const { format, setFormat, isLoading } = useColors();
+  const formats = React.useMemo(() => getColorFormat(color), [color]);
 
   if (isLoading) {
-    return <ColorFormatSelectorSkeleton />
+    return <ColorFormatSelectorSkeleton />;
   }
 
   return (
@@ -54,7 +54,7 @@ export function ColorFormatSelector({
         ))}
       </SelectContent>
     </Select>
-  )
+  );
 }
 
 export function ColorFormatSelectorSkeleton({
@@ -66,5 +66,5 @@ export function ColorFormatSelectorSkeleton({
       className={cn("h-7 w-[116px] gap-1.5 rounded-lg", className)}
       {...props}
     />
-  )
+  );
 }

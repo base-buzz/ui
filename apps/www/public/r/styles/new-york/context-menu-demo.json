@@ -3,9 +3,7 @@
   "name": "context-menu-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "context-menu"
-  ],
+  "registryDependencies": ["context-menu"],
   "files": [
     {
       "path": "examples/context-menu-demo.tsx",

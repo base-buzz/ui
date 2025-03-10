@@ -3,9 +3,7 @@
   "name": "calendar-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "calendar"
-  ],
+  "registryDependencies": ["calendar"],
   "files": [
     {
       "path": "examples/calendar-demo.tsx",

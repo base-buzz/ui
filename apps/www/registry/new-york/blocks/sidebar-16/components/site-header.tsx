@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { SidebarIcon } from "lucide-react"
+import { SidebarIcon } from "lucide-react";
 
-import { SearchForm } from "@/registry/new-york/blocks/sidebar-16/components/search-form"
+import { SearchForm } from "@/registry/new-york/blocks/sidebar-16/components/search-form";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,13 +10,13 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/registry/new-york/ui/breadcrumb"
-import { Button } from "@/registry/new-york/ui/button"
-import { Separator } from "@/registry/new-york/ui/separator"
-import { useSidebar } from "@/registry/new-york/ui/sidebar"
+} from "@/registry/new-york/ui/breadcrumb";
+import { Button } from "@/registry/new-york/ui/button";
+import { Separator } from "@/registry/new-york/ui/separator";
+import { useSidebar } from "@/registry/new-york/ui/sidebar";
 
 export function SiteHeader() {
-  const { toggleSidebar } = useSidebar()
+  const { toggleSidebar } = useSidebar();
 
   return (
     <header className="fle sticky top-0 z-50 w-full items-center border-b bg-background">
@@ -46,5 +46,5 @@ export function SiteHeader() {
         <SearchForm className="w-full sm:ml-auto sm:w-auto" />
       </div>
     </header>
-  )
+  );
 }

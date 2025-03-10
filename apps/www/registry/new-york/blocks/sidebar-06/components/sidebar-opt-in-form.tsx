@@ -1,12 +1,12 @@
-import { Button } from "@/registry/new-york/ui/button"
+import { Button } from "@/registry/new-york/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york/ui/card"
-import { SidebarInput } from "@/registry/new-york/ui/sidebar"
+} from "@/registry/new-york/ui/card";
+import { SidebarInput } from "@/registry/new-york/ui/sidebar";
 
 export function SidebarOptInForm() {
   return (
@@ -21,7 +21,7 @@ export function SidebarOptInForm() {
         <CardContent className="grid gap-2.5 p-4">
           <SidebarInput type="email" placeholder="Email" />
           <Button
-            className="w-full bg-sidebar-primary text-sidebar-primary-foreground shadow-none"
+            className="bg-sidebar-primary text-sidebar-primary-foreground w-full shadow-none"
             size="sm"
           >
             Subscribe
@@ -29,5 +29,5 @@ export function SidebarOptInForm() {
         </CardContent>
       </form>
     </Card>
-  )
+  );
 }

@@ -1,8 +1,6 @@
 {
   "name": "pagination",
-  "registryDependencies": [
-    "button"
-  ],
+  "registryDependencies": ["button"],
   "files": [
     {
       "name": "pagination.tsx",

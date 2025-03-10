@@ -3,9 +3,7 @@
   "name": "slider-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "slider"
-  ],
+  "registryDependencies": ["slider"],
   "files": [
     {
       "path": "examples/slider-demo.tsx",

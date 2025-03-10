@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Command, Sidebar } from "lucide-react"
+import * as React from "react";
+import { Command, Sidebar } from "lucide-react";
 
-import { AppSidebar } from "@/registry/default/block/sidebar-16/components/app-sidebar"
+import { AppSidebar } from "@/registry/default/block/sidebar-16/components/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,23 +11,23 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/registry/default/ui/breadcrumb"
-import { Button } from "@/registry/default/ui/button"
-import { Separator } from "@/registry/default/ui/separator"
+} from "@/registry/default/ui/breadcrumb";
+import { Button } from "@/registry/default/ui/button";
+import { Separator } from "@/registry/default/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/registry/default/ui/sidebar"
+} from "@/registry/default/ui/sidebar";
 
-export const iframeHeight = "800px"
+export const iframeHeight = "800px";
 
-export const description = "An inset sidebar with site header navigation."
+export const description = "An inset sidebar with site header navigation.";
 
-const HEADER_HEIGHT = "4rem"
+const HEADER_HEIGHT = "4rem";
 
 export default function Page() {
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(true);
 
   return (
     <div
@@ -37,7 +37,7 @@ export default function Page() {
         } as React.CSSProperties
       }
     >
-      <header className="bg-sidebar sticky h-[--header-height] top-0 z-50 w-full border-b border-border/40  backdrop-blur">
+      <header className="bg-sidebar sticky top-0 z-50 h-[--header-height] w-full border-b border-border/40 backdrop-blur">
         <div className="flex h-14 items-center px-4">
           <div className="mr-4 hidden md:flex">
             <Button
@@ -49,7 +49,7 @@ export default function Page() {
               <Sidebar />
             </Button>
             <a href="#" className="mr-4 flex items-center gap-2 lg:mr-6">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+              <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                 <Command className="size-4" />
               </div>
             </a>
@@ -98,9 +98,9 @@ export default function Page() {
         <AppSidebar />
 
         <SidebarInset>
-          <header className=" flex shrink-0 items-center gap-2 border-b py-2">
+          <header className="flex shrink-0 items-center gap-2 border-b py-2">
             <div className="flex items-center gap-2 px-4 py-2">
-              <div className="flex md:hidden items-center gap-2">
+              <div className="flex items-center gap-2 md:hidden">
                 <SidebarTrigger />
                 <Separator orientation="vertical" className="mr-2 h-4" />
               </div>
@@ -130,5 +130,5 @@ export default function Page() {
         </SidebarInset>
       </SidebarProvider>
     </div>
-  )
+  );
 }

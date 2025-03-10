@@ -1,18 +1,18 @@
-import { Metadata } from "next"
-import Link from "next/link"
+import { Metadata } from "next";
+import Link from "next/link";
 
-import { Announcement } from "@/components/announcement"
-import { ExamplesNav } from "@/components/examples-nav"
+import { Announcement } from "@/components/announcement";
+import { ExamplesNav } from "@/components/examples-nav";
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/page-header"
-import { Button } from "@/registry/new-york/ui/button"
+} from "@/components/page-header";
+import { Button } from "@/registry/new-york/ui/button";
 
-const title = "Examples"
-const description = "Check out some examples app built using the components."
+const title = "Examples";
+const description = "Check out some examples app built using the components.";
 
 export const metadata: Metadata = {
   title,
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          title
+          title,
         )}&description=${encodeURIComponent(description)}`,
       },
     ],
@@ -31,17 +31,17 @@ export const metadata: Metadata = {
     images: [
       {
         url: `/og?title=${encodeURIComponent(
-          title
+          title,
         )}&description=${encodeURIComponent(description)}`,
       },
     ],
   },
-}
+};
 
 export default function ExamplesLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
@@ -49,9 +49,9 @@ export default function ExamplesLayout({
         <Announcement />
         <PageHeaderHeading>Build your component library</PageHeaderHeading>
         <PageHeaderDescription>
-          A set of beautifully-designed, accessible components and a code
-          distribution platform. Works with your favorite frameworks. Open
-          Source. Open Code.
+          BaseBuzz is the ultimate hub for AI-driven DeFi, meme speculation, and
+          real-world asset tokenization. Trade, engage, and build—powered by
+          $BUZZ.
         </PageHeaderDescription>
         <PageActions>
           <Button asChild size="sm">
@@ -77,5 +77,5 @@ export default function ExamplesLayout({
         </div>
       </div>
     </>
-  )
+  );
 }

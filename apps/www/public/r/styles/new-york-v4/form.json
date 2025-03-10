@@ -9,10 +9,7 @@
     "zod",
     "react-hook-form"
   ],
-  "registryDependencies": [
-    "button",
-    "label"
-  ],
+  "registryDependencies": ["button", "label"],
   "files": [
     {
       "path": "registry/new-york-v4/ui/form.tsx",

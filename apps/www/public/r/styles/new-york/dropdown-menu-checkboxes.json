@@ -3,10 +3,7 @@
   "name": "dropdown-menu-checkboxes",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "dropdown-menu",
-    "checkbox"
-  ],
+  "registryDependencies": ["dropdown-menu", "checkbox"],
   "files": [
     {
       "path": "examples/dropdown-menu-checkboxes.tsx",

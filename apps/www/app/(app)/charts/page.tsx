@@ -1,9 +1,9 @@
-import { THEMES } from "@/lib/themes"
-import { ChartDisplay } from "@/components/chart-display"
-import { ThemesSwitcher } from "@/components/themes-selector"
-import { ThemesStyle } from "@/components/themes-styles"
-import { Separator } from "@/registry/new-york/ui/separator"
-import * as Charts from "@/app/(app)/charts/charts"
+import { THEMES } from "@/lib/themes";
+import { ChartDisplay } from "@/components/chart-display";
+import { ThemesSwitcher } from "@/components/themes-selector";
+import { ThemesStyle } from "@/components/themes-styles";
+import { Separator } from "@/registry/new-york/ui/separator";
+import * as Charts from "@/app/(app)/charts/charts";
 
 export default function ChartsPage() {
   return (
@@ -294,5 +294,5 @@ export default function ChartsPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

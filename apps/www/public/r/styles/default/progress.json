@@ -3,9 +3,7 @@
   "name": "progress",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "dependencies": [
-    "@radix-ui/react-progress"
-  ],
+  "dependencies": ["@radix-ui/react-progress"],
   "files": [
     {
       "path": "ui/progress.tsx",

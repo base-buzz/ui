@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   Check,
   ChevronRight,
   ChevronsUpDown,
   GalleryVerticalEnd,
   Search,
-} from "lucide-react"
+} from "lucide-react";
 
 import {
   Breadcrumb,
@@ -16,20 +16,20 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/registry/default/ui/breadcrumb"
+} from "@/registry/default/ui/breadcrumb";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/registry/default/ui/collapsible"
+} from "@/registry/default/ui/collapsible";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/registry/default/ui/dropdown-menu"
-import { Label } from "@/registry/default/ui/label"
-import { Separator } from "@/registry/default/ui/separator"
+} from "@/registry/default/ui/dropdown-menu";
+import { Label } from "@/registry/default/ui/label";
+import { Separator } from "@/registry/default/ui/separator";
 import {
   Sidebar,
   SidebarContent,
@@ -45,11 +45,11 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
-} from "@/registry/default/ui/sidebar"
+} from "@/registry/default/ui/sidebar";
 
-export const iframeHeight = "800px"
+export const iframeHeight = "800px";
 
-export const description = "A sidebar with collapsible sections."
+export const description = "A sidebar with collapsible sections.";
 
 // This is sample data.
 const data = {
@@ -191,10 +191,12 @@ const data = {
       ],
     },
   ],
-}
+};
 
 export default function Component() {
-  const [selectedVersion, setSelectedVersion] = React.useState(data.versions[0])
+  const [selectedVersion, setSelectedVersion] = React.useState(
+    data.versions[0],
+  );
 
   return (
     <SidebarProvider>
@@ -208,7 +210,7 @@ export default function Component() {
                     size="lg"
                     className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                   >
-                    <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                    <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                       <GalleryVerticalEnd className="size-4" />
                     </div>
                     <div className="flex flex-col gap-0.5 leading-none">
@@ -265,7 +267,7 @@ export default function Component() {
               <SidebarGroup>
                 <SidebarGroupLabel
                   asChild
-                  className="group/label text-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                  className="group/label text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm"
                 >
                   <CollapsibleTrigger>
                     {item.title}{" "}
@@ -292,7 +294,7 @@ export default function Component() {
         <SidebarRail />
       </Sidebar>
       <SidebarInset>
-        <header className="flex sticky top-0 bg-background h-16 shrink-0 items-center gap-2 border-b px-4">
+        <header className="sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 h-4" />
           <Breadcrumb>
@@ -319,5 +321,5 @@ export default function Component() {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

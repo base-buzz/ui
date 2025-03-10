@@ -1,24 +1,24 @@
-import { getAllBlockIds } from "@/lib/blocks"
-import { BlockDisplay } from "@/components/block-display"
-import { registryCategories } from "@/registry/registry-categories"
+import { getAllBlockIds } from "@/lib/blocks";
+import { BlockDisplay } from "@/components/block-display";
+import { registryCategories } from "@/registry/registry-categories";
 
-export const dynamicParams = false
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return registryCategories.map((category) => ({
     categories: [category.slug],
-  }))
+  }));
 }
 
 export default async function BlocksPage({
   params,
 }: {
-  params: { categories?: string[] }
+  params: { categories?: string[] };
 }) {
   const blocks = await getAllBlockIds(
     ["registry:block"],
-    params.categories ?? []
-  )
+    params.categories ?? [],
+  );
 
   return blocks.map((name) => (
     <div
@@ -27,5 +27,5 @@ export default async function BlocksPage({
     >
       <BlockDisplay name={name} />
     </div>
-  ))
+  ));
 }

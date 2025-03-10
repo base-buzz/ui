@@ -3,7 +3,7 @@ title: Gatsby
 description: Install and configure Gatsby.
 ---
 
-<Callout className="bg-blue-50 border-blue-600 dark:border-blue-900 dark:bg-blue-950 mb-6 [&_code]:bg-blue-100 dark:[&_code]:bg-blue-900">
+<Callout className="mb-6 border-blue-600 bg-blue-50 dark:border-blue-900 dark:bg-blue-950 [&_code]:bg-blue-100 dark:[&_code]:bg-blue-900">
   **Update:** We have added full support for React 19 and Tailwind v4 in the
   `canary` release. See the docs for [Tailwind v4](/docs/tailwind-v4) for more
   information.
@@ -63,7 +63,7 @@ Add the following code to the `tsconfig.json` file to resolve paths:
 Create a `gatsby-node.ts` file at the root of your project if it doesn’t already exist, and add the code below to the `gatsby-node` file so your app can resolve paths:
 
 ```ts
-import * as path from "path"
+import * as path from "path";
 
 export const onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
@@ -73,8 +73,8 @@ export const onCreateWebpackConfig = ({ actions }) => {
         "@/lib/utils": path.resolve(__dirname, "src/lib/utils"),
       },
     },
-  })
-}
+  });
+};
 ```
 
 ### Run the CLI
@@ -112,14 +112,14 @@ npx shadcn@latest add button
 The command above will add the `Button` component to your project. You can then import it like this:
 
 ```tsx {1,6} showLineNumbers
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <div>
       <Button>Click me</Button>
     </div>
-  )
+  );
 }
 ```
 

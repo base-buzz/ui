@@ -3,13 +3,8 @@
   "name": "chart",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "dependencies": [
-    "recharts",
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "card"
-  ],
+  "dependencies": ["recharts", "lucide-react"],
+  "registryDependencies": ["card"],
   "files": [
     {
       "path": "ui/chart.tsx",

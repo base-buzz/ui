@@ -2,11 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "chart-area-interactive",
   "type": "registry:block",
-  "registryDependencies": [
-    "card",
-    "chart",
-    "select"
-  ],
+  "registryDependencies": ["card", "chart", "select"],
   "files": [
     {
       "path": "registry/new-york-v4/charts/chart-area-interactive.tsx",
@@ -14,8 +10,5 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "charts",
-    "charts-area"
-  ]
+  "categories": ["charts", "charts-area"]
 }

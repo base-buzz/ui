@@ -3,10 +3,7 @@
   "name": "dropdown-menu-radio-group",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "dropdown-menu",
-    "radio-group"
-  ],
+  "registryDependencies": ["dropdown-menu", "radio-group"],
   "files": [
     {
       "path": "examples/dropdown-menu-radio-group.tsx",

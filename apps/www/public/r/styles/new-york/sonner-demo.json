@@ -3,9 +3,7 @@
   "name": "sonner-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "sonner"
-  ],
+  "registryDependencies": ["sonner"],
   "files": [
     {
       "path": "examples/sonner-demo.tsx",

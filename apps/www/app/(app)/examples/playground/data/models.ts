@@ -1,13 +1,13 @@
-export const types = ["GPT-3", "Codex"] as const
+export const types = ["GPT-3", "Codex"] as const;
 
-export type ModelType = (typeof types)[number]
+export type ModelType = (typeof types)[number];
 
 export interface Model<Type = string> {
-  id: string
-  name: string
-  description: string
-  strengths?: string
-  type: Type
+  id: string;
+  name: string;
+  description: string;
+  strengths?: string;
+  type: Type;
 }
 
 export const models: Model<ModelType>[] = [
@@ -59,4 +59,4 @@ export const models: Model<ModelType>[] = [
     type: "Codex",
     strengths: "Real-time application where low-latency is preferable",
   },
-]
+];

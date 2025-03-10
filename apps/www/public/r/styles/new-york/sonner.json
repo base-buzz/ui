@@ -3,10 +3,7 @@
   "name": "sonner",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "dependencies": [
-    "sonner",
-    "next-themes"
-  ],
+  "dependencies": ["sonner", "next-themes"],
   "files": [
     {
       "path": "ui/sonner.tsx",

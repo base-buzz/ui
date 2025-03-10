@@ -1,4 +1,4 @@
-import { GalleryVerticalEnd, Minus, Plus, Search } from "lucide-react"
+import { GalleryVerticalEnd, Minus, Plus, Search } from "lucide-react";
 
 import {
   Breadcrumb,
@@ -7,14 +7,14 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/registry/default/ui/breadcrumb"
+} from "@/registry/default/ui/breadcrumb";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/registry/default/ui/collapsible"
-import { Label } from "@/registry/default/ui/label"
-import { Separator } from "@/registry/default/ui/separator"
+} from "@/registry/default/ui/collapsible";
+import { Label } from "@/registry/default/ui/label";
+import { Separator } from "@/registry/default/ui/separator";
 import {
   Sidebar,
   SidebarContent,
@@ -32,11 +32,11 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
-} from "@/registry/default/ui/sidebar"
+} from "@/registry/default/ui/sidebar";
 
-export const iframeHeight = "800px"
+export const iframeHeight = "800px";
 
-export const description = "A sidebar with collapsible submenus."
+export const description = "A sidebar with collapsible submenus.";
 
 // This is sample data.
 const data = {
@@ -177,7 +177,7 @@ const data = {
       ],
     },
   ],
-}
+};
 
 export default function Component() {
   return (
@@ -188,7 +188,7 @@ export default function Component() {
             <SidebarMenuItem>
               <SidebarMenuButton size="lg" asChild>
                 <a href="#">
-                  <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                  <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                     <GalleryVerticalEnd className="size-4" />
                   </div>
                   <div className="flex flex-col gap-0.5 leading-none">
@@ -284,5 +284,5 @@ export default function Component() {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

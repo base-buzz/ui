@@ -3,9 +3,7 @@
   "name": "toast-with-title",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "toast"
-  ],
+  "registryDependencies": ["toast"],
   "files": [
     {
       "path": "examples/toast-with-title.tsx",

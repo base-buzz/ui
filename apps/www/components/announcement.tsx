@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export function Announcement() {
   return (
@@ -21,5 +21,5 @@ export function Announcement() {
       </span>
       <ArrowRight className="ml-1 h-4 w-4" />
     </Link>
-  )
+  );
 }

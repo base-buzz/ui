@@ -3,9 +3,7 @@
   "name": "select-scrollable",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "select"
-  ],
+  "registryDependencies": ["select"],
   "files": [
     {
       "path": "examples/select-scrollable.tsx",

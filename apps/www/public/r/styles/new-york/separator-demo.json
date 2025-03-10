@@ -3,9 +3,7 @@
   "name": "separator-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "separator"
-  ],
+  "registryDependencies": ["separator"],
   "files": [
     {
       "path": "examples/separator-demo.tsx",
