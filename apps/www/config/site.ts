@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: "BaseBuzz",
-  url: "https://ui.shadcn.com",
-  ogImage: "https://ui.shadcn.com/og.jpg",
+  url: "https://www.base.buzz",
+  ogImage: "https://www.base.buzz/og.jpg",
   description:
     "BaseBuzz is the ultimate hub for AI-driven DeFi, meme speculation, and real-world asset tokenization. Trade, engage, and build—powered by $BUZZ.",
   links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn-ui/ui",
+    twitter: "https://twitter.com/realbasebuzz",
+    github: "https://github.com/base-buzz",
   },
 };
 

@@ -2,17 +2,10 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Announcement } from "@/components/announcement";
-import { CardsDemo } from "@/components/cards";
 import { ExamplesNav } from "@/components/examples-nav";
-import {
-  PageActions,
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading,
-} from "@/components/page-header";
-import { Button } from "@/registry/new-york/ui/button";
+import { CardsDemo } from "@/components/cards";
 import { HeroSection } from "@/components/ui/hero-section"; // ✅ Import Hero Section
+import { Button } from "@/components/ui/button";
 
 const title =
   "BaseBuzz | Trade crypto and NFT's safely on the top Base platform";
@@ -46,21 +39,7 @@ export const metadata: Metadata = {
 export default function IndexPage() {
   return (
     <>
-      <PageHeader>
-        <Announcement />
-        <PageHeaderHeading>{title}</PageHeaderHeading>
-        <PageHeaderDescription>{description}</PageHeaderDescription>
-        <PageActions>
-          <Button asChild size="sm" className="rounded-md">
-            <Link href="/docs/installation">Get Started</Link>
-          </Button>
-          <Button asChild size="sm" variant="ghost" className="rounded-md">
-            <Link href="/blocks">Browse Blocks</Link>
-          </Button>
-        </PageActions>
-      </PageHeader>
-
-      {/* ✅ Add Hero Section Here */}
+      {/* ✅ Hero Section Added */}
       <HeroSection />
 
       <div className="border-grid border-b">
@@ -70,6 +49,7 @@ export default function IndexPage() {
           </div>
         </div>
       </div>
+
       <div className="container-wrapper">
         <div className="container py-6">
           <section className="overflow-hidden rounded-lg border bg-background shadow-md md:hidden md:shadow-xl">
