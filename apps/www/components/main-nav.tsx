@@ -54,10 +54,14 @@ export function MainNav() {
       </Sheet>
 
       {/* ✅ Clickable Logo (Always Links to Home) */}
-      <Link href="/" className="flex items-center gap-2 text-lg font-bold">
-        <Icons.logo className="h-6 w-6 text-primary" />
-        <span className="md:inline-block">{siteConfig.name}</span>
-      </Link>
+      {/* ✅ Clickable Logo (Always Links to Home) */}
+<Link href="/" className="flex items-center gap-1 text-sm font-medium text-foreground transition-colors hover:text-foreground/80">
+  <Icons.logo className="h-6 w-6 text-primary" />
+  <span className="md:inline-block text-foreground/80 font-bold">{siteConfig.name}</span>
+</Link>
+
+
+
 
       {/* ✅ Desktop Navigation (Only Shows on Large Screens) */}
       <nav className="ml-2 hidden items-center gap-4 text-sm md:flex xl:gap-6">
@@ -92,9 +96,9 @@ export function MainNav() {
         {/* ✅ Base Apps Link */}
         <Link href="/apps" className="flex items-center gap-1 transition-colors hover:text-foreground/80">
           <Image
-            src="/icons/Base_Wordmark_Blue.svg"
+            src="/icons/Base_Wordmark_White.svg"
             alt="Base Apps"
-            width={50}
+            width={45}
             height={12}
             className="object-contain"
           />
