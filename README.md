@@ -4,7 +4,7 @@ Accessible and customizable components that you can copy and paste into your app
 
 ![hero](apps/www/public/og.jpg)
 
-## Documentation
+## Documentations
 
 Visit http://ui.shadcn.com/docs to view the documentation.
 
