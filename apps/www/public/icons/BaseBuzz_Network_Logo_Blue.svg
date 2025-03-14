@@ -1,0 +1,11 @@
+<svg width="230" height="230" viewBox="0 0 230 230" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M230 115C230 178.513 178.513 230 115 230C51.4873 230 0 178.513 0 115C0 51.4873 51.4873 0 115 0C178.513 0 230 51.4873 230 115ZM196.214 114.35C196.214 158.845 160.082 194.915 115.509 194.915C73.2211 194.915 38.5299 162.448 35.0845 121.122V114V107.578C38.5299 66.2522 73.2211 33.7852 115.509 33.7852C160.082 33.7852 196.214 69.8553 196.214 114.35Z" fill="#0052FF"/>
+<line x1="30.5" y1="112.5" x2="85.5" y2="112.5" stroke="#0052FF" stroke-width="9" stroke-linecap="round"/>
+<line x1="86.3666" y1="112.206" x2="89.2065" y2="104.633" stroke="#0052FF" stroke-width="9" stroke-linecap="round"/>
+<line x1="109.478" y1="177.837" x2="89.8368" y2="105.522" stroke="#0052FF" stroke-width="9" stroke-linecap="round"/>
+<line x1="109.807" y1="177.213" x2="117.213" y2="65.1933" stroke="#0052FF" stroke-width="9" stroke-linecap="round"/>
+<line x1="136.442" y1="130.899" x2="117.899" y2="65.5576" stroke="#0052FF" stroke-width="9" stroke-linecap="round"/>
+<line x1="137.457" y1="129.826" x2="147.826" y2="112.543" stroke="#0052FF" stroke-width="9" stroke-linecap="round"/>
+<path d="M163.016 148.5L149.5 112.5" stroke="#0052FF" stroke-width="9" stroke-linecap="round"/>
+<path d="M163.016 148.5L174 97" stroke="#0052FF" stroke-width="9" stroke-linecap="round"/>
+</svg>

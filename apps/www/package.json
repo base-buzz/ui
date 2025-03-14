@@ -53,6 +53,7 @@
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.1.7",
     "@tanstack/react-table": "^8.9.1",
+    "@uniswap/widgets": "^2.59.0",
     "@vercel/analytics": "^1.2.2",
     "@vercel/og": "^0.0.21",
     "change-case": "^5.4.4",

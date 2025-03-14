@@ -9,6 +9,10 @@ const nextConfig = {
   },
   reactStrictMode: true,
   swcMinify: true,
+  
+
+
+
   images: {
     remotePatterns: [
       {
@@ -84,5 +88,8 @@ const nextConfig = {
 const withContentlayer = createContentlayerPlugin({
   // Additional Contentlayer config options
 });
+
+
+
 
 export default withContentlayer(nextConfig);
