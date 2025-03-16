@@ -1,11 +1,11 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-
 import { ExamplesNav } from "@/components/examples-nav";
 import { CardsDemo } from "@/components/cards";
-import { HeroSection } from "@/components/ui/hero-section"; // ✅ Import Hero Section
-import { Button } from "@/components/ui/button";
+import { HeroSection } from "@/components/ui/hero-section";
+import { TrendingBox } from "@/components/ui/trending-box";
+import { EarlyAdopterBox } from "@/components/ui/early-adopter-box";
+import { MarketOverview } from "@/components/ui/market-overview-section";
 
 const title =
   "BaseBuzz | Trade crypto and NFT's safely on the top Base platform";
@@ -39,17 +39,22 @@ export const metadata: Metadata = {
 export default function IndexPage() {
   return (
     <>
-      {/* ✅ Hero Section Added */}
+      {/* ✅ Hero Section */}
       <HeroSection />
 
-      <div className="border-grid border-b">
-        <div className="container-wrapper">
-          <div className="container py-4">
+      {/* ✅ Market Overview Wrapper (Trending + Early Adopter) */}
+      <MarketOverview />
+
+      {/* ✅ Separate Section for Examples Navigation */}
+      <div className="container-wrapper">
+        <div className="container pt-6">
+          <div className="rounded-lg border bg-background p-4 shadow-md">
             <ExamplesNav className="[&>a:first-child]:text-primary" />
           </div>
         </div>
       </div>
 
+      {/* ✅ Rest of the Page */}
       <div className="container-wrapper">
         <div className="container py-6">
           <section className="overflow-hidden rounded-lg border bg-background shadow-md md:hidden md:shadow-xl">
