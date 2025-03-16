@@ -1,4 +1,4 @@
-import { SiteFooter } from "@/components/site-footer";
+import { SiteFooter } from "@/components/ui/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 interface AppLayoutProps {
