@@ -1,2 +1,48 @@
-.vscode
-.env
+# Ignore environment files
+.env.local
+.env.development
+.env.production
+
+# Node.js dependencies
+node_modules/
+.npm/
+.pnpm-store/
+
+# Next.js build outputs
+.next/
+out/
+dist/
+
+# TurboRepo cache
+turbo/
+
+# Contentlayer auto-generated files
+.contentlayer/
+
+# Logs and debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Registry (if auto-generated)
+registry/
+
+# Cache & lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Build artifacts
+coverage/
+*.log
