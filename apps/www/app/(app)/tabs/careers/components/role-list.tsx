@@ -7,6 +7,15 @@ export interface Role {
   title: string;
   description: string;
   fullDescription: string;
+  responsibilities: string[];
+  requirements: {
+    mustHave: string[];
+    niceToHave: string[];
+  };
+  compensation: {
+    salary: string;
+    benefits: string[];
+  };
 }
 
 export default function RoleList({
@@ -19,12 +28,11 @@ export default function RoleList({
   const [roles, setRoles] = useState<Role[]>([]);
   const [expanded, setExpanded] = useState<string | null>(null);
 
+  const API_URL =
+    // eslint-disable-next-line turbo/no-undeclared-env-vars
+    process.env.NEXT_PUBLIC_API_URL || "https://jobs-sepia.vercel.app/api";
+
   useEffect(() => {
-    const API_URL =
-      process.env.NEXT_PUBLIC_API_URL || "https://jobs-sepia.vercel.app/api";
-
-    console.log("🌍 Fetching jobs from:", API_URL);
-
     fetch(`${API_URL}/jobs`)
       .then((res) => {
         if (!res.ok) {
@@ -33,19 +41,19 @@ export default function RoleList({
         return res.json();
       })
       .then((data) => {
-        console.log("✅ Successfully fetched jobs:", data);
         if (Array.isArray(data)) {
           setRoles(data);
-        } else {
-          console.error("⚠️ Unexpected API response format:", data);
         }
       })
-      .catch((err) => console.error("❌ Error fetching jobs:", err));
+      .catch((err) => {
+        // Handle error
+      });
   }, []);
 
   return (
     <div className="rounded-lg border border-border bg-background p-6 shadow-md">
       <h2 className="text-xl font-semibold">Open Positions</h2>
+      <p className="text-xs text-muted-foreground">API Source: {API_URL}</p>
       <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
         {roles.length === 0 ? (
           <p className="text-muted-foreground">No job listings available.</p>
@@ -57,7 +65,6 @@ export default function RoleList({
                 onClick={() => {
                   setExpanded(expanded === role.id ? null : role.id);
                   setSelectedRole(role);
-                  console.log("📌 Selected Role:", role);
                 }}
               >
                 {role.title} <span>{expanded === role.id ? "▲" : "+"}</span>
@@ -65,7 +72,47 @@ export default function RoleList({
               {expanded === role.id && (
                 <div className="mt-2 rounded-lg border border-border bg-muted p-4">
                   <p className="text-xs text-muted-foreground">
-                    {role.fullDescription}
+                    <strong>Description:</strong> {role.fullDescription}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    <strong>Responsibilities:</strong>
+                    <ul className="list-inside list-disc">
+                      {role.responsibilities.map((item, index) => (
+                        <li key={index}>{item}</li>
+                      ))}
+                    </ul>
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    <strong>Requirements:</strong>
+                    <ul className="list-inside list-disc">
+                      <li>
+                        <strong>Must Have:</strong>
+                        <ul>
+                          {role.requirements.mustHave.map((item, index) => (
+                            <li key={index}>{item}</li>
+                          ))}
+                        </ul>
+                      </li>
+                      <li>
+                        <strong>Nice to Have:</strong>
+                        <ul>
+                          {role.requirements.niceToHave.map((item, index) => (
+                            <li key={index}>{item}</li>
+                          ))}
+                        </ul>
+                      </li>
+                    </ul>
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    <strong>Compensation:</strong> {role.compensation.salary}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    <strong>Benefits:</strong>
+                    <ul className="list-inside list-disc">
+                      {role.compensation.benefits.map((item, index) => (
+                        <li key={index}>{item}</li>
+                      ))}
+                    </ul>
                   </p>
                 </div>
               )}
