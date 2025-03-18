@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import { ExamplesNav } from "@/components/examples-nav";
+import { TabsNav } from "@/components/ui/tabs-nav";
 import { CardsDemo } from "@/components/cards";
 import { HeroSection } from "@/components/ui/hero-section";
 import { TrendingBox } from "@/components/ui/trending-box";
@@ -49,7 +49,7 @@ export default function IndexPage() {
       <div className="container-wrapper">
         <div className="container pt-6">
           <div className="rounded-lg border bg-background p-4 shadow-md">
-            <ExamplesNav className="[&>a:first-child]:text-primary" />
+            <TabsNav className="[&>a:first-child]:text-primary" />
           </div>
         </div>
       </div>
@@ -59,14 +59,14 @@ export default function IndexPage() {
         <div className="container py-6">
           <section className="overflow-hidden rounded-lg border bg-background shadow-md md:hidden md:shadow-xl">
             <Image
-              src="/examples/cards-light.png"
+              src="/tabs/cards-light.png"
               width={1280}
               height={1214}
               alt="Cards"
               className="block dark:hidden"
             />
             <Image
-              src="/examples/cards-dark.png"
+              src="/tabs/cards-dark.png"
               width={1280}
               height={1214}
               alt="Cards"

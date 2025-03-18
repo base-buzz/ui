@@ -23,16 +23,23 @@ export function HeroSection() {
               <Button
                 variant="default"
                 size="lg"
-                className="transition hover:scale-105"
+                className="w-full transition hover:scale-105 md:w-[200px]"
               >
-                Connect Wallet & Explore
+                Connect & Explore
               </Button>
+
               <Button
-                variant="secondary"
+                variant="outline"
                 size="lg"
-                className="transition hover:scale-105"
+                className="w-full transition hover:scale-105 md:w-[200px]"
+                onClick={() => {
+                  // Navigate to the Careers Tab
+                  document
+                    .getElementById("careers-tab")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
               >
-                See the Roadmap
+                Join Us 🚀
               </Button>
             </div>
           </div>

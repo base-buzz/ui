@@ -4,10 +4,10 @@ import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/registry/new-york/ui/button";
-import { UserAuthForm } from "@/app/(app)/examples/authentication/components/user-auth-form";
+import { UserAuthForm } from "@/app/(app)/examples/careers/components/user-auth-form";
 
 export const metadata: Metadata = {
-  title: "Authentication",
+  title: "Careers",
   description: "Authentication forms built using the components.",
 };
 
