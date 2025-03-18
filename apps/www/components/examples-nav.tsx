@@ -44,9 +44,9 @@ const examples = [
     hidden: false,
   },
   {
-    name: "Authentication",
-    href: "/examples/authentication",
-    code: "https://github.com/shadcn/ui/tree/main/apps/www/app/(app)/examples/authentication",
+    name: "Careers",
+    href: "/examples/careers",
+    code: "https://github.com/shadcn/ui/tree/main/apps/www/app/(app)/examples/careers",
     hidden: false,
   },
 ];

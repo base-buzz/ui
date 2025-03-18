@@ -62,9 +62,21 @@ export function MainNav() {
           {/* ✅ Social Links - Animated */}
           <div className="flex justify-center gap-4">
             {[
-              { href: siteConfig.links.twitter, icon: <Icons.twitter className="h-6 w-6" />, label: "Twitter" },
-              { href: siteConfig.links.github, icon: <Icons.gitHub className="h-6 w-6" />, label: "GitHub" },
-              { href: "https://discord.gg/basebuzz", icon: <Icons.discord className="h-6 w-6" />, label: "Discord" },
+              {
+                href: siteConfig.links.twitter,
+                icon: <Icons.twitter className="h-6 w-6" />,
+                label: "Twitter",
+              },
+              {
+                href: siteConfig.links.github,
+                icon: <Icons.gitHub className="h-6 w-6" />,
+                label: "GitHub",
+              },
+              {
+                href: "https://discord.gg/basebuzz",
+                icon: <Icons.discord className="h-6 w-6" />,
+                label: "Discord",
+              },
             ].map(({ href, icon, label }) => (
               <Link key={href} href={href} target="_blank" rel="noreferrer">
                 <Button
@@ -98,15 +110,25 @@ export function MainNav() {
                   isLegalOpen ? "rotate-180" : ""
                 }`}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </button>
             {isLegalOpen && (
               <div className="ml-4 space-y-2 text-sm text-muted-foreground">
-                <Link href="/terms" className="block transition hover:text-primary">
+                <Link
+                  href="/terms"
+                  className="block transition hover:text-primary"
+                >
                   Terms of Service
                 </Link>
-                <Link href="/privacy" className="block transition hover:text-primary">
+                <Link
+                  href="/privacy"
+                  className="block transition hover:text-primary"
+                >
                   Privacy Policy
                 </Link>
               </div>
@@ -122,20 +144,20 @@ export function MainNav() {
       >
         {/* Dark mode: White logo / Light mode: Blue logo */}
         <Image
-          src="/icons/Base_Wordmark_White.svg"
+          src="/icons/BaseBuzz_Network_Logo_White.svg"
           alt="BaseBuzz Logo"
-          width={45}
+          width={20}
           height={12}
-          className="hidden dark:block object-contain"
+          className="hidden object-contain dark:block"
         />
         <Image
           src="/icons/BaseBuzz_Network_Logo_Blue.svg"
           alt="BaseBuzz Logo"
           width={20}
           height={12}
-          className="block dark:hidden object-contain"
+          className="block object-contain dark:hidden"
         />
-        <span className="md:inline-block text-foreground/80 font-bold">
+        <span className="font-bold text-foreground/80 md:inline-block">
           {siteConfig.name}
         </span>
       </Link>
@@ -146,7 +168,7 @@ export function MainNav() {
           href="/mint"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname === "/mint" ? "text-foreground" : "text-foreground/80"
+            pathname === "/mint" ? "text-foreground" : "text-foreground/80",
           )}
         >
           Token
@@ -155,7 +177,9 @@ export function MainNav() {
           href="/governance"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname === "/governance" ? "text-foreground" : "text-foreground/80"
+            pathname === "/governance"
+              ? "text-foreground"
+              : "text-foreground/80",
           )}
         >
           Governance
@@ -164,32 +188,21 @@ export function MainNav() {
           href="/roadmap"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname === "/roadmap" ? "text-foreground" : "text-foreground/80"
+            pathname === "/roadmap" ? "text-foreground" : "text-foreground/80",
           )}
         >
           Roadmap
         </Link>
 
         {/* ✅ Base Apps Link */}
-        <Link href="/apps" className="flex items-center gap-1 transition-colors hover:text-foreground/80">
-          <Image
-            src="/icons/Base_Wordmark_White.svg"
-            alt="Base Apps"
-            width={45}
-            height={12}
-            className="hidden dark:block object-contain"
-          />
-          <Image
-            src="/icons/Base_Wordmark_Blue.svg"
-            alt="Base Apps"
-            width={45}
-            height={12}
-            className="block dark:hidden object-contain"
-          />
+        <Link
+          href="/apps"
+          className="flex items-center gap-1 transition-colors hover:text-foreground/80"
+        >
           <span
             className={cn(
               "transition-colors hover:text-foreground/80",
-              pathname === "/apps" ? "text-foreground" : "text-foreground/80"
+              pathname === "/apps" ? "text-foreground" : "text-foreground/80",
             )}
           >
             Apps
