@@ -1,0 +1,17 @@
+[
+  {
+    "title": "AI Engineer",
+    "description": "Develop AI-driven DeFi tools, trading models, and automated governance mechanisms. Collaborate with blockchain engineers and data scientists to build cutting-edge solutions.",
+    "fullDescription": "As an AI Engineer at BaseBuzz, you will be responsible for developing and optimizing AI-driven DeFi strategies, predictive analytics, and automated trading models. The role involves integrating AI models with smart contracts, ensuring scalability, security, and efficiency."
+  },
+  {
+    "title": "Blockchain Developer (EVM)",
+    "description": "Build and optimize smart contracts on Base and other EVM-compatible chains. Enhance protocol security and efficiency.",
+    "fullDescription": "As an EVM Blockchain Developer, you will design, deploy, and optimize smart contracts for DeFi applications. Your role will include gas optimization, smart contract security, and seamless integration with frontend applications."
+  },
+  {
+    "title": "Blockchain Developer (Solana)",
+    "description": "Develop high-performance Solana programs for DeFi, tokenized assets, and governance.",
+    "fullDescription": "This role involves writing and optimizing Solana programs in Rust, ensuring security and high performance. You will collaborate with front-end teams to integrate Solana smart contracts into dApps and contribute to the broader Solana ecosystem."
+  }
+]

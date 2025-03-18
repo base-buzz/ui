@@ -8,10 +8,11 @@ const nextConfig = {
     },
   },
   reactStrictMode: true,
+  env: {
+    // eslint-disable-next-line turbo/no-undeclared-env-vars
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  },
   swcMinify: true,
-  
-
-
 
   images: {
     remotePatterns: [
@@ -88,8 +89,5 @@ const nextConfig = {
 const withContentlayer = createContentlayerPlugin({
   // Additional Contentlayer config options
 });
-
-
-
 
 export default withContentlayer(nextConfig);
