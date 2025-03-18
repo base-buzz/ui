@@ -146,15 +146,15 @@ export function MainNav() {
         <Image
           src="/icons/BaseBuzz_Network_Logo_White.svg"
           alt="BaseBuzz Logo"
-          width={20}
-          height={12}
+          width={16}
+          height={10}
           className="hidden object-contain dark:block"
         />
         <Image
           src="/icons/BaseBuzz_Network_Logo_Blue.svg"
           alt="BaseBuzz Logo"
-          width={20}
-          height={12}
+          width={16}
+          height={10}
           className="block object-contain dark:hidden"
         />
         <span className="font-bold text-foreground/80 md:inline-block">
