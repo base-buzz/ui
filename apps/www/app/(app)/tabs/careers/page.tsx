@@ -1,14 +1,57 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { CareersForm } from "../careers/components/careers-form";
-import RoleList, { roles } from "../careers/components/role-list";
+
+interface Role {
+  title: string;
+  location?: string;
+  description: string;
+  fullDescription?: string;
+  responsibilities: string[];
+  requirements: {
+    mustHave: string[];
+    niceToHave?: string[];
+  };
+  compensation: {
+    remote: string;
+    tokenRewards: string;
+    benefits?: string[];
+  };
+  applyLink: string;
+}
 
 export default function CareersPage() {
-  const [selectedRole, setSelectedRole] = useState<(typeof roles)[0] | null>(
-    roles?.length ? roles[0] : null,
-  );
+  const [selectedRole, setSelectedRole] = useState<Role | null>(null);
+  const [roles, setRoles] = useState<Role[]>([]);
+  const [expandedRoles, setExpandedRoles] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    // eslint-disable-next-line turbo/no-undeclared-env-vars
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/jobs`)
+      .then((res) => res.json())
+      .then((data: Role[]) => {
+        console.log("✅ Fetched Roles:", data);
+        setRoles(data);
+      })
+      .catch((err) => console.error("❌ Error fetching jobs:", err));
+  }, []);
+
+  const handleRoleClick = (role: Role) => {
+    setExpandedRoles((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(role.title)) {
+        newSet.delete(role.title);
+      } else {
+        newSet.add(role.title);
+      }
+      return newSet;
+    });
+
+    setSelectedRole(role);
+  };
+
   return (
     <div className="container relative py-12">
       <h1 className="text-center text-3xl font-bold tracking-tight sm:text-4xl">
@@ -34,12 +77,21 @@ export default function CareersPage() {
           </div>
 
           {/* Role List */}
-          <RoleList
-            selectedRole={selectedRole} // Ensure proper typing
-            setSelectedRole={(role: (typeof roles)[0]) => {
-              setSelectedRole(role);
-            }}
-          />
+          <div className="space-y-2">
+            {roles.map((role) => (
+              <button
+                key={role.title}
+                onClick={() => handleRoleClick(role)}
+                className={`w-full rounded-lg border p-4 text-left ${
+                  expandedRoles.has(role.title)
+                    ? "bg-blue-500 text-white"
+                    : "bg-background text-muted-foreground"
+                }`}
+              >
+                {role.title}
+              </button>
+            ))}
+          </div>
 
           <div className="rounded-lg border border-border bg-background p-6 shadow-md">
             <h2 className="text-xl font-semibold">Benefits</h2>
@@ -67,19 +119,46 @@ export default function CareersPage() {
         <div className="rounded-lg border border-border bg-background p-6 shadow-md">
           {selectedRole ? (
             <>
-              <h2 className="text-xl font-semibold">
-                {selectedRole?.title || "Select a Role"}
-              </h2>
+              <h2 className="text-xl font-semibold">{selectedRole.title}</h2>
               <p className="mb-6 mt-2 text-sm text-muted-foreground">
-                {selectedRole?.description ||
-                  "Choose a role from the list to view details."}
+                {selectedRole.description}
               </p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {selectedRole?.fullDescription ||
-                  "Choose a role from the list to view details."}
+              <h3 className="font-semibold">Responsibilities</h3>
+              <ul className="mb-4 list-inside list-disc text-sm text-muted-foreground">
+                {selectedRole?.responsibilities?.map((resp, index) => (
+                  <li key={index}>{resp}</li>
+                ))}
+              </ul>
+              <h3 className="font-semibold">Requirements</h3>
+              <h4 className="font-semibold">Must Have:</h4>
+              <ul className="mb-4 list-inside list-disc text-sm text-muted-foreground">
+                {selectedRole?.requirements?.mustHave?.map((req, index) => (
+                  <li key={index}>{req}</li>
+                ))}
+              </ul>
+              <h4 className="font-semibold">Nice to Have:</h4>
+              <ul className="mb-4 list-inside list-disc text-sm text-muted-foreground">
+                {selectedRole?.requirements?.niceToHave?.map((req, index) => (
+                  <li key={index}>{req}</li>
+                ))}
+              </ul>
+              <h3 className="font-semibold">Compensation and Benefits</h3>
+              <p className="text-sm text-muted-foreground">
+                Remote: {selectedRole?.compensation?.remote} <br />
+                Token Rewards: {selectedRole?.compensation?.tokenRewards} <br />
               </p>
-              {/* Careers Form with Pre-filled Role */}
-              <CareersForm prefillRole={selectedRole?.title || ""} />
+              <ul className="mb-4 list-inside list-disc text-sm text-muted-foreground">
+                {selectedRole?.compensation?.benefits?.map((benefit, index) => (
+                  <li key={index}>{benefit}</li>
+                ))}
+              </ul>
+              <Link
+                href={selectedRole.applyLink}
+                className="mt-4 inline-block text-primary underline"
+              >
+                Apply Now
+              </Link>
+              <CareersForm prefillRole={selectedRole.title} />
             </>
           ) : (
             <p className="text-center text-sm text-muted-foreground">
