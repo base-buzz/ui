@@ -67,14 +67,17 @@ export default function CareersPage() {
         <div className="rounded-lg border border-border bg-background p-6 shadow-md">
           {selectedRole ? (
             <>
-              <h2 className="text-center text-xl font-semibold">
+              <h2 className="text-xl font-semibold">
                 {selectedRole?.title || "Select a Role"}
               </h2>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <p className="mb-6 mt-2 text-sm text-muted-foreground">
                 {selectedRole?.description ||
                   "Choose a role from the list to view details."}
               </p>
-
+              <p className="mt-2 text-sm text-muted-foreground">
+                {selectedRole?.fullDescription ||
+                  "Choose a role from the list to view details."}
+              </p>
               {/* Careers Form with Pre-filled Role */}
               <CareersForm prefillRole={selectedRole?.title || ""} />
             </>
