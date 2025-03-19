@@ -2,24 +2,51 @@
 
 import { Button } from "@/components/ui/button";
 import { UniswapSwapWidget } from "@/components/ui/uniswap-swap-widget";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 
 export function HeroSection() {
+  const { theme } = useTheme();
+  const baseLogo =
+    theme === "dark"
+      ? "/icons/Base_Wordmark_White.svg"
+      : "/icons/Base_Wordmark_Blue.svg";
+
   return (
     <section className="border-b border-border">
       <div className="container-wrapper">
-        <div className="container grid grid-cols-1 items-center gap-8 py-8 text-center md:grid-cols-2 md:pt-24 md:text-left">
+        <div className="container grid grid-cols-1 items-center gap-6 py-6 text-center md:grid-cols-2 md:pt-20 md:text-left">
           {/* ✅ Left Column: Main Hero Messaging */}
-          <div className="flex flex-col items-center space-y-6 md:items-start">
+          <div className="flex flex-col items-center space-y-4 md:items-start">
             <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
-              🚀 The AI-Powered DeFi Ecosystem on Base
+              🚀 The AI-Powered DeFi Ecosystem
+              <span className="ml-2 inline-flex items-baseline gap-1">
+                on
+                <Image
+                  src={baseLogo}
+                  alt="Base Logo"
+                  width={140}
+                  height={22}
+                  className="relative top-[2px] ml-2"
+                />
+              </span>
             </h1>
             <p className="max-w-xl text-lg text-muted-foreground">
               $BASEBUZZ fuels the future of on-chain speculation, governance,
               and real-world finance.
             </p>
+            <p className="mt-2 font-semibold text-primary">
+              Stake $BASEBUZZ now to unlock Early Staker Incentive Payouts, LP
+              Gas Rebates, Trading Perks, Reputation, Influence, Governance
+              Boost & Voting Power
+            </p>
+            <p className="mt-2 font-semibold text-primary">
+              Next Reward Drop In:{" "}
+              <span className="countdown-timer">5 Days 23 Hrs 50 Min</span>
+            </p>
 
             {/* ✅ Call to Action Buttons */}
-            <div className="flex flex-wrap justify-center gap-4 md:justify-start">
+            <div className="flex flex-wrap justify-center gap-2 md:justify-start">
               <Button
                 variant="default"
                 size="lg"

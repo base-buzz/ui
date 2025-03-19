@@ -1,8 +1,8 @@
 import * as React from "react";
-import Image from "next/image";
 import { Wallet } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Image from "next/image";
 import {
   Sheet,
   SheetContent,
@@ -32,25 +32,8 @@ const WalletConnectSheet = () => {
         </SheetHeader>
 
         {/* Wallet Buttons */}
-        <div className="space-y-3">
-          <Button className="flex w-full items-center justify-start gap-3 rounded-t-lg bg-gray-900 px-4 py-3 text-white">
-            <Image
-              src="/icons/metamask.svg"
-              alt="MetaMask"
-              width={24}
-              height={24}
-            />
-            MetaMask
-          </Button>
-          <Button className="flex w-full items-center justify-start gap-3 rounded-b-lg bg-gray-900 px-4 py-3 text-white">
-            <Image
-              src="/icons/walletconnect.svg"
-              alt="WalletConnect"
-              width={24}
-              height={24}
-            />
-            WalletConnect
-          </Button>
+        <div className="flex justify-center">
+          <ConnectButton />
         </div>
 
         {/* Separator */}
@@ -63,11 +46,21 @@ const WalletConnectSheet = () => {
         {/* Other Wallets */}
         <div className="space-y-3">
           <Button className="flex w-full items-center justify-start gap-3 bg-gray-900 px-4 py-3 text-white">
-            <Image src="/icons/phantom.png" alt="Phantom" width={24} height={24} />
+            <Image
+              src="/icons/phantom.png"
+              alt="Phantom"
+              width={24}
+              height={24}
+            />
             Phantom
           </Button>
           <Button className="flex w-full items-center justify-start gap-3 rounded-b-lg bg-gray-900 px-4 py-3 text-white">
-            <Image src="/icons/coinbase.svg" alt="Coinbase" width={24} height={24} />
+            <Image
+              src="/icons/coinbase.svg"
+              alt="Coinbase"
+              width={24}
+              height={24}
+            />
             Coinbase Wallet
           </Button>
         </div>

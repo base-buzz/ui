@@ -5,6 +5,10 @@ import { META_THEME_COLORS, siteConfig } from "@/config/site";
 import { fontMono, fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@/components/analytics";
+import { Providers } from "@/lib/wagmi"; // our custom wrapper
+import { WagmiProvider } from "wagmi";
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { config } from "@/lib/wagmi";
 import { ThemeProvider } from "@/components/providers";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeSwitcher } from "@/components/theme-switcher";
@@ -96,25 +100,27 @@ export default function RootLayout({ children }: RootLayoutProps) {
             fontMono.variable,
           )}
         >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-            enableColorScheme
-          >
-            <div vaul-drawer-wrapper="">
-              <div className="relative flex min-h-svh flex-col bg-background">
-                {children}
+          <Providers>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+              enableColorScheme
+            >
+              <div vaul-drawer-wrapper="">
+                <div className="relative flex min-h-svh flex-col bg-background">
+                  {children}
+                </div>
               </div>
-            </div>
-            <TailwindIndicator />
-            <ThemeSwitcher />
-            <Analytics />
-            <NewYorkToaster />
-            <DefaultToaster />
-            <NewYorkSonner />
-          </ThemeProvider>
+              <TailwindIndicator />
+              <ThemeSwitcher />
+              <Analytics />
+              <NewYorkToaster />
+              <DefaultToaster />
+              <NewYorkSonner />
+            </ThemeProvider>
+          </Providers>
         </body>
       </html>
     </>

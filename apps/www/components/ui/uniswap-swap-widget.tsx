@@ -22,18 +22,18 @@ export function UniswapSwapWidget() {
           <Image
             src="/icons/Base_Wordmark_Blue.png"
             alt="Base"
-            width={50}
-            height={10}
-            className="block dark:hidden"
+            width={60} // Adjusted width
+            height={16} // Adjusted height to match text
+            className="block dark:hidden align-bottom" // Ensures alignment
           />
 
           {/* Dark Mode Version */}
           <Image
             src="/icons/Base_Wordmark_White.png"
             alt="Base"
-            width={50}
-            height={10}
-            className="hidden dark:block"
+            width={60} // Adjusted width
+            height={16} // Adjusted height to match text
+            className="hidden dark:block align-bottom" // Ensures alignment
           />
         </div>
 
