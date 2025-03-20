@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable turbo/no-undeclared-env-vars */
 
 import React from "react";
 import "@rainbow-me/rainbowkit/styles.css";
@@ -11,28 +12,35 @@ import {
   optimism,
   arbitrum,
   base,
-  sepolia,
+  baseGoerli,
 } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
 // Create a QueryClient instance (if using React Query).
 const queryClient = new QueryClient();
 
+// Determine which projectId to use
+const projectId =
+  process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
+    ? process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID_TESTNET
+    : process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID_MAINNET;
+
+// Ensure projectId is set, or throw a clear error
+if (!projectId) {
+  throw new Error(
+    "Missing WalletConnect Project ID. Please set it in .env.local.",
+  );
+}
+
 // Explicitly type the Wagmi config so TS doesn’t try to reference internal library types.
 type MyConfig = ReturnType<typeof getDefaultConfig>;
 
 export const config: MyConfig = getDefaultConfig({
-  appName: "RainbowKit App",
-  projectId: "YOUR_PROJECT_ID", // Must be obtained from WalletConnect Cloud
+  appName: "BaseBuzz",
+  projectId,
   chains: [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    // process.env for testnets, if you want:
-    // eslint-disable-next-line turbo/no-undeclared-env-vars
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [sepolia] : []),
+    base, // Base Mainnet ✅
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [baseGoerli] : []), // Base Goerli ✅
   ],
   ssr: true, // If your Next.js app uses SSR
 });

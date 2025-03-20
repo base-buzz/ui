@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
-import WalletConnectDialog from "@/components/ui/wallet-connect-sheet";
+import WalletConnectDialog from "@/components/ui/wallet-connect";
 import { CommandMenu } from "@/components/command-menu";
 import { Icons } from "@/components/icons";
 import { MainNav } from "@/components/main-nav";
