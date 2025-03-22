@@ -46,7 +46,7 @@ export function WalletConnect({
               </Button>
             </SheetTrigger>
             <SheetContent>
-              <WalletSheet open={open} onClose={() => onOpenChange(false)} />
+              <WalletSheet open={open} onOpenChange={onOpenChange} />
             </SheetContent>
           </Sheet>
         ) : null // Remove duplicate button - handled by WalletButton
