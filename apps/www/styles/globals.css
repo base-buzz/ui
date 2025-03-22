@@ -197,24 +197,3 @@
     shake 0.5s ease-in-out,
     flash 0.5s ease-in-out;
 }
-
-.rainbowkit-modal {
-  position: relative;
-  padding-bottom: 40px; /* ✅ Adds space for footer */
-}
-
-.rainbowkit-modal::after {
-  content: "By connecting, you agree to our Terms of Service and Privacy Policy.";
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 12px;
-  color: #666;
-}
-
-.rainbowkit-modal::after a {
-  color: #007bff;
-  text-decoration: underline;
-}

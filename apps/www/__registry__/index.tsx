@@ -1173,7 +1173,7 @@ export const Index: Record<string, any> = {
         type: "registry:component",
         target: ""
       },{
-        path: "registry/new-york/blocks/sidebar-16/components/site-header.tsx",
+        path: "registry/new-york/blocks/sidebar-16/components/ui/site-header.tsx",
         type: "registry:component",
         target: ""
       }],
@@ -6471,7 +6471,7 @@ export const Index: Record<string, any> = {
         type: "registry:component",
         target: ""
       },{
-        path: "registry/default/blocks/sidebar-16/components/site-header.tsx",
+        path: "registry/default/blocks/sidebar-16/components/ui/site-header.tsx",
         type: "registry:component",
         target: ""
       }],

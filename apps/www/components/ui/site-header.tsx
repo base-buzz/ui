@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
-import WalletConnectDialog from "@/components/ui/wallet-connect";
 import { CommandMenu } from "@/components/command-menu";
 import { Icons } from "@/components/icons";
 import { MainNav } from "@/components/main-nav";
 import { ModeSwitcher } from "@/components/mode-switcher";
 import { Button } from "@/registry/new-york/ui/button";
+import { WalletButton } from "@/components/ui/wallet/wallet-button";
 
 export function SiteHeader() {
   return (
@@ -41,7 +41,7 @@ export function SiteHeader() {
             </nav>
 
             {/* ✅ Wallet Connect remains visible on all screens */}
-            <WalletConnectDialog />
+            <WalletButton />
           </div>
         </div>
       </div>
