@@ -1,26 +1,68 @@
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount, useDisconnect, useBalance } from "wagmi";
 import { Sheet, SheetContent, SheetClose } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Copy, X } from "lucide-react";
 import { useClipboard } from "@/hooks/use-clipboard";
 import Link from "next/link";
+import { formatEther } from "viem";
+import { useEffect, useState } from "react";
 
 interface WalletSheetProps {
   open: boolean;
   onOpenChange?: (state: boolean) => void;
 }
+const BASE_ETH_ADDRESS = "0x4200000000000000000000000000000000000006";
+// eslint-disable-next-line turbo/no-undeclared-env-vars
+const BUZZ_ADDRESS = process.env.NEXT_PUBLIC_BUZZ_TOKEN_ADDRESS;
+const isBuzzTokenValid =
+  BUZZ_ADDRESS?.startsWith("0x") && BUZZ_ADDRESS.length === 42;
 
 export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
   console.log("WalletSheet: rendering... open=", open);
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const { copy } = useClipboard();
+  const { data: ethBalance } = useBalance({ address });
+  const buzzBalanceResult = useBalance({
+    address,
+    token:
+      BUZZ_ADDRESS?.startsWith("0x") && BUZZ_ADDRESS.length === 42
+        ? (BUZZ_ADDRESS as `0x${string}`)
+        : undefined,
+  });
+  const buzzBalance = buzzBalanceResult.data;
+  const [ethPrice, setEthPrice] = useState<number | null>(null);
+
+  const getTokenPrice = async (tokenAddress: string) => {
+    try {
+      // eslint-disable-next-line turbo/no-undeclared-env-vars
+      const url = `${process.env.NEXT_PUBLIC_COINGECKO_BASE_TOKEN_API}?contract_addresses=${tokenAddress}&vs_currencies=usd`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      console.log("Fetched token price data from Coingecko:", data);
+      return data[tokenAddress.toLowerCase()]?.usd ?? null;
+    } catch (error) {
+      console.error("Failed to fetch token price", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    getTokenPrice(BASE_ETH_ADDRESS.toLowerCase()).then(setEthPrice);
+  }, []);
 
   if (!isConnected) return null;
 
   const handleOpenChange = (val: boolean) => {
     console.log("WalletSheet: onOpenChange called with val=", val);
     onOpenChange?.(val);
+  };
+
+  const fetchEthPrice = async () => {
+    // eslint-disable-next-line turbo/no-undeclared-env-vars
+    const res = await fetch(process.env.NEXT_PUBLIC_ETH_PRICE_API as string);
+    // handle response...
   };
 
   return (
@@ -54,26 +96,20 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
               <Copy size={16} />
             </Button>
           </div>
-          <Link
-            href="/debug"
-            className="block w-full text-center text-sm text-blue-500 hover:underline"
-            onClick={() => {
-              console.log("WalletSheet: Debug link clicked");
-              if (onOpenChange) {
-                // Add this null check
-                onOpenChange(false);
-              }
-            }}
-          >
-            Debug Info
-          </Link>
         </div>
         <div className="mt-6 space-y-3">
           <h3 className="font-semibold">On-Chain Data</h3>
           <div className="space-y-2 text-sm">
             <div className="flex items-center justify-between">
               <span className="text-gray-500 dark:text-gray-400">Base ETH</span>
-              <span className="font-medium">--</span>
+              <span className="font-medium">
+                {ethBalance
+                  ? `${parseFloat(formatEther(ethBalance.value)).toFixed(4)} ETH` +
+                    (ethPrice
+                      ? ` ($${(parseFloat(formatEther(ethBalance.value)) * ethPrice).toFixed(2)})`
+                      : "")
+                  : "--"}
+              </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-gray-500 dark:text-gray-400">Badges</span>
@@ -99,7 +135,21 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
               <span className="text-gray-500 dark:text-gray-400">
                 BUZZ Holdings
               </span>
-              <span className="font-medium">--</span>
+              <span className="font-medium">
+                {!buzzBalance?.value || buzzBalance.value === 0n ? (
+                  <Link
+                    // eslint-disable-next-line turbo/no-undeclared-env-vars
+                    href={process.env.NEXT_PUBLIC_UNISWAP_BUZZ_URL as string}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                  >
+                    Buy BASEBUZZ
+                  </Link>
+                ) : (
+                  parseFloat(formatEther(buzzBalance.value)).toFixed(2)
+                )}
+              </span>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-gray-500 dark:text-gray-400">
@@ -107,6 +157,20 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
               </span>
               <span className="font-medium">--</span>
             </div>
+
+            <Link
+              href="/debug"
+              className="block w-full text-center text-sm text-blue-500 hover:underline"
+              onClick={() => {
+                console.log("WalletSheet: Debug link clicked");
+                if (onOpenChange) {
+                  // Add this null check
+                  onOpenChange(false);
+                }
+              }}
+            >
+              Debug Info
+            </Link>
           </div>
         </div>
       </SheetContent>
