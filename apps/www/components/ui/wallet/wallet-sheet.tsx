@@ -17,21 +17,24 @@ const BUZZ_ADDRESS = process.env.NEXT_PUBLIC_BUZZ_TOKEN_ADDRESS;
 const isBuzzTokenValid =
   BUZZ_ADDRESS?.startsWith("0x") && BUZZ_ADDRESS.length === 42;
 
-export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
-  console.log("WalletSheet: rendering... open=", open);
-  const { address, isConnected } = useAccount();
-  const { disconnect } = useDisconnect();
-  const { copy } = useClipboard();
-  const { data: ethBalance } = useBalance({ address });
-  const buzzBalanceResult = useBalance({
-    address,
-    token:
-      BUZZ_ADDRESS?.startsWith("0x") && BUZZ_ADDRESS.length === 42
-        ? (BUZZ_ADDRESS as `0x${string}`)
-        : undefined,
-  });
-  const buzzBalance = buzzBalanceResult.data;
-  const [ethPrice, setEthPrice] = useState<number | null>(null);
+  export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
+    console.log("WalletSheet: rendering... open=", open);
+    const { address, isConnected } = useAccount();
+    const { disconnect } = useDisconnect();
+    const { copy } = useClipboard();
+    const { data: ethBalance } = useBalance({ address });
+  
+    const buzzBalanceResult = useBalance({
+      address,
+      token: isBuzzTokenValid ? (BUZZ_ADDRESS as `0x${string}`) : undefined,
+    });
+    const buzzBalance = buzzBalanceResult.data;
+    const [ethPrice, setEthPrice] = useState<number | null>(null);
+  
+    useEffect(() => {
+      console.log("WalletSheet: buzzBalanceResult", buzzBalanceResult);
+      console.log("WalletSheet: buzzBalance", buzzBalance);
+    }, [buzzBalanceResult, buzzBalance]);
 
   const getTokenPrice = async (tokenAddress: string) => {
     try {
@@ -131,26 +134,30 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
               <span className="text-gray-500 dark:text-gray-400">LDR</span>
               <span className="font-medium">--</span>
             </div>
+            
+
             <div className="flex items-center justify-between">
-              <span className="text-gray-500 dark:text-gray-400">
-                BUZZ Holdings
-              </span>
-              <span className="font-medium">
-                {!buzzBalance?.value || buzzBalance.value === 0n ? (
-                  <Link
-                    // eslint-disable-next-line turbo/no-undeclared-env-vars
-                    href={process.env.NEXT_PUBLIC_UNISWAP_BUZZ_URL as string}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline"
-                  >
-                    Buy BASEBUZZ
-                  </Link>
-                ) : (
-                  parseFloat(formatEther(buzzBalance.value)).toFixed(2)
-                )}
-              </span>
-            </div>
+          <span className="text-gray-500 dark:text-gray-400">
+            BUZZ Holdings
+          </span>
+          <span className="font-medium">
+            {!isBuzzTokenValid || buzzBalance?.value === undefined || buzzBalance.value === BigInt(0) ? (
+              <Link
+                // eslint-disable-next-line turbo/no-undeclared-env-vars
+                href={process.env.NEXT_PUBLIC_UNISWAP_BUZZ_URL as string}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline"
+              >
+                Buy BASEBUZZ
+              </Link>
+            ) : (
+              parseFloat(formatEther(buzzBalance.value)).toFixed(2)
+            )}
+          </span>
+        </div>
+
+
             <div className="flex items-center justify-between">
               <span className="text-gray-500 dark:text-gray-400">
                 Eligibility
