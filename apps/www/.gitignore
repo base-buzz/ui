@@ -38,9 +38,9 @@ Thumbs.db
 
 # Project specific
 registry/
-docs/
+
 **/*.draft.md
-.cursorrc
+
 
 # Testing
 coverage/
