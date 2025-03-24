@@ -1,5 +1,6 @@
 /**
- * WalletSheet Component
+ * @file components/ui/wallet/wallet-sheet.tsx
+ * @description Wallet sheet component for displaying wallet connection and network information
  *
  * A detailed wallet information sheet that displays:
  * - Wallet address with copy functionality
@@ -10,7 +11,8 @@
  * - Debug information and wallet disconnection
  */
 
-import { useAccount, useDisconnect, useBalance } from "wagmi";
+import { useAccount, useDisconnect, useBalance, useConfig } from "wagmi";
+import { switchNetwork } from "wagmi/actions";
 import { Sheet, SheetContent, SheetClose } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Copy, X } from "lucide-react";
@@ -19,6 +21,8 @@ import Link from "next/link";
 import { formatEther } from "viem";
 import { useEffect, useState } from "react";
 import { useEnsName } from "wagmi";
+import { base, baseGoerli } from "wagmi/chains";
+import { Icons } from "@/components/icons";
 
 interface WalletSheetProps {
   /** Controls the open state of the sheet */
@@ -41,6 +45,7 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
   const { copy } = useClipboard();
   const { data: ethBalance } = useBalance({ address });
   const { data: ensName } = useEnsName({ address });
+  const config = useConfig();
 
   // Fetch BUZZ token balance
   const buzzBalanceResult = useBalance({
@@ -220,11 +225,89 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
             {/* Network and ENS information */}
             <div className="flex items-center justify-between">
               <span className="text-gray-500 dark:text-gray-400">Network</span>
-              <span className="font-medium">{chain?.name || "Unknown"}</span>
+              <div className="flex items-center gap-2">
+                <span className="font-medium">{chain?.name || "Unknown"}</span>
+                {process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={async () => {
+                      const targetChainId =
+                        chain?.id === base.id ? baseGoerli.id : base.id;
+                      try {
+                        await switchNetwork(config, { chainId: targetChainId });
+                      } catch (error) {
+                        console.error("Failed to switch network:", error);
+                      }
+                    }}
+                  >
+                    Switch to {chain?.id === base.id ? "Goerli" : "Mainnet"}
+                  </Button>
+                )}
+              </div>
             </div>
             <div className="flex items-center justify-between">
               <span className="text-gray-500 dark:text-gray-400">ENS Name</span>
               <span className="font-medium">{ensName || "N/A"}</span>
+            </div>
+
+            {/* Base Buzz Features */}
+            <div className="mt-6 space-y-3">
+              <h3 className="font-semibold">Base Buzz Features</h3>
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  href="/badges"
+                  className="flex flex-col gap-1 rounded-lg border p-3 transition hover:bg-accent"
+                  onClick={() => handleOpenChange(false)}
+                >
+                  <div className="flex items-center gap-2">
+                    <Icons.badge className="h-5 w-5" />
+                    <span className="font-medium">Badges</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    View your achievements
+                  </span>
+                </Link>
+                <Link
+                  href="/benefits"
+                  className="flex flex-col gap-1 rounded-lg border p-3 transition hover:bg-accent"
+                  onClick={() => handleOpenChange(false)}
+                >
+                  <div className="flex items-center gap-2">
+                    <Icons.gift className="h-5 w-5" />
+                    <span className="font-medium">Benefits</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    Member perks
+                  </span>
+                </Link>
+                <Link
+                  href="/apps"
+                  className="flex flex-col gap-1 rounded-lg border p-3 transition hover:bg-accent"
+                  onClick={() => handleOpenChange(false)}
+                >
+                  <div className="flex items-center gap-2">
+                    <Icons.apps className="h-5 w-5" />
+                    <span className="font-medium">Apps</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    Explore Base Buzz apps
+                  </span>
+                </Link>
+                <Link
+                  href="/leaderboard"
+                  className="flex flex-col gap-1 rounded-lg border p-3 transition hover:bg-accent"
+                  onClick={() => handleOpenChange(false)}
+                >
+                  <div className="flex items-center gap-2">
+                    <Icons.trophy className="h-5 w-5" />
+                    <span className="font-medium">Leaderboard</span>
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    Top contributors
+                  </span>
+                </Link>
+              </div>
             </div>
 
             {/* Debug and disconnect buttons */}

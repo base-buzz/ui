@@ -1,3 +1,8 @@
+/**
+ * @file components/cards/payment-method.tsx
+ * @description Payment method card component for handling payment method selection and input
+ */
+
 "use client";
 
 import { Icons } from "@/components/icons";

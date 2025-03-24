@@ -2,7 +2,7 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { CommandMenu } from "@/components/command-menu";
 import { Icons } from "@/components/icons";
-import { MainNav } from "@/components/main-nav";
+import { MainNav } from "@/components/ui/main-nav";
 import { ModeSwitcher } from "@/components/mode-switcher";
 import { Button } from "@/registry/new-york/ui/button";
 import { WalletButton } from "@/components/ui/wallet/wallet-button";

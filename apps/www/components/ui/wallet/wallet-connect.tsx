@@ -1,4 +1,7 @@
 /**
+ * @file components/ui/wallet/wallet-connect.tsx
+ * @description Main wallet connection component
+ *
  * WalletConnect Component
  *
  * A client-side component that handles wallet connection and display.

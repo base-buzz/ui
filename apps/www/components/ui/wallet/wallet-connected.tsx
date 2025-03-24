@@ -1,4 +1,7 @@
 /**
+ * @file components/ui/wallet/wallet-connected.tsx
+ * @description Component for displaying connected wallet information and actions
+ *
  * WalletConnected Component
  *
  * A client-side component that displays detailed wallet information in a slide-out sheet.

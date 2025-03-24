@@ -1,4 +1,7 @@
 /**
+ * @file components/ui/wallet/wallet-button.tsx
+ * @description Button component for wallet connection actions
+ *
  * WalletButton Component
  *
  * A client-side component that provides the main wallet connection interface.
