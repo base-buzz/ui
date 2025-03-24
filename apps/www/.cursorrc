@@ -1,0 +1,20 @@
+{
+"context": [
+"docs/project-context.md",
+"docs/components-guide.md",
+"docs/tech-implementation.md",
+"docs/project-structure.md",
+"docs/regulatory-guide.md",
+"docs/basebuzz-protocol-guide.md",
+"docs/wagmi-docs.md",
+"docs/documentation.md"
+],
+"prioritize": [
+"docs/project-context.md",
+"docs/tech-implementation.md",
+"docs/project-structure.md"
+],
+"meta": {
+"notes": "Cursor AI should always include inline comments and docstrings when generating code. All logic must be clearly explained with contextual comments, and when applicable, reference related markdown files using `// See docs/<filename>.md`. Use functional React components with TypeScript and arrow functions by default. ShadCN UI components must be used for all UI unless explicitly unavailable. Prefer `const` for variable declarations. Tailwind utility class order must follow standard logical grouping. Component and file structure must follow conventions defined in docs/project-structure.md. All user input must be validated with zod. Code should be clean, modular, readable, and performance-aware. Avoid unnecessary dependencies or complex abstractions. All server logic should be wrapped in async functions with proper try/catch error handling. Use only pre-approved libraries like lucide-react, wagmi, and zod unless instructed otherwise."
+}
+}
