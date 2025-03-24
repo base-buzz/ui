@@ -1,0 +1,3 @@
+[submodule "apps/www/docs"]
+	path = apps/www/docs
+	url = https://github.com/base-buzz/ui-private.git
