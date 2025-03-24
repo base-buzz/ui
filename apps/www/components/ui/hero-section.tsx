@@ -25,7 +25,7 @@ export function HeroSection() {
                 <Image
                   src={baseLogo}
                   alt="Base Logo"
-                  width={140}
+                  width={110}
                   height={22}
                   className="relative top-[2px] ml-2"
                 />

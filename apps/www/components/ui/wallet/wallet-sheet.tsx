@@ -6,6 +6,7 @@ import { useClipboard } from "@/hooks/use-clipboard";
 import Link from "next/link";
 import { formatEther } from "viem";
 import { useEffect, useState } from "react";
+import { useEnsName } from "wagmi";
 
 interface WalletSheetProps {
   open: boolean;
@@ -17,24 +18,30 @@ const BUZZ_ADDRESS = process.env.NEXT_PUBLIC_BUZZ_TOKEN_ADDRESS;
 const isBuzzTokenValid =
   BUZZ_ADDRESS?.startsWith("0x") && BUZZ_ADDRESS.length === 42;
 
-  export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
-    console.log("WalletSheet: rendering... open=", open);
-    const { address, isConnected } = useAccount();
-    const { disconnect } = useDisconnect();
-    const { copy } = useClipboard();
-    const { data: ethBalance } = useBalance({ address });
-  
-    const buzzBalanceResult = useBalance({
-      address,
-      token: isBuzzTokenValid ? (BUZZ_ADDRESS as `0x${string}`) : undefined,
-    });
-    const buzzBalance = buzzBalanceResult.data;
-    const [ethPrice, setEthPrice] = useState<number | null>(null);
-  
-    useEffect(() => {
-      console.log("WalletSheet: buzzBalanceResult", buzzBalanceResult);
-      console.log("WalletSheet: buzzBalance", buzzBalance);
-    }, [buzzBalanceResult, buzzBalance]);
+export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
+  console.log("WalletSheet: rendering... open=", open);
+  const { address, isConnected, chain } = useAccount();
+  const { disconnect } = useDisconnect();
+  const { copy } = useClipboard();
+  const { data: ethBalance } = useBalance({ address });
+  const { data: ensName } = useEnsName({ address });
+
+  const buzzBalanceResult = useBalance({
+    address,
+    token: isBuzzTokenValid ? (BUZZ_ADDRESS as `0x${string}`) : undefined,
+  });
+  const buzzBalance = buzzBalanceResult.data;
+  const [ethPrice, setEthPrice] = useState<number | null>(null);
+
+  useEffect(() => {
+    console.log("WalletSheet: buzzBalanceResult", buzzBalanceResult);
+    console.log("WalletSheet: buzzBalance", buzzBalance);
+  }, [buzzBalanceResult, buzzBalance]);
+
+  useEffect(() => {
+    console.log("WalletSheet: chain", chain);
+    console.log("WalletSheet: ensName", ensName);
+  }, [chain, ensName]);
 
   const getTokenPrice = async (tokenAddress: string) => {
     try {
@@ -134,35 +141,44 @@ const isBuzzTokenValid =
               <span className="text-gray-500 dark:text-gray-400">LDR</span>
               <span className="font-medium">--</span>
             </div>
-            
 
             <div className="flex items-center justify-between">
-          <span className="text-gray-500 dark:text-gray-400">
-            BUZZ Holdings
-          </span>
-          <span className="font-medium">
-            {!isBuzzTokenValid || buzzBalance?.value === undefined || buzzBalance.value === BigInt(0) ? (
-              <Link
-                // eslint-disable-next-line turbo/no-undeclared-env-vars
-                href={process.env.NEXT_PUBLIC_UNISWAP_BUZZ_URL as string}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline"
-              >
-                Buy BASEBUZZ
-              </Link>
-            ) : (
-              parseFloat(formatEther(buzzBalance.value)).toFixed(2)
-            )}
-          </span>
-        </div>
-
+              <span className="text-gray-500 dark:text-gray-400">
+                BUZZ Holdings
+              </span>
+              <span className="font-medium">
+                {!isBuzzTokenValid ||
+                buzzBalance?.value === undefined ||
+                buzzBalance.value === BigInt(0) ? (
+                  <Link
+                    // eslint-disable-next-line turbo/no-undeclared-env-vars
+                    href={process.env.NEXT_PUBLIC_UNISWAP_BUZZ_URL as string}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                  >
+                    Buy BASEBUZZ
+                  </Link>
+                ) : (
+                  parseFloat(formatEther(buzzBalance.value)).toFixed(2)
+                )}
+              </span>
+            </div>
 
             <div className="flex items-center justify-between">
               <span className="text-gray-500 dark:text-gray-400">
                 Eligibility
               </span>
               <span className="font-medium">--</span>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <span className="text-gray-500 dark:text-gray-400">Network</span>
+              <span className="font-medium">{chain?.name || "Unknown"}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-gray-500 dark:text-gray-400">ENS Name</span>
+              <span className="font-medium">{ensName || "N/A"}</span>
             </div>
 
             <Link
@@ -178,6 +194,18 @@ const isBuzzTokenValid =
             >
               Debug Info
             </Link>
+
+            <Button
+              variant="outline"
+              className="mt-2 w-full"
+              onClick={() => {
+                console.log("WalletSheet: Disconnect button clicked");
+                disconnect();
+                handleOpenChange(false);
+              }}
+            >
+              Disconnect Wallet
+            </Button>
           </div>
         </div>
       </SheetContent>
