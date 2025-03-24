@@ -1,48 +1,52 @@
-# Ignore environment files
-.env.local
-.env.development
-.env.production
-
-# Node.js dependencies
+# Dependencies
 node_modules/
 .npm/
 .pnpm-store/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
 
-# Next.js build outputs
+# Build outputs
 .next/
 out/
 dist/
+build/
+coverage/
 
-# TurboRepo cache
-turbo/
+# Environment variables
+.env
+.env.*
+!.env.example
 
-# Contentlayer auto-generated files
+# Cache and logs
+.cache/
+.turbo/
 .contentlayer/
-
-# Logs and debug
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE files
+# IDE and editor files
 .vscode/
 .idea/
 *.swp
 *.swo
+.DS_Store
+Thumbs.db
 
-# Registry (if auto-generated)
+# Project specific
 registry/
+docs/
+**/*.draft.md
+.cursorrc
 
-# Cache & lock files
-package-lock.json
-pnpm-lock.yaml
-yarn.lock
-
-# Build artifacts
+# Testing
 coverage/
-*.log
+.nyc_output/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/

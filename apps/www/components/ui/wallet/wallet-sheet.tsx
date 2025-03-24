@@ -1,3 +1,15 @@
+/**
+ * WalletSheet Component
+ *
+ * A detailed wallet information sheet that displays:
+ * - Wallet address with copy functionality
+ * - On-chain data (ETH balance, BUZZ token balance)
+ * - Network information
+ * - ENS name
+ * - Various metrics (badges, reputation, FOMO score)
+ * - Debug information and wallet disconnection
+ */
+
 import { useAccount, useDisconnect, useBalance } from "wagmi";
 import { Sheet, SheetContent, SheetClose } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -9,9 +21,13 @@ import { useEffect, useState } from "react";
 import { useEnsName } from "wagmi";
 
 interface WalletSheetProps {
+  /** Controls the open state of the sheet */
   open: boolean;
+  /** Callback function to handle sheet open state changes */
   onOpenChange?: (state: boolean) => void;
 }
+
+// Constants for token addresses
 const BASE_ETH_ADDRESS = "0x4200000000000000000000000000000000000006";
 // eslint-disable-next-line turbo/no-undeclared-env-vars
 const BUZZ_ADDRESS = process.env.NEXT_PUBLIC_BUZZ_TOKEN_ADDRESS;
@@ -19,30 +35,40 @@ const isBuzzTokenValid =
   BUZZ_ADDRESS?.startsWith("0x") && BUZZ_ADDRESS.length === 42;
 
 export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
-  console.log("WalletSheet: rendering... open=", open);
+  // Wagmi hooks for wallet state and actions
   const { address, isConnected, chain } = useAccount();
   const { disconnect } = useDisconnect();
   const { copy } = useClipboard();
   const { data: ethBalance } = useBalance({ address });
   const { data: ensName } = useEnsName({ address });
 
+  // Fetch BUZZ token balance
   const buzzBalanceResult = useBalance({
     address,
     token: isBuzzTokenValid ? (BUZZ_ADDRESS as `0x${string}`) : undefined,
   });
   const buzzBalance = buzzBalanceResult.data;
+
+  // State for ETH price
   const [ethPrice, setEthPrice] = useState<number | null>(null);
 
+  // Debug logging for balance updates
   useEffect(() => {
     console.log("WalletSheet: buzzBalanceResult", buzzBalanceResult);
     console.log("WalletSheet: buzzBalance", buzzBalance);
   }, [buzzBalanceResult, buzzBalance]);
 
+  // Debug logging for chain and ENS updates
   useEffect(() => {
     console.log("WalletSheet: chain", chain);
     console.log("WalletSheet: ensName", ensName);
   }, [chain, ensName]);
 
+  /**
+   * Fetches token price from CoinGecko API
+   * @param tokenAddress - The token contract address
+   * @returns The token price in USD or null if fetch fails
+   */
   const getTokenPrice = async (tokenAddress: string) => {
     try {
       // eslint-disable-next-line turbo/no-undeclared-env-vars
@@ -58,17 +84,26 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
     }
   };
 
+  // Fetch ETH price on component mount
   useEffect(() => {
     getTokenPrice(BASE_ETH_ADDRESS.toLowerCase()).then(setEthPrice);
   }, []);
 
+  // Don't render if wallet is not connected
   if (!isConnected) return null;
 
+  /**
+   * Handles sheet open state changes
+   * @param val - New open state
+   */
   const handleOpenChange = (val: boolean) => {
     console.log("WalletSheet: onOpenChange called with val=", val);
     onOpenChange?.(val);
   };
 
+  /**
+   * Fetches current ETH price from API
+   */
   const fetchEthPrice = async () => {
     // eslint-disable-next-line turbo/no-undeclared-env-vars
     const res = await fetch(process.env.NEXT_PUBLIC_ETH_PRICE_API as string);
@@ -78,6 +113,7 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
       <SheetContent side="right" className="w-[350px] p-6">
+        {/* Header with close button */}
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Wallet</h2>
           <SheetClose asChild>
@@ -94,6 +130,8 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
             </Button>
           </SheetClose>
         </div>
+
+        {/* Wallet address section */}
         <div className="mt-4 space-y-3">
           <div className="flex items-center justify-between rounded-lg border p-2">
             <span className="w-full truncate font-mono text-sm">{address}</span>
@@ -107,9 +145,12 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
             </Button>
           </div>
         </div>
+
+        {/* On-chain data section */}
         <div className="mt-6 space-y-3">
           <h3 className="font-semibold">On-Chain Data</h3>
           <div className="space-y-2 text-sm">
+            {/* ETH Balance */}
             <div className="flex items-center justify-between">
               <span className="text-gray-500 dark:text-gray-400">Base ETH</span>
               <span className="font-medium">
@@ -121,6 +162,8 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
                   : "--"}
               </span>
             </div>
+
+            {/* Various metrics (placeholder) */}
             <div className="flex items-center justify-between">
               <span className="text-gray-500 dark:text-gray-400">Badges</span>
               <span className="font-medium">--</span>
@@ -142,6 +185,7 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
               <span className="font-medium">--</span>
             </div>
 
+            {/* BUZZ Token Balance */}
             <div className="flex items-center justify-between">
               <span className="text-gray-500 dark:text-gray-400">
                 BUZZ Holdings
@@ -165,6 +209,7 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
               </span>
             </div>
 
+            {/* Additional metrics */}
             <div className="flex items-center justify-between">
               <span className="text-gray-500 dark:text-gray-400">
                 Eligibility
@@ -172,6 +217,7 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
               <span className="font-medium">--</span>
             </div>
 
+            {/* Network and ENS information */}
             <div className="flex items-center justify-between">
               <span className="text-gray-500 dark:text-gray-400">Network</span>
               <span className="font-medium">{chain?.name || "Unknown"}</span>
@@ -181,13 +227,13 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
               <span className="font-medium">{ensName || "N/A"}</span>
             </div>
 
+            {/* Debug and disconnect buttons */}
             <Link
               href="/debug"
               className="block w-full text-center text-sm text-blue-500 hover:underline"
               onClick={() => {
                 console.log("WalletSheet: Debug link clicked");
                 if (onOpenChange) {
-                  // Add this null check
                   onOpenChange(false);
                 }
               }}
