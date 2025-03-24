@@ -11,6 +11,7 @@ import {
   ArchiveX,
   Bell,
   Bookmark,
+  Briefcase,
   ChevronLeft,
   ChevronRight,
   Circle,
@@ -95,6 +96,7 @@ export const Icons = {
   check: Circle,
   copy: Copy,
   menu: Menu,
+  briefcase: Briefcase,
 
   // Theme
   moon: Moon,

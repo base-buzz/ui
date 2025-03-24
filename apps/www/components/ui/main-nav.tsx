@@ -47,11 +47,13 @@ export function MainNav() {
       href: "/notifications",
       label: "Notifications",
       icon: <Icons.bell className="h-6 w-6" />,
+      hasNotification: true,
     },
     {
       href: "/messages",
       label: "Messages",
       icon: <Icons.mail className="h-6 w-6" />,
+      hasNotification: true,
     },
     {
       href: "/bookmarks",
@@ -62,6 +64,17 @@ export function MainNav() {
       href: "/communities",
       label: "Communities",
       icon: <Icons.users className="h-6 w-6" />,
+    },
+    {
+      href: "/tabs/careers",
+      label: "Careers",
+      icon: <Icons.briefcase className="h-6 w-6" />,
+      hasNotification: true,
+    },
+    {
+      href: "/apps",
+      label: "Apps",
+      icon: <Icons.apps className="h-6 w-6" />,
     },
     {
       href: "/profile",
@@ -121,18 +134,35 @@ export function MainNav() {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="p-6">
+          {/* Logo at the top */}
+          <div className="mb-6 flex items-center gap-2">
+            <Image
+              src="/logo.svg"
+              width={32}
+              height={32}
+              alt="Base Buzz"
+              className="dark:invert"
+            />
+            <span className="font-bold">{siteConfig.name}</span>
+          </div>
+
           {/* Primary Navigation Links */}
           <nav className="flex flex-col space-y-3">
-            {navigationItems.map(({ href, label, icon }) => (
+            {navigationItems.map(({ href, label, icon, hasNotification }) => (
               <Link
                 key={href}
                 href={href}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-lg transition-colors hover:bg-accent",
+                  "group flex items-center gap-3 rounded-lg px-3 py-2 text-lg transition-colors hover:bg-accent",
                   pathname === href ? "bg-accent" : "transparent",
                 )}
               >
-                {icon}
+                <div className="relative">
+                  {icon}
+                  {hasNotification && (
+                    <div className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-red-500" />
+                  )}
+                </div>
                 <span>{label}</span>
               </Link>
             ))}
@@ -248,18 +278,28 @@ export function MainNav() {
 
       {/* Desktop Navigation Links */}
       <nav className="ml-2 hidden items-center gap-4 text-sm md:flex xl:gap-6">
-        {navigationItems.slice(0, 4).map(({ href, label }) => (
-          <Link
-            key={href}
-            href={href}
-            className={cn(
-              "transition-colors hover:text-foreground/80",
-              pathname === href ? "text-foreground" : "text-foreground/80",
-            )}
-          >
-            {label}
-          </Link>
-        ))}
+        {navigationItems
+          .filter(
+            (item) =>
+              !["home", "bookmarks", "communities", "profile"].includes(
+                item.label.toLowerCase(),
+              ),
+          )
+          .map(({ href, label, hasNotification }) => (
+            <Link
+              key={href}
+              href={href}
+              className={cn(
+                "relative inline-flex items-center transition-colors hover:text-foreground/80",
+                pathname === href ? "text-foreground" : "text-foreground/80",
+              )}
+            >
+              <span>{label}</span>
+              {hasNotification && (
+                <div className="absolute -right-2.5 -top-1.5 h-2.5 w-2.5 rounded-full bg-red-500" />
+              )}
+            </Link>
+          ))}
       </nav>
     </div>
   );

@@ -37,6 +37,44 @@ export function SiteHeader() {
                   <span className="sr-only">GitHub</span>
                 </Link>
               </Button>
+              <Button
+                asChild
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 px-0"
+              >
+                <Link href="/tabs/careers" className="relative">
+                  <Icons.briefcase className="h-4 w-4" />
+                  <div className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-red-500" />
+                  <span className="sr-only">Careers</span>
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 px-0"
+              >
+                <Link href="/apps">
+                  <Icons.apps className="h-4 w-4" />
+                  <span className="sr-only">Apps</span>
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 px-0"
+              >
+                <Link
+                  href={siteConfig.links.discord}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Icons.discord className="h-4 w-4" />
+                  <span className="sr-only">Discord</span>
+                </Link>
+              </Button>
               <ModeSwitcher />
             </nav>
 

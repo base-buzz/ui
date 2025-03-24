@@ -7,6 +7,7 @@ export const siteConfig = {
   links: {
     twitter: "https://twitter.com/realbasebuzz",
     github: "https://github.com/base-buzz",
+    discord: "https://discord.gg/basebuzz",
   },
 };
 
