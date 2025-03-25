@@ -1,9 +1,20 @@
+/**
+ * File: apps/www/app/(app)/tabs/careers/page.tsx
+ * Description: Main careers page component that displays job listings and application form
+ * Features:
+ * - Fetches and displays available job roles
+ * - Allows role selection with single-select functionality
+ * - Shows detailed role information
+ * - Includes application form
+ */
+
 "use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { CareersForm } from "../careers/components/careers-form";
 
+// Interface defining the structure of a job role
 interface Role {
   title: string;
   location?: string;
@@ -23,10 +34,12 @@ interface Role {
 }
 
 export default function CareersPage() {
+  // State management for selected role and available roles
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
   const [roles, setRoles] = useState<Role[]>([]);
   const [expandedRoles, setExpandedRoles] = useState<Set<string>>(new Set());
 
+  // Fetch available roles from API on component mount
   useEffect(() => {
     // eslint-disable-next-line turbo/no-undeclared-env-vars
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/jobs`)
@@ -38,22 +51,16 @@ export default function CareersPage() {
       .catch((err) => console.error("❌ Error fetching jobs:", err));
   }, []);
 
+  // Handle role selection - ensures only one role can be selected at a time
   const handleRoleClick = (role: Role) => {
-    setExpandedRoles((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(role.title)) {
-        newSet.delete(role.title);
-      } else {
-        newSet.add(role.title);
-      }
-      return newSet;
-    });
-
+    // Only allow one role to be selected at a time
+    setExpandedRoles(new Set([role.title]));
     setSelectedRole(role);
   };
 
   return (
     <div className="container relative py-12">
+      {/* Page Header */}
       <h1 className="text-center text-3xl font-bold tracking-tight sm:text-4xl">
         Join the BaseBuzz Team 🚀
       </h1>
@@ -67,6 +74,7 @@ export default function CareersPage() {
       <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Left Column - Open Roles */}
         <div className="space-y-6">
+          {/* Why Join Section */}
           <div className="rounded-lg border border-border bg-background p-6 shadow-md">
             <h2 className="text-xl font-semibold">Why Join BaseBuzz?</h2>
             <p className="text-sm text-muted-foreground">
@@ -76,7 +84,7 @@ export default function CareersPage() {
             </p>
           </div>
 
-          {/* Role List */}
+          {/* Role List - Interactive buttons for role selection */}
           <div className="space-y-2">
             {roles.map((role) => (
               <button
@@ -84,8 +92,8 @@ export default function CareersPage() {
                 onClick={() => handleRoleClick(role)}
                 className={`w-full rounded-lg border p-4 text-left ${
                   expandedRoles.has(role.title)
-                    ? "bg-blue-500 text-white"
-                    : "bg-background text-muted-foreground"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-background text-muted-foreground hover:bg-muted"
                 }`}
               >
                 {role.title}
@@ -93,6 +101,7 @@ export default function CareersPage() {
             ))}
           </div>
 
+          {/* Benefits Section */}
           <div className="rounded-lg border border-border bg-background p-6 shadow-md">
             <h2 className="text-xl font-semibold">Benefits</h2>
             <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
@@ -103,6 +112,7 @@ export default function CareersPage() {
             </ul>
           </div>
 
+          {/* Token Rewards Section */}
           <div className="rounded-lg border border-border bg-background p-6 shadow-md">
             <h2 className="text-xl font-semibold">
               Smart Contract-Based Token Rewards
@@ -115,10 +125,11 @@ export default function CareersPage() {
           </div>
         </div>
 
-        {/* Right Column - Selected Role & Application Form */}
+        {/* Right Column - Selected Role Details & Application Form */}
         <div className="rounded-lg border border-border bg-background p-6 shadow-md">
           {selectedRole ? (
             <>
+              {/* Role Details */}
               <h2 className="text-xl font-semibold">{selectedRole.title}</h2>
               <p className="mb-6 mt-2 text-sm text-muted-foreground">
                 {selectedRole.description}
