@@ -206,7 +206,7 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:underline"
                   >
-                    Buy BASEBUZZ
+                    Buy BUZZ
                   </Link>
                 ) : (
                   parseFloat(formatEther(buzzBalance.value)).toFixed(2)

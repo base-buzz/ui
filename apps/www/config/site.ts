@@ -1,13 +1,13 @@
 export const siteConfig = {
-  name: "BASEBUZZ",
-  url: "https://www.base.buzz",
+  name: "BUZZ",
+  url: "https://base.buzz",
   ogImage: "https://www.base.buzz/og.jpg",
   description:
-    "BASEBUZZ is the ultimate hub for AI-driven DeFi, meme speculation, and real-world asset tokenization. Trade, engage, and build—powered by $BUZZ.",
+    "BUZZ is the ultimate hub for AI-driven DeFi, meme speculation, and real-world asset tokenization. Trade, engage, and build—powered by $BUZZ.",
   links: {
-    twitter: "https://twitter.com/realbasebuzz",
+    twitter: "https://twitter.com/realbuzz",
     github: "https://github.com/base-buzz",
-    discord: "https://discord.gg/basebuzz",
+    discord: "https://discord.gg/buzz",
   },
 };
 

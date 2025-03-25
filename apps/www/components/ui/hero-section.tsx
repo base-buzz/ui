@@ -32,13 +32,12 @@ export function HeroSection() {
               </span>
             </h1>
             <p className="max-w-xl text-lg text-muted-foreground">
-              $BASEBUZZ fuels the future of on-chain speculation, governance,
-              and real-world finance.
+              $BUZZ fuels the future of on-chain speculation, governance, and
+              community building.
             </p>
             <p className="mt-2 font-semibold text-primary">
-              Stake $BASEBUZZ now to unlock Early Staker Incentive Payouts, LP
-              Gas Rebates, Trading Perks, Reputation, Influence, Governance
-              Boost & Voting Power
+              Stake $BUZZ now to unlock Early Staker Incentive Payouts, LP
+              rewards, and exclusive community access.
             </p>
             <p className="mt-2 font-semibold text-primary">
               Next Reward Drop In:{" "}

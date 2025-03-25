@@ -3,9 +3,9 @@ import Image from "next/image";
 export function UniswapSwapWidget() {
   return (
     <div className="rounded-lg border border-border bg-background p-4 shadow-md">
-      <p className="text-lg font-medium">💱 Swap $BASEBUZZ Instantly</p>
+      <p className="text-lg font-medium">💱 Swap $BUZZ Instantly</p>
       <p className="text-sm text-muted-foreground">
-        Trade $BASEBUZZ securely via Uniswap.
+        Trade $BUZZ securely via Uniswap.
       </p>
 
       {/* ✅ Placeholder for Swap Widget */}
@@ -24,7 +24,7 @@ export function UniswapSwapWidget() {
             alt="Base"
             width={60} // Adjusted width
             height={16} // Adjusted height to match text
-            className="block dark:hidden align-bottom" // Ensures alignment
+            className="block align-bottom dark:hidden" // Ensures alignment
           />
 
           {/* Dark Mode Version */}
@@ -33,7 +33,7 @@ export function UniswapSwapWidget() {
             alt="Base"
             width={60} // Adjusted width
             height={16} // Adjusted height to match text
-            className="hidden dark:block align-bottom" // Ensures alignment
+            className="hidden align-bottom dark:block" // Ensures alignment
           />
         </div>
 

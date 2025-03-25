@@ -141,7 +141,7 @@ export function SiteFooter() {
           {/* ✅ Token Address Section */}
           <div className="flex flex-col items-center space-y-1 sm:order-2 sm:flex-row sm:space-x-4 sm:space-y-0">
             <span className="text-xs text-foreground">
-              Verify: $BASEBUZZ Contract
+              Verify: $BUZZ Contract
             </span>
             <span className="font-mono text-xs text-foreground">
               0x123...ABC
