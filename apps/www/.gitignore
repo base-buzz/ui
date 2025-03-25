@@ -50,3 +50,5 @@ coverage/
 *.tmp
 *.temp
 .cache/
+# cursor
+.cursor/mcp.json
