@@ -28,6 +28,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env
 
 # turbo
 .turbo
@@ -42,3 +43,4 @@ tsconfig.tsbuildinfo
 
 # cursor
 .cursor/mcp.json
+mcp-sql.ts
