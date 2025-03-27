@@ -81,6 +81,7 @@ export const Doc = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: "./content",
   documentTypes: [Doc],
+  disableImportAliasWarning: true,
   mdx: {
     remarkPlugins: [remarkGfm, codeImport],
     rehypePlugins: [
@@ -115,6 +116,7 @@ export default makeSource({
         {
           theme: "github-dark",
           getHighlighter,
+          cacheDirectory: "./.cache/rehype-pretty-code",
           onVisitLine(node) {
             // Prevent lines from collapsing in `display: grid` mode, and allow empty
             // lines to be copy/pasted
