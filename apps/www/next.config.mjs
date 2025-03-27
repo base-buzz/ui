@@ -27,6 +27,16 @@ const nextConfig = {
     ],
   },
   async redirects() {
+    // Only add docs redirects if docs exist
+    const fs = await import("fs");
+    const hasRealDocs =
+      fs.existsSync("./content/docs") &&
+      fs.readdirSync("./content/docs").length > 1; // More than just placeholder
+
+    if (!hasRealDocs) {
+      return [];
+    }
+
     return [
       {
         source: "/components",
