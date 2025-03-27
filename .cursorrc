@@ -1,0 +1,21 @@
+{
+  "context": [
+    "apps/docs/pages/README.md",
+    "apps/docs/pages/technical-guide.md",
+    "apps/docs/pages/user-guide.md",
+    "apps/docs/pages/design-system.md",
+    "apps/docs/pages/api-reference.md",
+    "apps/docs/pages/mcp-supabase-commands.md"
+  ],
+  "prioritize": [
+    "apps/docs/pages/README.md",
+    "apps/docs/pages/technical-guide.md",
+    "apps/docs/pages/user-guide.md",
+    "apps/docs/pages/mcp-supabase-commands.md"
+  ],
+  "meta": {
+    "notes": "IMPORTANT: Service name is BaseBuzz (no space)\n\nCursor AI should always include inline comments and docstrings when generating code. Always add any files containing sensitive information to .gitinore and let me know. All logic must be clearly explained with contextual comments, and when applicable, reference related markdown files using `// See apps/docs/pages/<filename>.md`. Use functional React components with TypeScript and arrow functions by default. ShadCN UI components must be used for all UI unless explicitly unavailable. Prefer `const` for variable declarations. Tailwind utility class order must follow standard logical grouping. Component and file structure must follow conventions defined in apps/docs/pages/technical-guide.md. All user input must be validated with zod. Code should be clean, modular, readable, and performance-aware. Avoid unnecessary dependencies or complex abstractions. All server logic should be wrapped in async functions with proper try/catch error handling. Use only pre-approved libraries like lucide-react, wagmi, and zod unless instructed otherwise. When suggesting code changes, always include the file path in the code block header using the format ```typescript:path/to/file.tsx``` to clearly indicate which file is being modified.",
+    "package_manager": "pnpm",
+    "python_version": "3.11"
+  }
+}

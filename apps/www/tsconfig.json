@@ -33,7 +33,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".contentlayer/generated",
-    "./scripts/**/*.ts"
+    "./scripts/**/*.ts",
+    "components/layout/auth/NotLoggedInLayout copy.bak"
   ],
   "exclude": ["node_modules", "__registry__"]
 }
