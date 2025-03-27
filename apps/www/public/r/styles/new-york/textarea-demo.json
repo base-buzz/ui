@@ -3,11 +3,13 @@
   "name": "textarea-demo",
   "type": "registry:example",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": ["textarea"],
+  "registryDependencies": [
+    "textarea"
+  ],
   "files": [
     {
       "path": "examples/textarea-demo.tsx",
-      "content": "import { Textarea } from \"@/registry/new-york/ui/textarea\"\n\nexport default function TextareaDemo() {\n  return <Textarea placeholder=\"Type your message here.\" />\n}\n",
+      "content": "import { Textarea } from \"@/registry/new-york/ui/textarea\";\n\nexport default function TextareaDemo() {\n  return <Textarea placeholder=\"Type your message here.\" />;\n}\n",
       "type": "registry:example",
       "target": ""
     }
