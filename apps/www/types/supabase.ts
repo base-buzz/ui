@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 export type Json =
   | string
   | number
@@ -39,22 +38,6 @@ export interface Database {
           website?: string | null;
         };
       };
-    };
-    Views: {
-      [_ in never]: never;
-    };
-    Functions: {
-      [_ in never]: never;
-    };
-    Enums: {
-      [_ in never]: never;
-    };
-  };
-}
-=======
-export type Database = {
-  public: {
-    Tables: {
       [key: string]: {
         Row: {}; // Will be populated with actual table row types
         Insert: {}; // Will be populated with insertion types
@@ -76,5 +59,4 @@ export type Database = {
       [key: string]: string[]; // Will be populated with enum values
     };
   };
-};
->>>>>>> 113382bd7dd2ac82c70197c115e3a815f6d6d8d8
+}
