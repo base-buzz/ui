@@ -1,6 +1,14 @@
-.turbo
-.next
-node_modules
+# Ignore private docs submodule
+docs/
+
+# Ignore build artifacts
+.next/
+.turbo/
+node_modules/
+
+# Ignore contentlayer build
+.contentlayer/
+
 .env.*
 .env
 README.md 

@@ -12,7 +12,9 @@
       "main": true
     }
   },
-  "buildCommand": "cd ../.. && rm -rf apps/www/.next && FORCE_COLOR=1 pnpm turbo build --filter=www... --no-daemon",
-  "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
-  "framework": "nextjs"
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install",
+  "framework": "nextjs",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./",
+  "outputDirectory": ".next"
 }
