@@ -35,6 +35,48 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   generateEtags: false,
+  // Add output configuration
+  output: "standalone",
+  // Add build optimization
+  optimizeFonts: true,
+  // Add webpack configuration
+  webpack: (config, { dev, isServer }) => {
+    // Optimize bundle size
+    if (!dev && !isServer) {
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: "all",
+          minSize: 20000,
+          maxSize: 244000,
+          minChunks: 1,
+          maxAsyncRequests: 30,
+          maxInitialRequests: 30,
+          cacheGroups: {
+            defaultVendors: {
+              test: /[\\/]node_modules[\\/]/,
+              priority: -10,
+              reuseExistingChunk: true,
+            },
+            default: {
+              minChunks: 2,
+              priority: -20,
+              reuseExistingChunk: true,
+            },
+          },
+        },
+      };
+    }
+    // Reduce logging
+    config.infrastructureLogging = { level: "error" };
+    config.watchOptions = {
+      aggregateTimeout: 500,
+      poll: 500,
+      ignored: "**/node_modules/**",
+    };
+    return config;
+  },
+  // Keep existing redirects
   async redirects() {
     // Only add docs redirects if docs exist
     const fs = await import("fs");
@@ -93,15 +135,6 @@ const nextConfig = {
         permanent: true,
       },
     ];
-  },
-  webpack(config) {
-    config.infrastructureLogging = { level: "error" }; // Reduce logging
-    config.watchOptions = {
-      aggregateTimeout: 500,
-      poll: 500,
-      ignored: "**/node_modules/**",
-    };
-    return config;
   },
 };
 
