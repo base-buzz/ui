@@ -65,7 +65,6 @@
     "eslint": "^8.41.0",
     "eslint-config-next": "13.3.0",
     "eslint-config-prettier": "^8.8.0",
-    "eslint-config-turbo": "^1.9.9",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-tailwindcss": "3.13.1",
     "pg": "^8.14.1",
@@ -86,6 +85,8 @@
     "@types/node": "^20.11.27",
     "@types/react": "^18.2.65",
     "@types/react-dom": "^18.2.22",
+    "eslint-config-turbo": "^1.13.4",
+    "eslint-plugin-turbo": "^2.4.4",
     "typescript": "^5.7.3"
   },
   "description": "Accessible and customizable components that you can copy and paste into your apps. Free. Open Source. **Use this to build your own component library**.",
