@@ -24,7 +24,6 @@ export default function NotLoggedInLayout() {
           />
         </div>
       </div>
-      
 
       {/* Main content */}
       <main className="flex grow flex-col pb-[152px] lg:flex-row lg:pb-[calc(152px+32px)]">
@@ -55,7 +54,7 @@ export default function NotLoggedInLayout() {
 
             <div className="mt-4 flex w-full flex-col space-y-2 lg:mt-8 lg:max-w-[300px] lg:space-y-[12px]">
               <button
-                className="flex h-[44px] w-full items-center justify-center gap-2 rounded-[10px] border border-border bg-card text-[15px] font-medium leading-5 text-card-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="flex h-[44px] w-full items-center justify-center gap-2 rounded-[10px] border border-[#94A3B8] bg-card text-[15px] font-medium leading-5 text-card-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 aria-label="Sign up with Coinbase"
               >
                 <div className="rounded-[15px] bg-background p-1">
@@ -72,7 +71,7 @@ export default function NotLoggedInLayout() {
               </button>
 
               <button
-                className="flex h-[44px] w-full items-center justify-center gap-2 rounded-[10px] border border-border bg-card text-[15px] font-medium leading-5 text-card-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="flex h-[44px] w-full items-center justify-center gap-2 rounded-[10px] border border-[#94A3B8] bg-card text-[15px] font-medium leading-5 text-card-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 aria-label="Sign up with MetaMask"
               >
                 <div className="rounded-[15px] bg-background p-1">
