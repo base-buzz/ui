@@ -115,8 +115,8 @@ importers:
         specifier: ^18.2.22
         version: 18.3.5(@types/react@18.3.18)
       eslint-config-turbo:
-        specifier: ^2.4.4
-        version: 2.4.4(eslint@8.57.1)(turbo@2.4.4)
+        specifier: ^1.13.4
+        version: 1.13.4(eslint@8.57.1)
       eslint-plugin-turbo:
         specifier: ^2.4.4
         version: 2.4.4(eslint@8.57.1)(turbo@2.4.4)
@@ -5954,11 +5954,10 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-config-turbo@2.4.4:
-    resolution: {integrity: sha512-4w/heWywWkFw09a5MY5lCvb9suJlhBSkzNtGTwM5+zRif4rksubaMYy1pD0++5rqoDVcQax25jCrtii9ptsNDw==}
+  eslint-config-turbo@1.13.4:
+    resolution: {integrity: sha512-+we4eWdZlmlEn7LnhXHCIPX/wtujbHCS7XjQM/TN09BHNEl2fZ8id4rHfdfUKIYTSKyy8U/nNyJ0DNoZj5Q8bw==}
     peerDependencies:
       eslint: '>6.6.0'
-      turbo: '>2.0.0'
 
   eslint-import-resolver-node@0.3.9:
     resolution: {integrity: sha512-WFj2isz22JahUv+B788TlO3N6zL3nNJGU8CcZbPZvVEkBPaJdCV4vy5wyghty5ROFbCRnm132v8BScu5/1BQ8g==}
@@ -6030,6 +6029,11 @@ packages:
     engines: {node: '>=12.13.0'}
     peerDependencies:
       tailwindcss: ^3.3.2
+
+  eslint-plugin-turbo@1.13.4:
+    resolution: {integrity: sha512-82GfMzrewI/DJB92Bbch239GWbGx4j1zvjk1lqb06lxIlMPnVwUHVwPbAnLfyLG3JuhLv9whxGkO/q1CL18JTg==}
+    peerDependencies:
+      eslint: '>6.6.0'
 
   eslint-plugin-turbo@2.4.4:
     resolution: {integrity: sha512-myEnQTjr3FkI0j1Fu0Mqnv1z8n0JW5iFTOUNzHaEevjzl+1uzMSsFwks/x8i3rGmI3EYtC1BY8K2B2pS0Vfx6w==}
@@ -11801,7 +11805,7 @@ snapshots:
       '@types/node': 20.5.1
       chalk: 4.1.2
       cosmiconfig: 8.3.6(typescript@5.7.3)
-      cosmiconfig-typescript-loader: 4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@5.7.3))(ts-node@10.9.2(@types/node@20.17.16)(typescript@5.7.3))(typescript@5.7.3)
+      cosmiconfig-typescript-loader: 4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@5.7.3))(ts-node@10.9.2(@types/node@20.5.1)(typescript@5.7.3))(typescript@5.7.3)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -17926,7 +17930,7 @@ snapshots:
       object-assign: 4.1.1
       vary: 1.1.2
 
-  cosmiconfig-typescript-loader@4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@5.7.3))(ts-node@10.9.2(@types/node@20.17.16)(typescript@5.7.3))(typescript@5.7.3):
+  cosmiconfig-typescript-loader@4.4.0(@types/node@20.5.1)(cosmiconfig@8.3.6(typescript@5.7.3))(ts-node@10.9.2(@types/node@20.5.1)(typescript@5.7.3))(typescript@5.7.3):
     dependencies:
       '@types/node': 20.5.1
       cosmiconfig: 8.3.6(typescript@5.7.3)
@@ -18780,11 +18784,10 @@ snapshots:
     dependencies:
       eslint: 8.57.1
 
-  eslint-config-turbo@2.4.4(eslint@8.57.1)(turbo@2.4.4):
+  eslint-config-turbo@1.13.4(eslint@8.57.1):
     dependencies:
       eslint: 8.57.1
-      eslint-plugin-turbo: 2.4.4(eslint@8.57.1)(turbo@2.4.4)
-      turbo: 2.4.4
+      eslint-plugin-turbo: 1.13.4(eslint@8.57.1)
 
   eslint-import-resolver-node@0.3.9:
     dependencies:
@@ -19003,6 +19006,11 @@ snapshots:
       fast-glob: 3.3.3
       postcss: 8.5.1
       tailwindcss: 3.4.6(ts-node@10.9.2(@types/node@20.17.16)(typescript@5.7.3))
+
+  eslint-plugin-turbo@1.13.4(eslint@8.57.1):
+    dependencies:
+      dotenv: 16.0.3
+      eslint: 8.57.1
 
   eslint-plugin-turbo@2.4.4(eslint@8.57.1)(turbo@2.4.4):
     dependencies:
