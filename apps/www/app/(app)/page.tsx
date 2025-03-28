@@ -1,3 +1,5 @@
+"use client";
+
 import { Metadata } from "next";
 import Image from "next/image";
 import { TabsNav } from "@/components/ui/tabs-nav";
