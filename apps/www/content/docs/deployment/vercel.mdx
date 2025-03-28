@@ -1,0 +1,115 @@
+# Vercel Deployment Guide
+
+This guide outlines the specific configuration needed for deploying the UI library documentation to Vercel.
+
+## Important Notes
+
+- The documentation is split into two parts:
+  - Public docs: Located in `apps/www/content/docs/`
+  - Private docs: Located in `apps/www/docs/` (Git submodule)
+- Vercel should only deploy the public documentation
+- The private docs submodule should be completely ignored during deployment
+
+## Configuration Files
+
+### 1. `.vercelignore`
+
+```text
+# Ignore private docs submodule
+docs/
+
+# Ignore build artifacts
+.next/
+.turbo/
+node_modules/
+
+# Ignore contentlayer build
+.contentlayer/
+
+# Ignore environment files
+.env.*
+.env
+README.md
+```
+
+This file ensures that Vercel:
+
+- Does not attempt to access the private docs submodule
+- Ignores build artifacts and temporary files
+- Excludes sensitive environment files
+
+### 2. `vercel.json`
+
+```json
+{
+  "build": {
+    "env": {
+      "NODE_OPTIONS": "--max-old-space-size=8192",
+      "TURBO_REMOTE_ONLY": "true",
+      "NEXT_TELEMETRY_DISABLED": "1"
+    }
+  },
+  "git": {
+    "submodules": true,
+    "deploymentEnabled": {
+      "main": true
+    }
+  },
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install",
+  "framework": "nextjs",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./",
+  "outputDirectory": ".next"
+}
+```
+
+Key configuration points:
+
+- Increased Node.js memory limit for large builds
+- Disabled Next.js telemetry
+- Enabled Git submodules (but private docs are ignored via `.vercelignore`)
+- Optimized build command using pnpm
+- Git diff-based ignore command for faster builds
+
+### 3. `next.config.mjs`
+
+The Next.js configuration is already set up to:
+
+- Use the public docs from `content/docs/`
+- Handle redirects appropriately
+- Optimize build output
+- Configure proper webpack settings
+
+## Common Issues and Solutions
+
+1. **Private Docs Access**
+
+   - If Vercel tries to access private docs, check `.vercelignore` is properly configured
+   - Ensure the `docs/` entry is present in `.vercelignore`
+
+2. **Build Failures**
+
+   - Check Node.js memory limit in `vercel.json`
+   - Verify all required environment variables are set in Vercel dashboard
+   - Ensure pnpm is selected as the package manager in Vercel project settings
+
+3. **Missing Content**
+   - Verify content is in `apps/www/content/docs/` not in the private submodule
+   - Check contentlayer build output in `.contentlayer/`
+
+## Deployment Checklist
+
+Before deploying:
+
+1. Verify all public content is in `apps/www/content/docs/`
+2. Check `.vercelignore` is properly configured
+3. Ensure `vercel.json` has correct build settings
+4. Verify environment variables in Vercel dashboard
+5. Test build locally with `pnpm build`
+
+After deployment:
+
+1. Verify public docs are accessible
+2. Check redirects are working
+3. Confirm private docs are not accessible
+4. Monitor build logs for any issues

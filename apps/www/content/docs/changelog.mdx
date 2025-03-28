@@ -4,6 +4,14 @@ description: Latest updates and announcements.
 toc: false
 ---
 
+## March 2024 - Repository Cleanup
+
+We've cleaned up the repository structure to improve maintainability and reduce confusion:
+
+- Removed the unused v4 app to streamline the codebase
+- Consolidated documentation into a clearer public/private structure
+- Updated deployment configuration for better Vercel integration
+
 ## August 2024 - npx shadcn init
 
 The new CLI is now available. It's a complete rewrite with a lot of new features and improvements. You can now install components, themes, hooks, utils and more using `npx shadcn add`.
@@ -11,7 +19,7 @@ The new CLI is now available. It's a complete rewrite with a lot of new features
 This is a major step towards distributing code that you and your LLMs can access and use.
 
 1. First up, the cli now has support for all major React framework out of the box. Next.js, Remix, Vite and Laravel. And when you init into a new app, we update your existing Tailwind files instead of overriding.
-2. A component now ship its own dependencies. Take the accordion for example, it can define its Tailwind keyframes. When you add it to your project, we’ll update your tailwind.config.ts file accordingly.
+2. A component now ship its own dependencies. Take the accordion for example, it can define its Tailwind keyframes. When you add it to your project, we'll update your tailwind.config.ts file accordingly.
 3. You can also install remote components using url. `npx shadcn add https://acme.com/registry/navbar.json`.
 4. We have also improve the init command. It does framework detection and can even init a brand new Next.js app in one command. `npx shadcn init`.
 5. We have created a new schema that you can use to ship your own component registry. And since it has support for urls, you can even use it to distribute private components.
