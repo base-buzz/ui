@@ -43,11 +43,11 @@ export const SignupButton = ({
 
   return (
     <button
-      className={`flex h-[44px] w-full items-center justify-center gap-2 rounded-[10px] border border-[#536471]/25 bg-white text-[15px] font-medium leading-5 text-[#3c4043] transition-colors hover:bg-[#e6e6e6]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1d9bf0] disabled:cursor-not-allowed disabled:opacity-50 ${className || ""}`}
+      className={`flex h-[44px] w-full items-center gap-3 rounded-[10px] border border-[#536471]/25 bg-white px-4 text-[15px] font-medium leading-5 text-[#3c4043] transition-colors hover:bg-[#e6e6e6]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1d9bf0] disabled:cursor-not-allowed disabled:opacity-50 ${className || ""}`}
       onClick={handleClick}
       disabled={isConnecting || isConnected}
     >
-      <div className="rounded-[15px] bg-white p-1">
+      <div className="shrink-0 rounded-[15px] bg-white p-1">
         <Image
           src={icon}
           alt=""
@@ -57,7 +57,9 @@ export const SignupButton = ({
           aria-hidden="true"
         />
       </div>
-      {isConnecting ? "Connecting..." : isConnected ? "Connected" : text}
+      <span className="truncate">
+        {isConnecting ? "Connecting..." : isConnected ? "Connected" : text}
+      </span>
     </button>
   );
 };

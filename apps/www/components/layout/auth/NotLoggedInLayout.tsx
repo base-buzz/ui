@@ -12,6 +12,7 @@ import { CoinbaseSignup } from "../../wallet/CoinbaseSignup";
 import { WalletConnectSignup } from "../../wallet/WalletConnectSignup";
 import { CookieNotice } from "../CookieNotice";
 import { useRouter } from "next/navigation";
+import { EmailSignup } from "../../wallet/EmailSignup";
 
 // Fallback button component for when wallet connection fails
 const FallbackButton = ({
@@ -153,16 +154,10 @@ export default function NotLoggedInLayout() {
               <div className="pb-0.5 lg:pb-8" />
 
               <p className="text-[15px] font-medium text-muted-foreground">
-                Browse as guest
+                Or continue with email
               </p>
 
-              <button
-                className="h-[44px] w-full rounded-[10px] bg-primary text-[17px] font-bold leading-5 text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                aria-label="Just let me in"
-                onClick={() => router.push("/home")}
-              >
-                Just let me in
-              </button>
+              <EmailSignup />
             </div>
           </div>
         </div>
