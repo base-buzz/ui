@@ -6,10 +6,45 @@
 "use client";
 
 import Image from "next/image";
-import { WalletButton } from "./wallet/wallet-button";
+import { ErrorBoundary } from "react-error-boundary";
+import { MetaMaskSignup } from "../../wallet/MetaMaskSignup";
+import { CoinbaseSignup } from "../../wallet/CoinbaseSignup";
+import { WalletConnectSignup } from "../../wallet/WalletConnectSignup";
 import { CookieNotice } from "../CookieNotice";
+import { useRouter } from "next/navigation";
+
+// Fallback button component for when wallet connection fails
+const FallbackButton = ({
+  icon,
+  text,
+  className,
+}: {
+  icon: string;
+  text: string;
+  className?: string;
+}) => (
+  <button
+    className={`flex h-[44px] w-full items-center justify-center gap-2 rounded-[10px] border border-[#94A3B8] bg-card text-[15px] font-medium leading-5 text-card-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${className || ""}`}
+    aria-label={text}
+    disabled
+  >
+    <div className="rounded-[15px] bg-background p-1">
+      <Image
+        src={icon}
+        alt=""
+        width={28}
+        height={28}
+        className="h-7 w-7 opacity-50"
+        aria-hidden="true"
+      />
+    </div>
+    {text}
+  </button>
+);
 
 export default function NotLoggedInLayout() {
+  const router = useRouter();
+
   return (
     <div className="flex h-screen flex-col bg-background">
       {/* Mobile logo */}
@@ -53,39 +88,27 @@ export default function NotLoggedInLayout() {
             </div>
 
             <div className="mt-4 flex w-full flex-col space-y-2 lg:mt-8 lg:max-w-[300px] lg:space-y-[12px]">
-              <button
-                className="flex h-[44px] w-full items-center justify-center gap-2 rounded-[10px] border border-[#94A3B8] bg-card text-[15px] font-medium leading-5 text-card-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                aria-label="Sign up with Coinbase"
-              >
-                <div className="rounded-[15px] bg-background p-1">
-                  <Image
-                    src="/coinbase.svg"
-                    alt=""
-                    width={28}
-                    height={28}
-                    className="h-7 w-7"
-                    aria-hidden="true"
+              <ErrorBoundary
+                fallback={
+                  <FallbackButton
+                    icon="/coinbase.svg"
+                    text="Sign up with Coinbase"
                   />
-                </div>
-                Sign up with Coinbase
-              </button>
+                }
+              >
+                <CoinbaseSignup />
+              </ErrorBoundary>
 
-              <button
-                className="flex h-[44px] w-full items-center justify-center gap-2 rounded-[10px] border border-[#94A3B8] bg-card text-[15px] font-medium leading-5 text-card-foreground transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                aria-label="Sign up with MetaMask"
-              >
-                <div className="rounded-[15px] bg-background p-1">
-                  <Image
-                    src="/metamask.svg"
-                    alt=""
-                    width={28}
-                    height={28}
-                    className="h-7 w-7"
-                    aria-hidden="true"
+              <ErrorBoundary
+                fallback={
+                  <FallbackButton
+                    icon="/metamask.svg"
+                    text="Sign up with MetaMask"
                   />
-                </div>
-                Sign up with MetaMask
-              </button>
+                }
+              >
+                <MetaMaskSignup />
+              </ErrorBoundary>
 
               <div
                 className="flex items-center justify-center py-0.5"
@@ -99,21 +122,17 @@ export default function NotLoggedInLayout() {
                 <div className="h-px flex-1 bg-border"></div>
               </div>
 
-              <button
-                className="flex h-[44px] w-full items-center justify-center gap-2 rounded-[10px] bg-gradient-to-r from-[#FF0080] via-[#7928CA] to-[#FF0080] bg-[length:200%_auto] px-8 py-2 font-medium text-primary-foreground transition-colors duration-200 hover:bg-right"
-                aria-label="Let me in"
-              >
-                <div className="rounded-[15px] bg-background/10 p-1">
-                  <Image
-                    src="/wallet-connect.svg"
-                    alt="Wallet Connect"
-                    width={28}
-                    height={28}
-                    className="h-7 w-7"
+              <ErrorBoundary
+                fallback={
+                  <FallbackButton
+                    icon="/wallet-connect.svg"
+                    text="Wallet Connect"
+                    className="bg-gradient-to-r from-[#FF0080] via-[#7928CA] to-[#FF0080] bg-[length:200%_auto] text-primary-foreground"
                   />
-                </div>
-                Wallet Connect
-              </button>
+                }
+              >
+                <WalletConnectSignup />
+              </ErrorBoundary>
 
               <p className="text-center text-[13px] leading-4 text-muted-foreground">
                 By signing up, you agree to the{" "}
@@ -140,6 +159,7 @@ export default function NotLoggedInLayout() {
               <button
                 className="h-[44px] w-full rounded-[10px] bg-primary text-[17px] font-bold leading-5 text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 aria-label="Just let me in"
+                onClick={() => router.push("/home")}
               >
                 Just let me in
               </button>

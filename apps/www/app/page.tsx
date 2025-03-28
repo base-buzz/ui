@@ -1,5 +1,8 @@
 "use client";
 
+import { useAccount } from "wagmi";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { TabsNav } from "@/components/ui/tabs-nav";
 import { CardsDemo } from "@/components/cards";
@@ -10,61 +13,16 @@ import { MarketOverview } from "@/components/ui/market-overview-section";
 import NotLoggedInLayout from "@/components/layout/auth/NotLoggedInLayout";
 
 export default function Home() {
-  // TODO: Add authentication check here
-  const isAuthenticated = false;
+  const { isConnected } = useAccount();
+  const router = useRouter();
 
-  if (!isAuthenticated) {
-    return <NotLoggedInLayout />;
-  }
+  // Redirect to home if connected
+  useEffect(() => {
+    if (isConnected) {
+      router.push("/home");
+    }
+  }, [isConnected, router]);
 
-  return (
-    <>
-      {/* ✅ Hero Section */}
-      <HeroSection />
-
-      {/* ✅ Market Overview Wrapper (Trending + Early Adopter) */}
-      <MarketOverview />
-
-      {/* ✅ Separate Section for Examples Navigation */}
-      <div className="container-wrapper">
-        <div className="container pt-6">
-          <div className="rounded-lg border bg-background p-4 shadow-md">
-            <TabsNav className="[&>a:first-child]:text-primary" />
-          </div>
-        </div>
-      </div>
-
-      {/* ✅ Rest of the Page */}
-      <div className="container-wrapper">
-        <div className="container py-6">
-          <section className="overflow-hidden rounded-lg border bg-background shadow-md md:hidden md:shadow-xl">
-            <Image
-              src="/tabs/cards-light.png"
-              width={1280}
-              height={1214}
-              alt="Cards"
-              className="block dark:hidden"
-            />
-            <Image
-              src="/tabs/cards-dark.png"
-              width={1280}
-              height={1214}
-              alt="Cards"
-              className="hidden dark:block"
-            />
-          </section>
-          <section
-            className="hidden md:block [&>div]:p-0"
-            style={
-              {
-                "--radius": "0.75rem",
-              } as React.CSSProperties
-            }
-          >
-            <CardsDemo />
-          </section>
-        </div>
-      </div>
-    </>
-  );
+  // Show the not logged in layout if not authenticated
+  return <NotLoggedInLayout />;
 }
