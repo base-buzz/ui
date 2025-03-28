@@ -40,7 +40,7 @@ const LinksProperties = defineNestedType(() => ({
 
 export const Doc = defineDocumentType(() => ({
   name: "Doc",
-  filePathPattern: `docs/**/*.mdx`,
+  filePathPattern: `{docs,public-docs}/**/*.mdx`,
   contentType: "mdx",
   fields: {
     title: {

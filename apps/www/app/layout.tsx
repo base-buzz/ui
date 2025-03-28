@@ -17,12 +17,10 @@ import { Toaster as NewYorkSonner } from "@/registry/new-york/ui/sonner";
 import { Toaster as NewYorkToaster } from "@/registry/new-york/ui/toaster";
 
 export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
-  },
+  title: "BaseBuzz",
+  description:
+    "BaseBuzz is the ultimate hub for AI-driven DeFi, meme speculation, and real-world asset tokenization. Trade, engage, and build—powered by $BUZZ.",
   metadataBase: new URL(siteConfig.url),
-  description: siteConfig.description,
   keywords: [
     "Next.js",
     "React",
@@ -46,10 +44,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
-        alt: siteConfig.name,
+        url: `/og?title=${encodeURIComponent("BaseBuzz | Trade crypto and NFT's safely on the top Base platform")}&description=${encodeURIComponent("BaseBuzz is the ultimate hub for AI-driven DeFi, meme speculation, and real-world asset tokenization. Trade, engage, and build—powered by $BUZZ.")}`,
       },
     ],
   },
@@ -57,7 +52,11 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [siteConfig.ogImage],
+    images: [
+      {
+        url: `/og?title=${encodeURIComponent("BaseBuzz | Trade crypto and NFT's safely on the top Base platform")}&description=${encodeURIComponent("BaseBuzz is the ultimate hub for AI-driven DeFi, meme speculation, and real-world asset tokenization. Trade, engage, and build—powered by $BUZZ.")}`,
+      },
+    ],
     creator: "@shadcn",
   },
   icons: {
