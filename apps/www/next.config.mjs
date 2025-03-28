@@ -6,14 +6,10 @@ const nextConfig = {
     outputFileTracingIncludes: {
       "/blocks/*": ["./registry/**/*"],
     },
-    optimizeCss: true,
-    turbotrace: {
-      memoryLimit: 4096,
-    },
+    // optimizeCss: true, // Disabled due to critters issues
   },
   reactStrictMode: true,
   env: {
-    // eslint-disable-next-line turbo/no-undeclared-env-vars
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
   swcMinify: true,
@@ -35,6 +31,10 @@ const nextConfig = {
       },
     ],
   },
+  // Add build optimization settings
+  poweredByHeader: false,
+  compress: true,
+  generateEtags: false,
   async redirects() {
     // Only add docs redirects if docs exist
     const fs = await import("fs");
@@ -95,11 +95,11 @@ const nextConfig = {
     ];
   },
   webpack(config) {
-    config.infrastructureLogging = { level: "error" }; // ✅ Reduce logging
+    config.infrastructureLogging = { level: "error" }; // Reduce logging
     config.watchOptions = {
-      aggregateTimeout: 500, // ✅ Optimize rebuild timing
-      poll: 500, // ✅ Reduce file polling intensity
-      ignored: "**/node_modules/**", // ✅ Ignore unnecessary files
+      aggregateTimeout: 500,
+      poll: 500,
+      ignored: "**/node_modules/**",
     };
     return config;
   },
