@@ -11,13 +11,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { useAccount } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { Icon } from "@/components/ui/icons";
 import { CheckIcon, CopyIcon, ExternalLinkIcon, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface WalletProfileSheetProps {
   children: React.ReactNode;
@@ -31,6 +32,8 @@ export default function WalletProfileSheet({
   isOwnWallet = true,
 }: WalletProfileSheetProps) {
   const { address: connectedAddress } = useAccount();
+  const { disconnect } = useDisconnect();
+  const router = useRouter();
   const { user } = useCurrentUser();
   const [copied, setCopied] = useState(false);
 
@@ -47,6 +50,11 @@ export default function WalletProfileSheet({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
+  };
+
+  const handleDisconnect = () => {
+    disconnect();
+    router.push("/"); // Redirect to home page after disconnect
   };
 
   // Mock data for the wallet profile
@@ -181,6 +189,7 @@ export default function WalletProfileSheet({
                 <Button
                   variant="outline"
                   className="flex w-full items-center justify-start gap-2 text-destructive hover:text-destructive"
+                  onClick={handleDisconnect}
                 >
                   <Icon name="log-out" className="h-4 w-4" />
                   <span>Disconnect wallet</span>
