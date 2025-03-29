@@ -1,20 +1,23 @@
 "use client";
 
 import * as React from "react";
-import { Provider as JotaiProvider } from "jotai";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { WagmiProvider } from "wagmi";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { config } from "@/lib/wagmi";
 
-import { TooltipProvider } from "@/registry/new-york/ui/tooltip";
+// Create a React Query client
+const queryClient = new QueryClient();
 
-export function ThemeProvider({
-  children,
-  ...props
-}: React.ComponentProps<typeof NextThemesProvider>) {
+export function Providers({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
   return (
-    <JotaiProvider>
-      <NextThemesProvider {...props}>
-        <TooltipProvider delayDuration={0}>{children}</TooltipProvider>
-      </NextThemesProvider>
-    </JotaiProvider>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider>{mounted && children}</RainbowKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
   );
 }
