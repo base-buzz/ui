@@ -116,6 +116,13 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* Show posts count section */}
+      <div className="flex items-center justify-center border-b border-border py-3.5">
+        <button className="text-[15px] font-normal text-primary hover:underline">
+          Show 453 posts
+        </button>
+      </div>
+
       <div className="divide-y divide-border">
         {/* Post creation area with collapsible form */}
         {user && (
@@ -199,15 +206,25 @@ export default function HomePage() {
             </div>
           ) : posts.length > 0 ? (
             posts.map((post) => (
-              <div key={post.id} className="p-4">
-                <PostComponent post={post} currentUserId={user?.id} />
-              </div>
+              <PostComponent
+                key={post.id}
+                post={post}
+                currentUserId={user?.id}
+              />
             ))
           ) : (
-            <div className="p-6 text-center">
-              <p className="text-muted-foreground">
-                No posts yet. Be the first to post!
+            <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
+              <div className="rounded-full bg-primary/10 p-4">
+                <Icon name="sparkles" className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold">Welcome to BaseBuzz!</h3>
+              <p className="max-w-[80%] text-muted-foreground">
+                Follow other users to see their posts and start building your
+                feed. Or create your first post to get started!
               </p>
+              <Link href="/explore">
+                <Button className="mt-2">Find people to follow</Button>
+              </Link>
             </div>
           )}
         </div>

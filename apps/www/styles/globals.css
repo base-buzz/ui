@@ -6,6 +6,7 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
+    --hover: 0 0% 95%; /* Light mode hover background */
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
@@ -41,11 +42,12 @@
 
   .dark {
     --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    --foreground: 220 14% 8%;
+    --hover: 200 7% 13%; /* Dark mode hover background - matches Twitter's hover state */
     --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card-foreground: 220 14% 8%;
     --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover-foreground: 220 14% 8%;
     --primary: 0 0% 98%;
     --primary-foreground: 0 0% 9%;
     --secondary: 0 0% 14.9%;
@@ -153,6 +155,27 @@
   .container {
     @apply mx-auto max-w-screen-2xl px-4 xl:px-6;
   }
+
+  .hover-background {
+    @apply transition-colors duration-200;
+  }
+
+  .hover-background:hover {
+    background-color: hsl(var(--hover));
+  }
+
+  /* Remove these styles as we now use inline hover styles */
+  /* .p-4 {
+    padding: 1rem;
+  }
+
+  .p-4:hover {
+    background-color: rgba(239, 243, 244, 0.5);
+  }
+
+  .dark .p-4:hover {
+    background-color: rgba(22, 24, 28, 0.5);
+  } */
 }
 
 @layer base {

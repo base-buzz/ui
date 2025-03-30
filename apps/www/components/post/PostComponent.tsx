@@ -12,13 +12,8 @@ import {
   AvatarImage,
 } from "@/registry/new-york/ui/avatar";
 import { Button } from "@/registry/new-york/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/registry/new-york/ui/card";
 import { Icon } from "@/components/ui/icons";
+import { cn } from "@/lib/utils";
 
 interface PostComponentProps {
   post: Post;
@@ -155,128 +150,162 @@ export default function PostComponent({
   const isVerified = post.verified || false;
 
   return (
-    <Card
-      className={`${isComment ? "ml-12 mt-2 border-t" : ""} cursor-pointer transition-colors hover:bg-accent/10`}
+    <div
+      className={cn(
+        "cursor-pointer border-b border-border px-4 py-3 hover:bg-[rgba(0,0,0,0.03)] dark:hover:bg-[rgba(255,255,255,0.03)]",
+        isComment && "ml-12 mt-2",
+      )}
       onClick={handlePostClick}
     >
-      <CardHeader className="flex flex-row items-start gap-4 p-4 pb-2">
+      <div className="flex gap-3">
         <Link
           href={`/profile/${post.userId}`}
           className="shrink-0"
-          onClick={(e) => e.stopPropagation()} // Prevent the post click handler from firing
+          onClick={(e) => e.stopPropagation()}
         >
-          <Avatar>
+          <Avatar className="h-10 w-10">
             <AvatarImage src={avatarSrc} alt={displayName} />
             <AvatarFallback>
               {displayName.substring(0, 2) || "U"}
             </AvatarFallback>
           </Avatar>
         </Link>
-        <div className="flex-1">
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1">
-              <Link
-                href={`/profile/${post.userId}`}
-                className="font-semibold hover:underline"
-                onClick={(e) => e.stopPropagation()} // Prevent the post click handler from firing
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-1">
+            <Link
+              href={`/profile/${post.userId}`}
+              className="max-w-[150px] truncate font-semibold hover:underline"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {displayName}
+            </Link>
+            {isVerified && (
+              <Icon
+                name="shield-check"
+                className="h-4 w-4 shrink-0 text-primary"
+              />
+            )}
+            <span className="truncate text-sm text-muted-foreground">
+              {displayHandle}
+            </span>
+            <span className="text-sm text-muted-foreground">
+              · {post.createdAt ? formatTimeAgo(new Date(post.createdAt)) : ""}
+            </span>
+          </div>
+
+          <div className="mt-0.5">
+            <p className="whitespace-pre-wrap text-[15px] leading-[20px]">
+              {post.content}
+            </p>
+
+            {Array.isArray(post.media) && post.media.length > 0 && (
+              <div
+                className={cn(
+                  "mt-3 grid gap-2",
+                  post.media?.length === 1 && "grid-cols-1",
+                  post.media?.length === 2 && "grid-cols-2",
+                  post.media?.length === 3 && "grid-cols-2",
+                  post.media?.length === 4 && "grid-cols-2",
+                )}
               >
-                {displayName}
-              </Link>
-              {isVerified && (
-                <Icon name="shield-check" className="h-4 w-4 text-primary" />
+                {post.media.map((media, index) => (
+                  <img
+                    key={index}
+                    src={media}
+                    alt={`Post media ${index + 1}`}
+                    className={cn(
+                      "w-full rounded-2xl object-cover",
+                      post.media?.length === 1
+                        ? "max-h-[500px]"
+                        : "max-h-[250px]",
+                      post.media?.length === 3 && index === 0 && "col-span-2",
+                    )}
+                  />
+                ))}
+              </div>
+            )}
+
+            {post.quoteTweet && (
+              <div className="mt-3 rounded-xl border p-3 hover:bg-muted/50">
+                <p className="text-sm text-muted-foreground">Quoted Post</p>
+                {/* We'd fetch and render the quoted tweet here */}
+              </div>
+            )}
+          </div>
+
+          <div className="mt-3 flex max-w-[425px] justify-between pr-8">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="flex h-[20px] items-center gap-1 rounded-[20px] p-0 text-muted-foreground hover:bg-primary/10 hover:text-primary"
+              onClick={handleComment}
+            >
+              <MessageCircle
+                className={cn(
+                  "h-[18px] w-[18px]",
+                  showComments && "text-primary",
+                )}
+              />
+              <span className="ml-0.5 text-xs">{post.comments.length}</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className={cn(
+                "flex h-[20px] items-center gap-1 rounded-[20px] p-0 text-muted-foreground hover:bg-green-500/10 hover:text-green-500",
+                isRetweeted && "text-green-500",
               )}
-              <span className="text-sm text-muted-foreground">
-                {displayHandle}
-              </span>
-              <span className="text-sm text-muted-foreground">
-                ·{" "}
-                {post.createdAt ? formatTimeAgo(new Date(post.createdAt)) : ""}
-              </span>
-            </div>
+              onClick={handleRetweet}
+            >
+              <Repeat className="h-[18px] w-[18px]" />
+              <span className="ml-0.5 text-xs">{retweetCount}</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className={cn(
+                "flex h-[20px] items-center gap-1 rounded-[20px] p-0 text-muted-foreground hover:bg-red-500/10 hover:text-red-500",
+                isLiked && "text-red-500",
+              )}
+              onClick={handleLike}
+            >
+              <Heart
+                className={cn("h-[18px] w-[18px]", isLiked && "fill-current")}
+              />
+              <span className="ml-0.5 text-xs">{likeCount}</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="flex h-[20px] items-center gap-1 rounded-[20px] p-0 text-muted-foreground hover:bg-primary/10 hover:text-primary"
+              onClick={handleShare}
+            >
+              <Share className="h-[18px] w-[18px]" />
+            </Button>
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="p-4 pt-0">
-        <p className="whitespace-pre-wrap">{post.content}</p>
-
-        {post.media && post.media.length > 0 && (
-          <div
-            className={`mt-3 grid gap-2 ${post.media.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
-          >
-            {post.media.map((media, index) => (
-              <img
-                key={index}
-                src={media}
-                alt={`Post media ${index + 1}`}
-                className="max-h-[300px] w-full rounded-lg object-cover"
-              />
-            ))}
-          </div>
-        )}
-
-        {post.quoteTweet && (
-          <div className="mt-3 rounded-lg border p-3">
-            <p className="text-sm text-muted-foreground">Quoted Tweet</p>
-            {/* We'd fetch and render the quoted tweet here */}
-          </div>
-        )}
-      </CardContent>
-      <CardFooter className="flex justify-between border-t p-2">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="flex gap-2"
-          onClick={handleComment}
-        >
-          <MessageCircle
-            className={`h-4 w-4 ${showComments ? "text-primary" : ""}`}
-          />
-          <span className="text-xs">{post.comments.length}</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          className={`flex gap-2 ${isRetweeted ? "text-green-500" : ""}`}
-          onClick={handleRetweet}
-        >
-          <Repeat className="h-4 w-4" />
-          <span className="text-xs">{retweetCount}</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          className={`flex gap-2 ${isLiked ? "text-red-500" : ""}`}
-          onClick={handleLike}
-        >
-          <Heart className={`h-4 w-4 ${isLiked ? "fill-current" : ""}`} />
-          <span className="text-xs">{likeCount}</span>
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="flex gap-2"
-          onClick={handleShare}
-        >
-          <Share className="h-4 w-4" />
-        </Button>
-      </CardFooter>
+      </div>
 
       {/* Comments section - only show in post detail view or when expanded */}
       {isComment && showComments && post.comments.length > 0 && (
-        <div className="border-t p-4">
-          <h3 className="mb-4 font-semibold">Comments</h3>
-          <div className="space-y-4">
+        <div className="mt-3 border-t pt-3">
+          <h3 className="mb-3 font-semibold">Comments</h3>
+          <div className="space-y-3">
             {post.comments.map((comment) => (
-              <PostComponent
+              <div
                 key={comment.id}
-                post={comment}
-                currentUserId={currentUserId}
-                isComment={true}
-              />
+                className="cursor-pointer rounded-lg transition-colors hover:bg-accent/5"
+              >
+                <PostComponent
+                  post={comment}
+                  currentUserId={currentUserId}
+                  isComment={true}
+                />
+              </div>
             ))}
           </div>
         </div>
       )}
-    </Card>
+    </div>
   );
 }

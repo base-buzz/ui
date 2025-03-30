@@ -20,6 +20,7 @@ import { useClipboard } from "@/hooks/use-clipboard";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { WalletSheet } from "@/components/ui/wallet/wallet-sheet";
 import Image from "next/image";
+import React from "react";
 
 export function WalletButton() {
   // Wagmi hook for wallet state
@@ -27,6 +28,7 @@ export function WalletButton() {
 
   // Local state for wallet sheet visibility
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   // Custom hook for clipboard operations
   const { copy, copied } = useClipboard();
@@ -34,23 +36,55 @@ export function WalletButton() {
   // RainbowKit hook for opening the connect modal
   const { openConnectModal } = useConnectModal();
 
+  // Handle hydration mismatch
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Don't render anything until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <Button
+        variant="outline"
+        className="flex h-[44px] items-center gap-2 rounded-[10px] px-4 opacity-0"
+      >
+        <div className="rounded-[15px] bg-white/10 p-1">
+          <div className="h-7 w-7" />
+        </div>
+        Loading...
+      </Button>
+    );
+  }
+
   return (
     <>
       {isConnected ? (
         // Connected wallet state
         <Button
           variant="outline"
-          className="flex items-center gap-2 rounded-lg px-4 py-2 transition hover:bg-gray-200 dark:hover:bg-gray-700"
+          style={
+            {
+              "--gradient-start": "#2563eb",
+              "--gradient-end": "#3b82f6",
+              background:
+                "linear-gradient(to right, var(--gradient-start), var(--gradient-end))",
+              backgroundSize: "200% auto",
+              border: "none",
+            } as React.CSSProperties
+          }
+          className="flex h-[44px] items-center gap-2 rounded-[10px] px-4 text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-md"
           onClick={() => setOpen(true)}
         >
           {/* Wallet avatar */}
-          <Image
-            src="/avatars/01.png"
-            alt="Wallet Avatar"
-            width="10"
-            height="10"
-            className="h-5 w-5 rounded-full"
-          />
+          <div className="rounded-[15px] bg-white/10 p-1">
+            <Image
+              src="/avatars/01.png"
+              alt="Wallet Avatar"
+              width="28"
+              height="28"
+              className="h-7 w-7 rounded-full"
+            />
+          </div>
           {/* Truncated wallet address */}
           <span className="max-w-[100px] truncate">
             {address?.slice(0, 6)}...{address?.slice(-4)}
@@ -64,9 +98,9 @@ export function WalletButton() {
             }}
           >
             {copied ? (
-              <Check className="h-4 w-4 text-green-500 opacity-100 transition-opacity" />
+              <Check className="h-4 w-4 text-white opacity-100 transition-opacity" />
             ) : (
-              <Copy className="h-4 w-4 text-gray-500 opacity-0 transition-opacity hover:opacity-100" />
+              <Copy className="h-4 w-4 text-white/70 opacity-0 transition-opacity hover:opacity-100" />
             )}
           </div>
         </Button>
@@ -74,10 +108,22 @@ export function WalletButton() {
         // Disconnected wallet state
         <Button
           variant="default"
-          className="flex items-center gap-2 rounded-lg bg-background text-foreground hover:bg-muted"
+          style={
+            {
+              "--gradient-start": "#2563eb",
+              "--gradient-end": "#3b82f6",
+              background:
+                "linear-gradient(to right, var(--gradient-start), var(--gradient-end))",
+              backgroundSize: "200% auto",
+              border: "none",
+            } as React.CSSProperties
+          }
+          className="flex h-[44px] items-center gap-2 rounded-[10px] px-4 text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-md"
           onClick={() => openConnectModal?.()}
         >
-          <Wallet className="h-5 w-5 text-foreground" />
+          <div className="rounded-[15px] bg-white/10 p-1">
+            <Wallet className="h-7 w-7" />
+          </div>
           Connect Wallet
         </Button>
       )}

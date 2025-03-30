@@ -101,7 +101,7 @@ export default function CreatePostForm({
   };
 
   return (
-    <Card className={cn("p-4", className)}>
+    <Card className={cn("p-3", className)}>
       <form onSubmit={handleSubmit}>
         <Textarea
           placeholder={
@@ -115,12 +115,12 @@ export default function CreatePostForm({
           onChange={(e) => setContent(e.target.value)}
           onFocus={() => setIsTextareaFocused(true)}
           onBlur={() => content.length === 0 && setIsTextareaFocused(false)}
-          className="min-h-[100px] resize-none border-0 bg-transparent p-0 text-xl focus-visible:ring-0 focus-visible:ring-offset-0"
+          className="min-h-[80px] resize-none border-0 bg-transparent p-0 text-xl focus-visible:ring-0 focus-visible:ring-offset-0"
         />
 
         {media.length > 0 && (
           <div
-            className={`mt-3 grid gap-2 ${media.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
+            className={`mt-2 grid gap-2 ${media.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}
           >
             {media.map((url, index) => (
               <div key={index} className="relative">

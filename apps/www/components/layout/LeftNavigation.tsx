@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAccount } from "wagmi";
@@ -18,6 +18,11 @@ export default function LeftNavigation() {
   const { isWalletModalOpen, openWalletModal, closeWalletModal } =
     useWalletModal();
   const [isCompact, setIsCompact] = useState(false);
+
+  // Notification counts - these would come from backend/Supabase in production
+  // @TODO: Integrate with Supabase to fetch actual notification counts
+  const [homeCount, setHomeCount] = useState(1);
+  const [notificationsCount, setNotificationsCount] = useState(2);
 
   const handleNavClick = (path: string) => {
     if (!isConnected && isProtectedRoute(leftNavItems, path)) {
@@ -53,6 +58,19 @@ export default function LeftNavigation() {
             <ul className="space-y-2">
               {leftNavItems.map((item) => {
                 const isActive = pathname === item.path;
+
+                // Determine if we should show a notification dot and count
+                const showNotificationDot =
+                  (item.icon === "home" && homeCount > 0) ||
+                  (item.icon === "bell" && notificationsCount > 0);
+
+                const itemCount =
+                  item.icon === "home"
+                    ? homeCount
+                    : item.icon === "bell"
+                      ? notificationsCount
+                      : 0;
+
                 return (
                   <li key={item.path}>
                     {item.protected && !isConnected ? (
@@ -63,28 +81,42 @@ export default function LeftNavigation() {
                           isActive ? "bg-accent/50 font-bold" : "",
                         )}
                       >
-                        <Icon
-                          name={item.icon}
-                          className={cn(
-                            "h-7 w-7",
-                            isActive
-                              ? "text-foreground"
-                              : "text-muted-foreground",
-                            item.icon === "home" &&
-                              isActive &&
-                              "text-foreground",
-                          )}
-                        />
-                        {!isCompact && (
-                          <span
+                        <div className="relative">
+                          <Icon
+                            name={item.icon}
                             className={cn(
-                              "ml-4 hidden text-xl md:block",
-                              isActive ? "font-bold" : "",
-                              item.icon === "home" && "font-extrabold",
+                              "h-7 w-7",
+                              isActive
+                                ? "text-foreground"
+                                : "text-muted-foreground",
+                              item.icon === "home" &&
+                                isActive &&
+                                "text-foreground",
                             )}
-                          >
-                            {item.label}
-                          </span>
+                          />
+                          {showNotificationDot && (
+                            <div className="absolute -right-0.5 -top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#1d9bf0] text-[11px] font-bold leading-none text-white">
+                              {itemCount > 0 && itemCount <= 9 ? itemCount : ""}
+                            </div>
+                          )}
+                        </div>
+                        {!isCompact && (
+                          <div className="flex flex-1 items-center">
+                            <span
+                              className={cn(
+                                "ml-4 hidden text-xl md:block",
+                                isActive ? "font-bold" : "",
+                                item.icon === "home" && "font-extrabold",
+                              )}
+                            >
+                              {item.label}
+                            </span>
+                            {showNotificationDot && itemCount > 9 && (
+                              <div className="ml-3 flex h-[17px] min-w-[26px] items-center justify-center rounded-full bg-[#1d9bf0] px-1 text-[11px] font-bold text-white">
+                                {itemCount}
+                              </div>
+                            )}
+                          </div>
                         )}
                       </button>
                     ) : (
@@ -96,27 +128,41 @@ export default function LeftNavigation() {
                         )}
                         onClick={() => handleNavClick(item.path)}
                       >
-                        <Icon
-                          name={item.icon}
-                          className={cn(
-                            "h-7 w-7",
-                            item.icon === "home" && isActive
-                              ? "text-foreground"
-                              : isActive
-                                ? "text-foreground"
-                                : "text-muted-foreground",
-                          )}
-                        />
-                        {!isCompact && (
-                          <span
+                        <div className="relative">
+                          <Icon
+                            name={item.icon}
                             className={cn(
-                              "ml-4 hidden text-xl md:block",
-                              isActive ? "font-bold" : "",
-                              item.icon === "home" && isActive && "font-bold",
+                              "h-7 w-7",
+                              item.icon === "home" && isActive
+                                ? "text-foreground"
+                                : isActive
+                                  ? "text-foreground"
+                                  : "text-muted-foreground",
                             )}
-                          >
-                            {item.label}
-                          </span>
+                          />
+                          {showNotificationDot && (
+                            <div className="absolute -right-0.5 -top-0.5 flex h-[18px] w-[18px] items-center justify-center rounded-full bg-[#1d9bf0] text-[11px] font-bold leading-none text-white">
+                              {itemCount > 0 && itemCount <= 9 ? itemCount : ""}
+                            </div>
+                          )}
+                        </div>
+                        {!isCompact && (
+                          <div className="flex flex-1 items-center">
+                            <span
+                              className={cn(
+                                "ml-4 hidden text-xl md:block",
+                                isActive ? "font-bold" : "",
+                                item.icon === "home" && isActive && "font-bold",
+                              )}
+                            >
+                              {item.label}
+                            </span>
+                            {showNotificationDot && itemCount > 9 && (
+                              <div className="ml-3 flex h-[17px] min-w-[26px] items-center justify-center rounded-full bg-[#1d9bf0] px-1 text-[11px] font-bold text-white">
+                                {itemCount}
+                              </div>
+                            )}
+                          </div>
                         )}
                       </Link>
                     )}

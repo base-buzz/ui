@@ -10,8 +10,6 @@ import { Providers } from "@/components/providers";
 import { cn } from "@/lib/utils";
 import { Toaster as NewYorkSonner } from "@/registry/new-york/ui/sonner";
 import { Toaster as NewYorkToaster } from "@/registry/new-york/ui/toaster";
-import LeftNavigation from "@/components/layout/LeftNavigation";
-import RightSidebar from "@/components/layout/RightSidebar";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
 
 export const metadata: Metadata = {
@@ -90,7 +88,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Providers>
           <ThemeProvider
             attribute="class"
-            defaultTheme="light"
+            defaultTheme="system"
             enableSystem
             disableTransitionOnChange
             enableColorScheme

@@ -48,8 +48,6 @@ export const leftNavItems: NavItem[] = [
     path: "/chat",
     protected: true,
   },
-  { label: "Trending Tags", icon: "hash", path: "/tags" },
-  { label: "Profile", icon: "user", path: "/profile/me", protected: true },
   {
     label: "More",
     icon: "more-horizontal",
