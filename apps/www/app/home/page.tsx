@@ -15,7 +15,6 @@ import { ChevronDown, Users, Plus } from "lucide-react";
 import Link from "next/link";
 import { Icon } from "@/components/ui/icons";
 import { UnauthenticatedView } from "@/components/auth/UnauthenticatedView";
-import MobileHeader from "@/components/layout/MobileHeader";
 
 export default function HomePage() {
   const { isAuthenticated, loading: authLoading } = useAuth({
@@ -97,9 +96,6 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Mobile header with tabs - only visible on mobile */}
-      <MobileHeader showTabs showProfile />
-
       {/* Desktop Tabs navigation - hidden on mobile */}
       <div className="sticky top-0 z-10 hidden bg-background/90 backdrop-blur-md md:block">
         <div className="grid grid-cols-4">
@@ -130,7 +126,7 @@ export default function HomePage() {
       <div className="divide-y divide-border">
         {/* Post creation area with collapsible form */}
         {user && (
-          <div className="p-4">
+          <div className="hidden p-4 md:block">
             {isComposeExpanded ? (
               <div className="flex flex-col">
                 {/* Audience selector */}

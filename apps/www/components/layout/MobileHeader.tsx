@@ -9,6 +9,7 @@ import { Icon } from "@/components/ui/icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useWalletModal } from "@/hooks/useAuth";
 import { useAccount } from "wagmi";
+import { useWalletSheet } from "@/hooks/useWalletSheet";
 
 interface Tab {
   id: string;
@@ -36,6 +37,7 @@ export default function MobileHeader({
   const { user } = useCurrentUser();
   const { isConnected } = useAccount();
   const { openWalletModal } = useWalletModal();
+  const { openWalletSheet } = useWalletSheet();
 
   const defaultTabs: Tab[] = [
     { id: "for-you", label: "For you", path: "/home" },
@@ -105,9 +107,22 @@ export default function MobileHeader({
           </div>
         )}
 
-        {title && <h1 className="text-xl font-bold">{title}</h1>}
+        {/* Center logo */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+          <img
+            src="/logo.svg"
+            alt="BaseBuzz"
+            className="h-6 w-auto dark:invert"
+          />
+        </div>
 
-        <div className="w-8">{/* Placeholder for right side if needed */}</div>
+        {/* Wallet button (replacing Premium button) */}
+        <button
+          onClick={openWalletSheet}
+          className="flex items-center justify-center rounded-full bg-indigo-600 px-4 py-2 text-sm font-semibold text-white"
+        >
+          Wallet
+        </button>
       </div>
 
       {/* Tabs navigation row */}

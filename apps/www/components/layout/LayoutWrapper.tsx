@@ -5,6 +5,9 @@ import { cn } from "@/lib/utils";
 import LeftNavigation from "./LeftNavigation";
 import RightSidebar from "./RightSidebar";
 import MobileBottomNav from "./MobileBottomNav";
+import { useWalletSheet } from "@/hooks/useWalletSheet";
+import { WalletSheet } from "@/components/ui/wallet/wallet-sheet";
+import MobileHeader from "./MobileHeader";
 
 interface LayoutWrapperProps {
   children: React.ReactNode;
@@ -12,9 +15,8 @@ interface LayoutWrapperProps {
 
 export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const pathname = usePathname();
-
-  // Check if the current page is the landing page
   const isLandingPage = pathname === "/";
+  const { isWalletSheetOpen, closeWalletSheet } = useWalletSheet();
 
   // Add extra padding at the bottom on mobile for the navigation bar
   const mobileBottomPadding = !isLandingPage ? "pb-[49px] md:pb-0" : "";
@@ -26,6 +28,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
         mobileBottomPadding,
       )}
     >
+      {!isLandingPage && <MobileHeader showTabs showProfile />}
       {isLandingPage ? (
         // Landing page layout
         <div className="flex-1">{children}</div>
@@ -50,7 +53,8 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
       )}
 
       {/* Mobile bottom navigation - visible only on mobile */}
-      <MobileBottomNav />
+      {!isLandingPage && <MobileBottomNav />}
+      <WalletSheet open={isWalletSheetOpen} onOpenChange={closeWalletSheet} />
     </div>
   );
 }
