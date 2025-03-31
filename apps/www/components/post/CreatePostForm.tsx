@@ -52,34 +52,14 @@ export default function CreatePostForm({
     setIsSubmitting(true);
 
     try {
-      let newPost;
-
-      if (replyToId) {
-        // If it's a reply, use the reply API
-        const response = await postApi.replyToPost(
-          replyToId,
-          userId,
-          content,
-          media.length > 0 ? media : undefined,
-        );
-        newPost = response.comment;
-      } else if (quoteTweetId) {
-        // If it's a quote tweet, use the quote tweet API
-        const response = await postApi.quoteTweet(
-          quoteTweetId,
-          userId,
-          content,
-          media.length > 0 ? media : undefined,
-        );
-        newPost = response.post;
-      } else {
-        // Regular post
-        newPost = await postApi.createPost({
-          userId,
-          content,
-          media: media.length > 0 ? media : undefined,
-        });
-      }
+      // Use the updated createPost function signature for all post types
+      const newPost = await postApi.createPost(
+        userId,
+        content,
+        media.length > 0 ? media : undefined,
+        replyToId, // Pass as parentId
+        quoteTweetId, // Pass as quotedPostId
+      );
 
       // Reset form
       setContent("");

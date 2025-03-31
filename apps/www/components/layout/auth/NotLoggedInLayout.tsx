@@ -48,19 +48,6 @@ export default function NotLoggedInLayout() {
 
   return (
     <div className="flex h-screen flex-col bg-background">
-      {/* Mobile logo */}
-      <div className="flex w-full px-4 pt-2 lg:hidden">
-        <div className="relative h-[45px] w-[45px]">
-          <Image
-            src="/black.svg"
-            alt="BaseBuzz"
-            width={45}
-            height={45}
-            priority
-          />
-        </div>
-      </div>
-
       {/* Main content */}
       <main className="flex grow flex-col pb-[152px] lg:flex-row lg:pb-[calc(152px+32px)]">
         {/* Left column - Logo (desktop only) */}

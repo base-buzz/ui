@@ -32,13 +32,13 @@ export const userApi = {
 
   // Get user by ID
   getUserById: async (id: string): Promise<User> => {
-    const response = await fetch(`${API_URL}/users?id=${id}`);
+    const response = await fetch(`${API_URL}/users/${id}`);
     return handleResponse(response);
   },
 
   // Update user profile
   updateUser: async (user: Partial<User> & { id: string }): Promise<User> => {
-    const response = await fetch(`${API_URL}/users`, {
+    const response = await fetch(`${API_URL}/users/${user.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -53,249 +53,145 @@ export const userApi = {
 export const postApi = {
   // Get all posts
   getPosts: async (): Promise<Post[]> => {
-    // In a real app, we would call an API endpoint here
-    // For now, return mock data
-    const mockPosts: Post[] = [
-      {
-        id: "1",
-        userId: "user1",
-        userName: "Elon Musk",
-        userHandle: "@elonmusk",
-        userAvatar: "https://i.pravatar.cc/150?img=11",
-        verified: true,
-        content: "The age of AI has begun.",
-        createdAt: new Date(Date.now() - 3600000).toISOString(),
-        likes: 1420,
-        retweets: 243,
-        comments: [
-          {
-            id: "1-reply-1",
-            userId: "user5",
-            userName: "kitze",
-            userHandle: "@thekitze",
-            userAvatar: "https://i.pravatar.cc/150?img=45",
-            verified: true,
-            content: "100%. It's moving way faster than most people realize.",
-            createdAt: new Date(Date.now() - 3400000).toISOString(),
-            likes: 89,
-            retweets: 12,
-            comments: [],
-          },
-          {
-            id: "1-reply-2",
-            userId: "user4",
-            userName: "Crypto Barista",
-            userHandle: "@CryptoBarista",
-            userAvatar: "https://i.pravatar.cc/150?img=33",
-            verified: false,
-            content:
-              "What do you think will be the most transformative AI use case in the next 5 years?",
-            createdAt: new Date(Date.now() - 3300000).toISOString(),
-            likes: 42,
-            retweets: 5,
-            comments: [],
-          },
-        ],
-        media: [
-          "https://pbs.twimg.com/media/F_k1OvZWgAAm8tz?format=jpg&name=medium",
-        ],
-      },
-      {
-        id: "2",
-        userId: "user2",
-        userName: "Vitalik Buterin",
-        userHandle: "@VitalikButerin",
-        userAvatar: "https://i.pravatar.cc/150?img=15",
-        verified: true,
-        content:
-          "Decentralized social media is the future. Layer 2 chains are going to change the game.",
-        createdAt: new Date(Date.now() - 7200000).toISOString(),
-        likes: 892,
-        retweets: 145,
-        comments: [
-          {
-            id: "2-reply-1",
-            userId: "user3",
-            userName: "BasedGhoul",
-            userHandle: "@BasedGhoul",
-            userAvatar: "https://i.pravatar.cc/150?img=23",
-            verified: true,
-            content:
-              "Base is perfectly positioned for this. Social media on L2s is going to be huge.",
-            createdAt: new Date(Date.now() - 7000000).toISOString(),
-            likes: 201,
-            retweets: 31,
-            comments: [],
-          },
-          {
-            id: "2-reply-2",
-            userId: "user7",
-            userName: "Lord Bebo",
-            userHandle: "@MyLordBebo",
-            userAvatar: "https://i.pravatar.cc/150?img=62",
-            verified: true,
-            content:
-              "What role do you see for ETH in social media monetization?",
-            createdAt: new Date(Date.now() - 6900000).toISOString(),
-            likes: 123,
-            retweets: 17,
-            comments: [],
-          },
-        ],
-      },
-      {
-        id: "3",
-        userId: "user3",
-        userName: "BasedGhoul",
-        userHandle: "@BasedGhoul",
-        userAvatar: "https://i.pravatar.cc/150?img=23",
-        verified: true,
-        content: "BaseBuzz going intergalactic 🚀 Join the revolution now!",
-        createdAt: new Date(Date.now() - 10800000).toISOString(),
-        likes: 573,
-        retweets: 98,
-        comments: [
-          {
-            id: "3-reply-1",
-            userId: "user8",
-            userName: "Velina Tchakarova",
-            userHandle: "@vtchakarova",
-            userAvatar: "https://i.pravatar.cc/150?img=69",
-            verified: false,
-            content: "Just signed up. Love what you're building!",
-            createdAt: new Date(Date.now() - 10200000).toISOString(),
-            likes: 32,
-            retweets: 2,
-            comments: [],
-          },
-        ],
-        media: [
-          "https://pbs.twimg.com/media/GHd1-64a0AAoRYC?format=jpg&name=large",
-        ],
-      },
-      {
-        id: "4",
-        userId: "user4",
-        userName: "Crypto Barista",
-        userHandle: "@CryptoBarista",
-        userAvatar: "https://i.pravatar.cc/150?img=33",
-        verified: false,
-        content:
-          "Coffee and crypto - the two things that keep me going through bear markets. Who else is stacking sats while sipping their morning brew? ☕️💰",
-        createdAt: new Date(Date.now() - 14400000).toISOString(),
-        likes: 321,
-        retweets: 42,
-        comments: [
-          {
-            id: "4-reply-1",
-            userId: "user5",
-            userName: "kitze",
-            userHandle: "@thekitze",
-            userAvatar: "https://i.pravatar.cc/150?img=45",
-            verified: true,
-            content: "This is literally me every morning.",
-            createdAt: new Date(Date.now() - 14200000).toISOString(),
-            likes: 78,
-            retweets: 5,
-            comments: [],
-          },
-          {
-            id: "4-reply-2",
-            userId: "user1",
-            userName: "Elon Musk",
-            userHandle: "@elonmusk",
-            userAvatar: "https://i.pravatar.cc/150?img=11",
-            verified: true,
-            content: "I prefer Dogecoin with my coffee ☕️🐕",
-            createdAt: new Date(Date.now() - 14100000).toISOString(),
-            likes: 542,
-            retweets: 123,
-            comments: [],
-          },
-        ],
-      },
-      {
-        id: "5",
-        userId: "user5",
-        userName: "kitze",
-        userHandle: "@thekitze",
-        userAvatar: "https://i.pravatar.cc/150?img=45",
-        verified: true,
-        content: "gm",
-        createdAt: new Date(Date.now() - 18000000).toISOString(),
-        likes: 48,
-        retweets: 0,
-        comments: [
-          {
-            id: "5-reply-1",
-            userId: "user6",
-            userName: "CNW",
-            userHandle: "@CANews Watch",
-            userAvatar: "https://i.pravatar.cc/150?img=51",
-            verified: false,
-            content: "gm frens",
-            createdAt: new Date(Date.now() - 17800000).toISOString(),
-            likes: 12,
-            retweets: 0,
-            comments: [],
-          },
-        ],
-        media: [
-          "https://pbs.twimg.com/media/GDZvGt4bUAE4t_a?format=jpg&name=medium",
-        ],
-      },
-      {
-        id: "6",
-        userId: "user6",
-        userName: "CNW",
-        userHandle: "@CANews Watch",
-        userAvatar: "https://i.pravatar.cc/150?img=51",
-        verified: false,
-        content: "#BREAKING Insane Pursuit Ends in Major Crash in Long Beach.",
-        createdAt: new Date(Date.now() - 21600000).toISOString(),
-        likes: 67,
-        retweets: 24,
-        comments: [],
-        media: [
-          "https://pbs.twimg.com/media/GC7yVfHbgAAPDlC?format=jpg&name=small",
-        ],
-      },
-      {
-        id: "7",
-        userId: "user7",
-        userName: "Lord Bebo",
-        userHandle: "@MyLordBebo",
-        userAvatar: "https://i.pravatar.cc/150?img=62",
-        verified: true,
-        content: "🇬🇧 🇺🇦 ‼️ Russia started a big drone raid on Ukraine!",
-        createdAt: new Date(Date.now() - 25200000).toISOString(),
-        likes: 114,
-        retweets: 28,
-        comments: [],
-      },
-      {
-        id: "8",
-        userId: "user8",
-        userName: "Velina Tchakarova",
-        userHandle: "@vtchakarova",
-        userAvatar: "https://i.pravatar.cc/150?img=69",
-        verified: false,
-        content:
-          "The one fact I can immediately agree is that we can't ignore the Chinese-Russian encroachment anymore and Europe did exactly that. Nobody in Europe paid attention to the DragonBear.",
-        createdAt: new Date(Date.now() - 28800000).toISOString(),
-        likes: 342,
-        retweets: 56,
-        comments: [],
-      },
-    ];
+    try {
+      // Use the new API endpoints
+      const response = await fetch(`${API_URL}/posts?limit=20&page=0`);
+      const data = await handleResponse(response);
 
-    return mockPosts;
+      // Map the API response to match the existing Post interface used by UI components
+      const posts = data.map((post: any) => ({
+        id: post.id,
+        userId: post.user_id,
+        userName: post.display_name || "User",
+        userHandle: post.address ? `@${post.address.substring(0, 8)}` : "@user",
+        userAvatar: post.avatar_url || "https://i.pravatar.cc/150?img=1",
+        verified: post.tier === "gold" || post.tier === "diamond",
+        content: post.content,
+        createdAt: post.created_at,
+        likes: post.likes_count || 0,
+        retweets: post.reposts_count || 0,
+        comments: [], // Will be populated below
+        media: post.media_urls || [],
+        // Add metadata for paginating replies
+        _repliesMetadata: {
+          hasMoreReplies: post.replies_count > 10,
+          totalReplies: post.replies_count || 0,
+          currentPage: 0,
+        },
+      }));
+
+      // Fetch replies for each post in parallel
+      if (posts.length > 0) {
+        try {
+          const postsWithReplies = await Promise.all(
+            posts.map(async (post) => {
+              try {
+                // Get first page of replies (10 per page)
+                const replies = await postApi.getPostReplies(post.id, 0, 10);
+                return {
+                  ...post,
+                  comments: replies,
+                };
+              } catch (error) {
+                console.error(
+                  `Error fetching replies for post ${post.id}:`,
+                  error,
+                );
+                return post; // Return the post without replies if there's an error
+              }
+            }),
+          );
+          return postsWithReplies;
+        } catch (error) {
+          console.error("Error fetching replies for posts:", error);
+        }
+      }
+
+      return posts;
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      // Return empty array if API fails
+      return [];
+    }
+  },
+
+  // Get replies to a post
+  getPostReplies: async (
+    postId: string,
+    page = 0,
+    limit = 10,
+  ): Promise<Post[]> => {
+    try {
+      const response = await fetch(
+        `${API_URL}/posts/${postId}/replies?limit=${limit}&page=${page}`,
+      );
+      const data = await handleResponse(response);
+
+      // Map replies to the Post interface
+      return data.map((reply: any) => ({
+        id: reply.id,
+        userId: reply.user_id,
+        userName: reply.display_name || "User",
+        userHandle: reply.address
+          ? `@${reply.address.substring(0, 8)}`
+          : "@user",
+        userAvatar: reply.avatar_url || "https://i.pravatar.cc/150?img=1",
+        verified: reply.tier === "gold" || reply.tier === "diamond",
+        content: reply.content,
+        createdAt: reply.created_at,
+        likes: reply.likes_count || 0,
+        retweets: reply.reposts_count || 0,
+        comments: [], // We don't fetch nested replies
+        media: reply.media_urls || [],
+      }));
+    } catch (error) {
+      console.error(`Error fetching replies for post ${postId}:`, error);
+      return [];
+    }
   },
 
   // Get post by ID
-  getPostById: async (id: string): Promise<Post> => {
-    const response = await fetch(`${API_URL}/posts?id=${id}`);
-    return handleResponse(response);
+  getPostById: async (id: string): Promise<Post | null> => {
+    try {
+      const response = await fetch(`${API_URL}/posts/${id}`);
+      const post = await handleResponse(response);
+
+      // Map the API response to match the existing Post interface
+      const mappedPost = {
+        id: post.id,
+        userId: post.user_id,
+        userName: post.display_name || "User",
+        userHandle: post.address ? `@${post.address.substring(0, 8)}` : "@user",
+        userAvatar: post.avatar_url || "https://i.pravatar.cc/150?img=1",
+        verified: post.tier === "gold" || post.tier === "diamond",
+        content: post.content,
+        createdAt: post.created_at,
+        likes: post.likes_count || 0,
+        retweets: post.reposts_count || 0,
+        comments: [] as Post[], // Explicitly type comments as Post[]
+        media: post.media_urls || [],
+        // Add metadata for paginating replies
+        _repliesMetadata: {
+          hasMoreReplies: post.replies_count > 10,
+          totalReplies: post.replies_count || 0,
+          currentPage: 0,
+        },
+      };
+
+      // Fetch replies for this post
+      try {
+        // Get first page of replies (10 per page)
+        const replies = await postApi.getPostReplies(id, 0, 10);
+        mappedPost.comments = replies;
+      } catch (error) {
+        console.error(`Error fetching replies for post ${id}:`, error);
+      }
+
+      return mappedPost;
+    } catch (error) {
+      console.error(`Error fetching post ${id}:`, error);
+      return null;
+    }
   },
 
   // Get posts by user ID
@@ -305,20 +201,53 @@ export const postApi = {
   },
 
   // Create a new post
-  createPost: async (post: {
-    userId: string;
-    content: string;
-    media?: string[];
-    quoteTweet?: string;
-  }): Promise<Post> => {
-    const response = await fetch(`${API_URL}/posts`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(post),
-    });
-    return handleResponse(response);
+  createPost: async (
+    userId: string,
+    content: string,
+    media?: string[],
+    replyToId?: string,
+    quoteTweetId?: string,
+  ): Promise<Post> => {
+    try {
+      const postData = {
+        user_id: userId,
+        content,
+        media_urls: media,
+        reply_to_id: replyToId,
+        repost_id: quoteTweetId,
+      };
+
+      const response = await fetch(`${API_URL}/posts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+
+      const newPost = await handleResponse(response);
+
+      // Map the API response to match the existing Post interface
+      return {
+        id: newPost.id,
+        userId: newPost.user_id,
+        userName: newPost.display_name || "User",
+        userHandle: newPost.address
+          ? `@${newPost.address.substring(0, 8)}`
+          : "@user",
+        userAvatar: newPost.avatar_url || "https://i.pravatar.cc/150?img=1",
+        verified: newPost.tier === "gold" || newPost.tier === "diamond",
+        content: newPost.content,
+        createdAt: newPost.created_at,
+        likes: 0,
+        retweets: 0,
+        comments: [],
+        media: newPost.media_urls || [],
+      };
+    } catch (error) {
+      console.error("Error creating post:", error);
+      throw error;
+    }
   },
 
   // Update a post
@@ -346,48 +275,51 @@ export const postApi = {
   },
 
   // Like a post
-  likePost: async (
-    postId: string,
-    userId: string,
-  ): Promise<{ message: string }> => {
-    const response = await fetch(`${API_URL}/posts/like`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ postId, userId }),
-    });
-    return handleResponse(response);
+  likePost: async (userId: string, postId: string): Promise<void> => {
+    try {
+      await fetch(`${API_URL}/posts/${postId}/like`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      });
+    } catch (error) {
+      console.error(`Error liking post ${postId}:`, error);
+      throw error;
+    }
   },
 
   // Unlike a post
-  unlikePost: async (
-    postId: string,
-    userId: string,
-  ): Promise<{ message: string }> => {
-    const response = await fetch(`${API_URL}/posts/like`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ postId, userId, unlike: true }),
-    });
-    return handleResponse(response);
+  unlikePost: async (userId: string, postId: string): Promise<void> => {
+    try {
+      await fetch(`${API_URL}/posts/${postId}/like`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      });
+    } catch (error) {
+      console.error(`Error unliking post ${postId}:`, error);
+      throw error;
+    }
   },
 
   // Retweet a post
-  retweetPost: async (
-    postId: string,
-    userId: string,
-  ): Promise<{ message: string }> => {
-    const response = await fetch(`${API_URL}/posts/retweet`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ postId, userId }),
-    });
-    return handleResponse(response);
+  retweetPost: async (userId: string, postId: string): Promise<void> => {
+    try {
+      await fetch(`${API_URL}/posts/${postId}/repost`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId }),
+      });
+    } catch (error) {
+      console.error(`Error retweeting post ${postId}:`, error);
+      throw error;
+    }
   },
 
   // Unretweet a post
@@ -437,6 +369,45 @@ export const postApi = {
       body: JSON.stringify({ postId, userId, content, media }),
     });
     return handleResponse(response);
+  },
+
+  // Get user's posts
+  getUserPosts: async (userId: string): Promise<Post[]> => {
+    try {
+      const response = await fetch(
+        `${API_URL}/users/${userId}/posts?limit=20&page=0`,
+      );
+      const data = await handleResponse(response);
+
+      // Map the API response to match the existing Post interface
+      return data.map((post: any) => ({
+        id: post.id,
+        userId: post.user_id,
+        userName: post.display_name || "User",
+        userHandle: post.address ? `@${post.address.substring(0, 8)}` : "@user",
+        userAvatar: post.avatar_url || "https://i.pravatar.cc/150?img=1",
+        verified: post.tier === "gold" || post.tier === "diamond",
+        content: post.content,
+        createdAt: post.created_at,
+        likes: post.likes_count || 0,
+        retweets: post.reposts_count || 0,
+        comments: [], // Will need to be populated separately
+        media: post.media_urls || [],
+      }));
+    } catch (error) {
+      console.error(`Error fetching user ${userId} posts:`, error);
+      return [];
+    }
+  },
+
+  // Get more replies for a specific post (for pagination)
+  getMoreReplies: async (postId: string, page: number): Promise<Post[]> => {
+    try {
+      return await postApi.getPostReplies(postId, page, 10);
+    } catch (error) {
+      console.error(`Error fetching more replies for post ${postId}:`, error);
+      return [];
+    }
   },
 };
 

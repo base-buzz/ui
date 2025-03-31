@@ -1,3 +1,6 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { SiteFooter } from "@/components/ui/site-footer";
 import { SiteHeader } from "@/components/ui/site-header";
 
@@ -6,11 +9,16 @@ interface AppLayoutProps {
 }
 
 export default function AppLayout({ children }: AppLayoutProps) {
+  const pathname = usePathname();
+
+  // Don't show header on the landing page
+  const isLandingPage = pathname === "/" || pathname === "/home";
+
   return (
     <div data-wrapper="" className="border-grid flex flex-1 flex-col">
-      <SiteHeader />
+      {!isLandingPage && <SiteHeader />}
       <main className="flex flex-1 flex-col">{children}</main>
-      <SiteFooter />
+      {!isLandingPage && <SiteFooter />}
     </div>
   );
 }

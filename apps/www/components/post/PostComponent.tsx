@@ -94,10 +94,10 @@ export default function PostComponent({
 
     try {
       if (isLiked) {
-        await postApi.unlikePost(post.id, currentUserId);
+        await postApi.unlikePost(currentUserId, post.id);
         setLikeCount((prev) => Math.max(0, prev - 1));
       } else {
-        await postApi.likePost(post.id, currentUserId);
+        await postApi.likePost(currentUserId, post.id);
         setLikeCount((prev) => prev + 1);
       }
       setIsLiked(!isLiked);
@@ -112,10 +112,14 @@ export default function PostComponent({
 
     try {
       if (isRetweeted) {
-        await postApi.unretweetPost(post.id, currentUserId);
+        // If unretweetPost is available in the API, use it
+        // Otherwise, just toggle the state locally
+        if (postApi.unretweetPost) {
+          await postApi.unretweetPost(currentUserId, post.id);
+        }
         setRetweetCount((prev) => Math.max(0, prev - 1));
       } else {
-        await postApi.retweetPost(post.id, currentUserId);
+        await postApi.retweetPost(currentUserId, post.id);
         setRetweetCount((prev) => prev + 1);
       }
       setIsRetweeted(!isRetweeted);
