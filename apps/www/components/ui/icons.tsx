@@ -20,6 +20,8 @@ import {
   LogOut,
   UserPlus,
   Send,
+  Plus,
+  ArrowLeft,
   type LucideIcon,
 } from "lucide-react";
 
@@ -45,7 +47,9 @@ export type IconName =
   | "edit"
   | "log-out"
   | "user-plus"
-  | "send";
+  | "send"
+  | "plus"
+  | "arrow-left";
 
 const HomeIcon = (props: any) => (
   <svg
@@ -54,6 +58,7 @@ const HomeIcon = (props: any) => (
     width="24"
     height="24"
     fill="currentColor"
+    {...props}
   >
     <g>
       <path d="M21.591 7.146L12.52 1.157c-.316-.21-.724-.21-1.04 0l-9.071 5.99c-.26.173-.409.456-.409.757v13.183c0 .502.418.913.929.913H9.14c.51 0 .929-.41.929-.913v-7.075h3.909v7.075c0 .502.417.913.928.913h6.165c.511 0 .929-.41.929-.913V7.904c0-.301-.158-.584-.408-.758z"></path>
@@ -84,6 +89,8 @@ export const Icons: Record<IconName, LucideIcon | any> = {
   "log-out": LogOut,
   "user-plus": UserPlus,
   send: Send,
+  plus: Plus,
+  "arrow-left": ArrowLeft,
 };
 
 interface IconProps {

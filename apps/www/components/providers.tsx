@@ -7,6 +7,7 @@ import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { config } from "@/lib/wagmi";
 import { UserProvider } from "@/contexts/user-context";
 import "@rainbow-me/rainbowkit/styles.css";
+import ServiceWorkerRegistration from "@/components/pwa/ServiceWorkerRegistration";
 
 // Create a React Query client
 const queryClient = new QueryClient();
@@ -34,7 +35,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
-          <UserProvider>{children}</UserProvider>
+          <UserProvider>
+            {children}
+            <ServiceWorkerRegistration />
+          </UserProvider>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

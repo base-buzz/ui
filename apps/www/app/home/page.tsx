@@ -15,6 +15,7 @@ import { ChevronDown, Users, Plus } from "lucide-react";
 import Link from "next/link";
 import { Icon } from "@/components/ui/icons";
 import { UnauthenticatedView } from "@/components/auth/UnauthenticatedView";
+import MobileHeader from "@/components/layout/MobileHeader";
 
 export default function HomePage() {
   const { isAuthenticated, loading: authLoading } = useAuth({
@@ -96,8 +97,11 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Tabs navigation */}
-      <div className="sticky top-0 z-10 bg-background/90 backdrop-blur-md">
+      {/* Mobile header with tabs - only visible on mobile */}
+      <MobileHeader showTabs showProfile />
+
+      {/* Desktop Tabs navigation - hidden on mobile */}
+      <div className="sticky top-0 z-10 hidden bg-background/90 backdrop-blur-md md:block">
         <div className="grid grid-cols-4">
           {tabs.map((tab) => (
             <button
@@ -228,18 +232,6 @@ export default function HomePage() {
             </div>
           )}
         </div>
-      </div>
-
-      {/* Mobile floating action button */}
-      <div className="fixed bottom-6 right-6 md:hidden">
-        <Link href="/compose">
-          <Button
-            size="icon"
-            className="h-14 w-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90"
-          >
-            <Plus className="h-6 w-6" />
-          </Button>
-        </Link>
       </div>
     </>
   );

@@ -58,6 +58,15 @@ export const metadata: Metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
+  manifest: "/manifest.json",
+  appleWebApp: {
+    title: "BaseBuzz",
+    statusBarStyle: "black-translucent",
+    capable: true,
+  },
+  formatDetection: {
+    telephone: false,
+  },
 };
 
 export const viewport: Viewport = {
@@ -68,6 +77,11 @@ export const viewport: Viewport = {
   ],
   width: "device-width",
   initialScale: 1,
+  minimumScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  interactiveWidget: "resizes-visual",
+  viewportFit: "cover",
 };
 
 interface RootLayoutProps {

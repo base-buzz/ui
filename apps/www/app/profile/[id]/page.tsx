@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { userApi, postApi } from "@/lib/api";
@@ -14,7 +14,12 @@ import {
   TabsTrigger,
 } from "@/registry/new-york/ui/tabs";
 import { Button } from "@/registry/new-york/ui/button";
-import { EditIcon, MoreHorizontal } from "lucide-react";
+import {
+  EditIcon,
+  CalendarIcon,
+  MapPinIcon,
+  MoreHorizontal,
+} from "lucide-react";
 import { Card } from "@/registry/new-york/ui/card";
 import {
   Avatar,
@@ -22,9 +27,12 @@ import {
   AvatarImage,
 } from "@/registry/new-york/ui/avatar";
 import EditProfileModal from "@/components/modals/EditProfileModal";
+import MobileHeader from "@/components/layout/MobileHeader";
+import { cn } from "@/lib/utils";
 
 export default function ProfilePage() {
   const params = useParams();
+  const router = useRouter();
   const profileId = params?.id as string;
   const { isAuthenticated, loading: authLoading } = useAuth();
   const {
@@ -37,8 +45,16 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("posts");
 
   const isOwnProfile = currentUser?.id === profileId || profileId === "me";
+
+  // Format join date
+  const formatJoinDate = (dateString?: string) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+  };
 
   // Check for locally stored user data
   const checkLocalStorage = (userId: string) => {
@@ -106,6 +122,10 @@ export default function ProfilePage() {
     }
   };
 
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+  };
+
   if (loading || authLoading || currentUserLoading) {
     return (
       <div className="flex h-full items-center justify-center py-20">
@@ -130,112 +150,156 @@ export default function ProfilePage() {
     );
   }
 
+  // Create tabs for mobile header
+  const profileTabs = [
+    { id: "posts", label: "Posts", path: `/profile/${profileId}?tab=posts` },
+    { id: "media", label: "Media", path: `/profile/${profileId}?tab=media` },
+    { id: "likes", label: "Likes", path: `/profile/${profileId}?tab=likes` },
+  ];
+
   return (
     <>
-      <div className="container mx-auto max-w-4xl py-6">
-        {/* Profile Header */}
-        <div className="mb-6">
-          {/* Cover Image */}
-          <div className="relative h-48 w-full overflow-hidden rounded-t-lg bg-gradient-to-r from-blue-400 to-purple-500">
-            {profileUser.headerImage && (
-              <img
-                src={profileUser.headerImage}
-                alt="Cover"
-                className="h-full w-full object-cover"
-              />
-            )}
-          </div>
+      {/* Mobile Header */}
+      <MobileHeader title={profileUser.alias} showBackButton />
 
-          {/* Profile Info */}
-          <div className="relative -mt-16 px-4">
-            <div className="flex justify-between">
-              {/* Avatar */}
-              <div className="relative">
-                <Avatar className="h-32 w-32 border-4 border-background">
-                  <AvatarImage src={profileUser.pfp} alt={profileUser.alias} />
-                  <AvatarFallback className="text-3xl">
-                    {profileUser.alias.substring(0, 2)}
-                  </AvatarFallback>
-                </Avatar>
-              </div>
+      <div className="pb-6">
+        {/* Cover Image */}
+        <div className="relative h-32 w-full overflow-hidden bg-gradient-to-r from-blue-400 to-purple-500 md:h-48">
+          {profileUser.headerImage && (
+            <img
+              src={profileUser.headerImage}
+              alt="Cover"
+              className="h-full w-full object-cover"
+            />
+          )}
+        </div>
 
-              {/* Actions */}
-              <div className="mt-16 flex gap-2">
-                {isOwnProfile ? (
-                  <Button
-                    variant="outline"
-                    className="gap-2"
-                    onClick={() => setIsEditModalOpen(true)}
-                  >
-                    <EditIcon className="h-4 w-4" />
-                    Edit Profile
-                  </Button>
-                ) : (
-                  <Button variant="default">Follow</Button>
-                )}
-                <Button variant="ghost" size="icon">
-                  <MoreHorizontal className="h-5 w-5" />
-                </Button>
-              </div>
+        {/* Profile Info */}
+        <div className="px-4">
+          <div className="flex justify-between">
+            {/* Avatar */}
+            <div className="relative -mt-16">
+              <Avatar className="h-24 w-24 border-4 border-background">
+                <AvatarImage src={profileUser.pfp} alt={profileUser.alias} />
+                <AvatarFallback className="text-2xl">
+                  {profileUser.alias?.substring(0, 2) || "U"}
+                </AvatarFallback>
+              </Avatar>
             </div>
 
-            {/* User Details */}
-            <div className="mt-4">
-              <h1 className="text-2xl font-bold">{profileUser.alias}</h1>
-              {profileUser.location && (
-                <p className="text-muted-foreground">{profileUser.location}</p>
+            {/* Actions */}
+            <div className="mt-2 flex gap-2">
+              {isOwnProfile ? (
+                <Button
+                  variant="outline"
+                  className="rounded-full"
+                  onClick={() => setIsEditModalOpen(true)}
+                >
+                  <span className="hidden md:inline">Edit Profile</span>
+                  <EditIcon className="h-4 w-4 md:ml-2 md:hidden" />
+                </Button>
+              ) : (
+                <Button variant="default" className="rounded-full">
+                  Follow
+                </Button>
               )}
-              <p className="mt-2">{profileUser.bio}</p>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <MoreHorizontal className="h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+
+          {/* User Details */}
+          <div className="mt-3">
+            <h1 className="text-xl font-bold">{profileUser.alias}</h1>
+            <p className="text-muted-foreground">
+              @{profileUser.alias?.toLowerCase().replace(/\s+/g, "_") || "user"}
+            </p>
+
+            {profileUser.bio && <p className="mt-3">{profileUser.bio}</p>}
+
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
+              {profileUser.location && (
+                <div className="flex items-center">
+                  <MapPinIcon className="mr-1 h-4 w-4" />
+                  <span>{profileUser.location}</span>
+                </div>
+              )}
+              {profileUser.dob && (
+                <div className="flex items-center">
+                  <CalendarIcon className="mr-1 h-4 w-4" />
+                  <span>Joined {formatJoinDate(profileUser.dob)}</span>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-3 flex gap-4 text-sm">
+              <div>
+                <span className="font-bold">265</span>
+                <span className="ml-1 text-muted-foreground">Following</span>
+              </div>
+              <div>
+                <span className="font-bold">568</span>
+                <span className="ml-1 text-muted-foreground">Followers</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Content Tabs */}
-        <Tabs defaultValue="posts" className="mt-6">
-          <TabsList className="w-full">
-            <TabsTrigger value="posts" className="flex-1">
-              Posts
-            </TabsTrigger>
-            <TabsTrigger value="media" className="flex-1">
-              Media
-            </TabsTrigger>
-            <TabsTrigger value="likes" className="flex-1">
-              Likes
-            </TabsTrigger>
-          </TabsList>
+        {/* Content Tabs - Desktop */}
+        <div className="mt-4 hidden md:block">
+          <Tabs value={activeTab} onValueChange={handleTabChange}>
+            <TabsList className="w-full">
+              <TabsTrigger value="posts" className="flex-1">
+                Posts
+              </TabsTrigger>
+              <TabsTrigger value="media" className="flex-1">
+                Media
+              </TabsTrigger>
+              <TabsTrigger value="likes" className="flex-1">
+                Likes
+              </TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="posts" className="mt-4 space-y-6">
-            {posts.length > 0 ? (
-              posts.map((post) => (
-                <PostComponent
-                  key={post.id}
-                  post={post}
-                  currentUserId={currentUser?.id}
-                />
-              ))
-            ) : (
-              <Card className="p-8 text-center">
-                <p className="text-muted-foreground">No posts yet</p>
-              </Card>
-            )}
-          </TabsContent>
+            <TabsContent value="posts" className="mt-4">
+              {renderPostsContent()}
+            </TabsContent>
 
-          <TabsContent value="media" className="mt-4">
-            <Card className="p-8 text-center">
-              <p className="text-muted-foreground">
-                Media posts will appear here
-              </p>
-            </Card>
-          </TabsContent>
+            <TabsContent value="media" className="mt-4">
+              {renderMediaContent()}
+            </TabsContent>
 
-          <TabsContent value="likes" className="mt-4">
-            <Card className="p-8 text-center">
-              <p className="text-muted-foreground">
-                Liked posts will appear here
-              </p>
-            </Card>
-          </TabsContent>
-        </Tabs>
+            <TabsContent value="likes" className="mt-4">
+              {renderLikesContent()}
+            </TabsContent>
+          </Tabs>
+        </div>
+
+        {/* Content Tabs - Mobile */}
+        <div className="mt-4 md:hidden">
+          <div className="grid grid-cols-3 border-b border-border">
+            {["posts", "media", "likes"].map((tab) => (
+              <button
+                key={tab}
+                className={cn(
+                  "flex h-[52px] items-center justify-center border-b-2 px-4 font-medium",
+                  activeTab === tab
+                    ? "border-primary text-foreground"
+                    : "border-transparent text-muted-foreground",
+                )}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-2">
+            {activeTab === "posts" && renderPostsContent()}
+            {activeTab === "media" && renderMediaContent()}
+            {activeTab === "likes" && renderLikesContent()}
+          </div>
+        </div>
       </div>
 
       {/* Edit Profile Modal */}
@@ -249,4 +313,38 @@ export default function ProfilePage() {
       )}
     </>
   );
+
+  function renderPostsContent() {
+    return posts.length > 0 ? (
+      <div className="divide-y divide-border">
+        {posts.map((post) => (
+          <PostComponent
+            key={post.id}
+            post={post}
+            currentUserId={currentUser?.id}
+          />
+        ))}
+      </div>
+    ) : (
+      <div className="p-8 text-center">
+        <p className="text-muted-foreground">No posts yet</p>
+      </div>
+    );
+  }
+
+  function renderMediaContent() {
+    return (
+      <div className="p-8 text-center">
+        <p className="text-muted-foreground">Media posts will appear here</p>
+      </div>
+    );
+  }
+
+  function renderLikesContent() {
+    return (
+      <div className="p-8 text-center">
+        <p className="text-muted-foreground">Liked posts will appear here</p>
+      </div>
+    );
+  }
 }
