@@ -14,7 +14,7 @@ import { Button } from "@/registry/new-york/ui/button";
 import { ChevronDown, Users, Plus } from "lucide-react";
 import Link from "next/link";
 import { Icon } from "@/components/ui/icons";
-import { UnauthenticatedView } from "@/components/auth/UnauthenticatedView";
+import { UnauthenticatedHomeView } from "@/components/auth/UnauthenticatedHomeView";
 
 export default function HomePage() {
   const { isAuthenticated, loading: authLoading } = useAuth({
@@ -61,9 +61,9 @@ export default function HomePage() {
     );
   }
 
-  // Show the unauthenticated view component instead of redirecting
+  // Show the unauthenticated home view component
   if (!isAuthenticated || !user) {
-    return <UnauthenticatedView onAuthClick={openWalletModal} />;
+    return <UnauthenticatedHomeView onConnectWallet={openWalletModal} />;
   }
 
   if (error) {
@@ -96,8 +96,9 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Desktop Tabs navigation - hidden on mobile */}
-      <div className="sticky top-0 z-10 hidden bg-background/90 backdrop-blur-md md:block">
+      {/* Tabs navigation */}
+      <div className="sticky top-[53px] z-10 border-b border-border bg-background/90 backdrop-blur-md md:hidden">
+        {/* Tabs */}
         <div className="grid grid-cols-4">
           {tabs.map((tab) => (
             <button
@@ -117,8 +118,8 @@ export default function HomePage() {
       </div>
 
       {/* Show posts count section */}
-      <div className="flex items-center justify-center border-b border-border py-3.5">
-        <button className="text-[15px] font-normal text-primary hover:underline">
+      <div className="flex items-center justify-center border-b border-border py-3.5 md:hidden">
+        <button className="text-[15px] font-normal text-[#1d9bf0] hover:underline md:text-primary">
           Show 453 posts
         </button>
       </div>

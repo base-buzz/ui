@@ -117,7 +117,7 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
-      <SheetContent side="right" className="w-[350px] p-6">
+      <SheetContent side="right" className="w-[70%] max-w-xs p-6">
         {/* Header with close button */}
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Wallet</h2>

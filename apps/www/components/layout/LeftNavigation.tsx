@@ -47,11 +47,6 @@ export default function LeftNavigation() {
                   className="h-5 w-5 invert"
                 />
               </div>
-              {!isCompact && (
-                <span className="ml-3 hidden text-xl font-bold md:block">
-                  BaseBuzz
-                </span>
-              )}
             </Link>
 
             {/* Nav Items */}
