@@ -1,0 +1,13 @@
+[03/31/25 11:01:30] INFO     PostgreSQL client initialized postgres_client.py:82
+                             for local project:                                 
+                             127.0.0.1:54322 (region:                           
+                             us-east-1)                                         
+                    INFO     Initilized Mangement API client    api_client.py:43
+                             successfully                                       
+                    INFO     Initialized Supabase SDK client    sdk_client.py:50
+                             for project 127.0.0.1:54322                        
+                    INFO     ✓ Safety configurations        safety_manager.py:53
+                             registered successfully                            
+                    INFO     ✓ All services initialized          container.py:61
+                             successfully.                                      
+                    INFO     Starting Supabase MCP server             main.py:19
