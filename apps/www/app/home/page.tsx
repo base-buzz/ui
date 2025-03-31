@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth, useWalletModal } from "@/hooks/useAuth";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { postApi } from "@/lib/api";
 import { Post } from "@/types/interfaces";
@@ -14,9 +14,13 @@ import { Button } from "@/registry/new-york/ui/button";
 import { ChevronDown, Users, Plus } from "lucide-react";
 import Link from "next/link";
 import { Icon } from "@/components/ui/icons";
+import { UnauthenticatedView } from "@/components/auth/UnauthenticatedView";
 
 export default function HomePage() {
-  const { isAuthenticated, loading: authLoading } = useAuth({ required: true });
+  const { isAuthenticated, loading: authLoading } = useAuth({
+    required: false,
+  });
+  const { openWalletModal } = useWalletModal();
   const { user, loading: userLoading } = useCurrentUser();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
@@ -57,13 +61,9 @@ export default function HomePage() {
     );
   }
 
-  // Don't render not-logged-in message, let the useAuth hook handle redirection
+  // Show the unauthenticated view component instead of redirecting
   if (!isAuthenticated || !user) {
-    return (
-      <div className="flex h-full items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
-      </div>
-    );
+    return <UnauthenticatedView onAuthClick={openWalletModal} />;
   }
 
   if (error) {
