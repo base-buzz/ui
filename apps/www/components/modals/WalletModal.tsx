@@ -3,6 +3,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { CoinbaseSignup } from "@/components/wallet/CoinbaseSignup";
 import { MetaMaskSignup } from "@/components/wallet/MetaMaskSignup";
@@ -22,6 +23,9 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
           <DialogTitle className="text-center text-xl font-bold">
             Connect your wallet
           </DialogTitle>
+          <DialogDescription className="text-center">
+            Choose your preferred method to connect to BaseBuzz
+          </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col space-y-3 p-4">
           <CoinbaseSignup />

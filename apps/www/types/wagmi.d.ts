@@ -8,6 +8,7 @@ declare module "wagmi" {
   export const WagmiProvider: any;
   export const createConfig: any;
   export const http: any;
+  export const useSignMessage: any;
 }
 
 declare module "wagmi/chains" {

@@ -8,6 +8,7 @@ import RightSidebar from "./RightSidebar";
 import MobileHeader from "./MobileHeader";
 import MobileBottomNav from "./MobileBottomNav";
 import { useWalletSheet } from "@/hooks/useWalletSheet";
+import MobileLayout from "./MobileLayout";
 
 interface LayoutWrapperProps {
   children: React.ReactNode;
@@ -15,18 +16,13 @@ interface LayoutWrapperProps {
 
 export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const pathname = usePathname();
-  const { isWalletSheetOpen, closeWalletSheet } = useWalletSheet();
+  const { isWalletSheetOpen } = useWalletSheet();
 
   // Determine if we're on the landing page
   const isLandingPage = pathname === "/";
 
   // Determine if we should show tabs on specific routes
-  const showTabs = [
-    "/home",
-    "/home/following",
-    "/home/buildin",
-    "/home/canto",
-  ].includes(pathname);
+  const showTabs = pathname.startsWith("/home");
 
   // Determine if we need to show the back button (e.g., on profile pages)
   const showBackButton =
@@ -52,31 +48,32 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
         isWalletSheetOpen ? "overflow-hidden" : "",
       )}
     >
-      {/* Mobile top header */}
+      {/* Mobile layout */}
       <div className="md:hidden">
-        <MobileHeader />
+        <MobileLayout>
+          <MobileHeader />
+          {children}
+          {!isLandingPage && <MobileBottomNav />}
+        </MobileLayout>
       </div>
 
       {/* Twitter-like 3-column layout */}
-      <div className="mx-auto flex w-full max-w-[1290px] justify-center">
+      <div className="relative mx-auto hidden w-full max-w-[1290px] md:flex">
         {/* Left column - Navigation (hidden on mobile) */}
-        <div className="sticky top-0 hidden h-screen w-[68px] shrink-0 md:block md:w-[270px]">
+        <div className="sticky top-0 h-screen w-[275px] shrink-0">
           <LeftNavigation />
         </div>
 
         {/* Center column - Main content */}
-        <div className="h-full w-full max-w-[600px] border-x border-border">
+        <main className="min-h-screen w-full max-w-[600px] border-x border-border">
           {children}
-        </div>
+        </main>
 
         {/* Right column - Sidebar (hidden on mobile and smaller tablets) */}
         <div className="sticky top-0 hidden h-screen w-[350px] shrink-0 overflow-y-auto pl-[25px] lg:block">
           <RightSidebar />
         </div>
       </div>
-
-      {/* Mobile bottom navigation - visible only on mobile */}
-      {!isLandingPage && <MobileBottomNav />}
     </div>
   );
 }

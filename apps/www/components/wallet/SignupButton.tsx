@@ -8,6 +8,7 @@ export interface SignupButtonProps {
   text: string;
   onClick?: () => void;
   className?: string;
+  disabled?: boolean;
 }
 
 export const SignupButton = ({
@@ -15,6 +16,7 @@ export const SignupButton = ({
   text,
   onClick,
   className,
+  disabled,
 }: SignupButtonProps) => {
   const { openConnectModal } = useConnectModal();
   const { status, error } = useConnect();
@@ -40,12 +42,13 @@ export const SignupButton = ({
   };
 
   const isConnecting = status === "pending";
+  const isDisabled = disabled || isConnecting || isConnected;
 
   return (
     <button
       className={`flex h-[44px] w-full items-center gap-3 rounded-[10px] border border-[#536471]/25 bg-white px-4 text-[15px] font-medium leading-5 text-[#3c4043] transition-colors hover:bg-[#e6e6e6]/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1d9bf0] disabled:cursor-not-allowed disabled:opacity-50 ${className || ""}`}
       onClick={handleClick}
-      disabled={isConnecting || isConnected}
+      disabled={isDisabled}
     >
       <div className="shrink-0 rounded-[15px] bg-white p-1">
         <Image

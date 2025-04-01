@@ -37,7 +37,7 @@ export const leftNavItems: NavItem[] = [
     protected: true,
   },
   {
-    label: "Verified Base Projects",
+    label: "Verified Projects",
     icon: "shield-check",
     path: "/verified",
   },

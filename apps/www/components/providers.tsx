@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { config } from "@/lib/wagmi";
 import { UserProvider } from "@/contexts/user-context";
+import { AuthProvider } from "@/contexts/auth-context";
 import "@rainbow-me/rainbowkit/styles.css";
 import ServiceWorkerRegistration from "@/components/pwa/ServiceWorkerRegistration";
 import { createContext, useContext, useState } from "react";
@@ -37,24 +38,16 @@ export function useWalletSheetContext() {
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = React.useState(false);
-
-  // Use a longer-running effect to ensure hydration is complete
-  // This prevents flashing of unauthenticated state on refresh
-  React.useEffect(() => {
-    // Delay setting mounted state slightly to ensure wallet state is loaded
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 200); // Small delay for hydration
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Wallet sheet state
   const [isWalletSheetOpen, setIsWalletSheetOpen] = useState(false);
 
   const openWalletSheet = () => setIsWalletSheetOpen(true);
   const closeWalletSheet = () => setIsWalletSheetOpen(false);
   const toggleWalletSheet = () => setIsWalletSheetOpen((prev) => !prev);
+
+  // Use a longer-running effect to ensure hydration is complete
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Show nothing during the initial hydration
   if (!mounted) {
@@ -62,24 +55,26 @@ export function Providers({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <WalletSheetContext.Provider
-      value={{
-        isWalletSheetOpen,
-        openWalletSheet,
-        closeWalletSheet,
-        toggleWalletSheet,
-      }}
-    >
+    <QueryClientProvider client={queryClient}>
       <WagmiProvider config={config}>
-        <QueryClientProvider client={queryClient}>
-          <RainbowKitProvider>
-            <UserProvider>
-              {children}
-              <ServiceWorkerRegistration />
-            </UserProvider>
-          </RainbowKitProvider>
-        </QueryClientProvider>
+        <RainbowKitProvider>
+          <WalletSheetContext.Provider
+            value={{
+              isWalletSheetOpen,
+              openWalletSheet,
+              closeWalletSheet,
+              toggleWalletSheet,
+            }}
+          >
+            <AuthProvider>
+              <UserProvider>
+                {children}
+                <ServiceWorkerRegistration />
+              </UserProvider>
+            </AuthProvider>
+          </WalletSheetContext.Provider>
+        </RainbowKitProvider>
       </WagmiProvider>
-    </WalletSheetContext.Provider>
+    </QueryClientProvider>
   );
 }

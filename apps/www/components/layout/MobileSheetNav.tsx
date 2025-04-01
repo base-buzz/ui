@@ -104,7 +104,7 @@ export default function MobileSheetNav() {
     },
     {
       icon: <ShieldCheck className="mr-4 h-6 w-6" />,
-      label: "Verified Base Projects",
+      label: "Verified Projects",
       path: "/verified-projects",
       protected: true,
     },

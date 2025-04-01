@@ -19,6 +19,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { EditProfileDialog } from "@/components/profile/EditProfileDialog";
+import { useTokenPrice } from "@/hooks/useTokenPrice";
 
 interface WalletProfileSheetProps {
   children: React.ReactNode;
@@ -36,6 +38,11 @@ export default function WalletProfileSheet({
   const router = useRouter();
   const { user } = useCurrentUser();
   const [copied, setCopied] = useState(false);
+  const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
+
+  const buzzTokenAddress = "0x2C74B18e2f84B78ac67428d0c7a9898515f0c46f"; // Replace with actual BUZZ token address
+  const { price: buzzPrice, loading: priceLoading } =
+    useTokenPrice(buzzTokenAddress);
 
   const walletAddress = address || connectedAddress;
   const formattedAddress = walletAddress
@@ -79,7 +86,9 @@ export default function WalletProfileSheet({
               <X className="h-4 w-4" />
             </SheetClose>
             <div className="ml-8 flex-1">
-              <h2 className="text-2xl font-bold">{user?.alias || "Wallet"}</h2>
+              <h2 className="text-2xl font-bold">
+                {user?.display_name || "Wallet"}
+              </h2>
               <div className="mt-1 flex items-center gap-2 text-muted-foreground">
                 <span>{formattedAddress}</span>
                 <Button
@@ -99,11 +108,11 @@ export default function WalletProfileSheet({
             </div>
             <Avatar className="h-16 w-16 border-2 border-background">
               <AvatarImage
-                src="https://i.pravatar.cc/150?img=3"
+                src={user?.avatar_url || "https://i.pravatar.cc/150?img=3"}
                 alt="Profile"
               />
               <AvatarFallback>
-                {user?.alias?.[0] || walletAddress?.[0] || "W"}
+                {user?.display_name?.[0] || walletAddress?.[0] || "W"}
               </AvatarFallback>
             </Avatar>
           </div>
@@ -118,6 +127,16 @@ export default function WalletProfileSheet({
                 </div>
                 <div className="text-lg font-bold">
                   {walletData.buzzBalance}
+                  {buzzPrice && (
+                    <span className="ml-1 text-sm text-muted-foreground">
+                      ($
+                      {(
+                        parseFloat(walletData.buzzBalance.replace(/,/g, "")) *
+                        buzzPrice
+                      ).toFixed(2)}
+                      )
+                    </span>
+                  )}
                 </div>
               </div>
               <div>
@@ -255,6 +274,11 @@ export default function WalletProfileSheet({
           </div>
         </div>
       </SheetContent>
+
+      <EditProfileDialog
+        isOpen={isEditProfileOpen}
+        onClose={() => setIsEditProfileOpen(false)}
+      />
     </Sheet>
   );
 }

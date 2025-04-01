@@ -7,6 +7,16 @@ import {
 } from "@/types/interfaces";
 
 /**
+ * API client for interacting with the BaseBuzz API
+ *
+ * UPDATED:
+ * - Added consistent X-Custom-Auth header for all authenticated requests
+ * - Improved error handling and logging
+ * - Added withCredentials option to ensure cookies are sent with requests
+ * - Enhanced debugging information
+ */
+
+/**
  * API client for interacting with the backend
  */
 
@@ -22,11 +32,67 @@ const handleResponse = async (response: Response) => {
   return response.json();
 };
 
+/**
+ * Custom headers for API requests
+ * @returns Common headers for all API requests
+ */
+export function getCommonHeaders() {
+  return {
+    "Content-Type": "application/json",
+    // Include custom auth header to support wallet-based authentication
+    "X-Custom-Auth": "true",
+  };
+}
+
+/**
+ * Enhanced fetch function that ensures cookies are included and handles errors consistently
+ * @param url API URL to fetch
+ * @param options Fetch options
+ * @returns Response data
+ */
+export async function apiFetch<T = any>(
+  url: string,
+  options: RequestInit = {},
+): Promise<T> {
+  try {
+    // Ensure headers are set
+    const headers = {
+      ...getCommonHeaders(),
+      ...(options.headers || {}),
+    };
+
+    // Always include credentials to ensure cookies are sent
+    const fetchOptions: RequestInit = {
+      ...options,
+      headers,
+      credentials: "include",
+    };
+
+    console.log(`🔄 Fetching ${options.method || "GET"} ${url}`);
+
+    const response = await fetch(url, fetchOptions);
+
+    // Handle HTTP errors
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`❌ API Error (${response.status}):`, errorText);
+      throw new Error(`API error ${response.status}: ${errorText}`);
+    }
+
+    // Return parsed JSON response
+    const data = await response.json();
+    return data as T;
+  } catch (error) {
+    console.error(`❌ Fetch error for ${url}:`, error);
+    throw error;
+  }
+}
+
 // User API functions
 export const userApi = {
   // Get all users
   getUsers: async (): Promise<User[]> => {
-    const response = await fetch(`${API_URL}/users`);
+    const response = await fetch(`${API_URL}/users?suggested=true`);
     return handleResponse(response);
   },
 
@@ -36,81 +102,83 @@ export const userApi = {
     return handleResponse(response);
   },
 
+  // Get user profile
+  async getProfile(userId: string): Promise<User> {
+    try {
+      console.log(`🧑 Fetching profile for user ${userId}...`);
+
+      const profile = await apiFetch<User>(`/api/users/${userId}`);
+      console.log("✅ Profile fetched successfully");
+      return profile;
+    } catch (error) {
+      console.error(`Error fetching profile for user ${userId}:`, error);
+      throw error;
+    }
+  },
+
   // Update user profile
-  updateUser: async (user: Partial<User> & { id: string }): Promise<User> => {
-    const response = await fetch(`${API_URL}/users/${user.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-    return handleResponse(response);
+  async updateProfile(userData: Partial<User>): Promise<User> {
+    try {
+      console.log("✏️ Updating user profile...");
+
+      const updatedProfile = await apiFetch<User>("/api/users/profile", {
+        method: "PUT",
+        body: JSON.stringify(userData),
+      });
+
+      console.log("✅ Profile updated successfully");
+      return updatedProfile;
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      throw error;
+    }
+  },
+
+  // Follow a user
+  async followUser(userId: string): Promise<void> {
+    try {
+      console.log(`➕ Following user ${userId}...`);
+
+      await apiFetch<void>(`/api/users/${userId}/follow`, {
+        method: "POST",
+      });
+
+      console.log("✅ User followed successfully");
+    } catch (error) {
+      console.error(`Error following user ${userId}:`, error);
+      throw error;
+    }
+  },
+
+  // Unfollow a user
+  async unfollowUser(userId: string): Promise<void> {
+    try {
+      console.log(`➖ Unfollowing user ${userId}...`);
+
+      await apiFetch<void>(`/api/users/${userId}/unfollow`, {
+        method: "POST",
+      });
+
+      console.log("✅ User unfollowed successfully");
+    } catch (error) {
+      console.error(`Error unfollowing user ${userId}:`, error);
+      throw error;
+    }
   },
 };
 
 // Post API functions
 export const postApi = {
-  // Get all posts
-  getPosts: async (): Promise<Post[]> => {
+  // Get posts from the API
+  async getPosts(): Promise<Post[]> {
     try {
-      // Use the new API endpoints
-      const response = await fetch(`${API_URL}/posts?limit=20&page=0`);
-      const data = await handleResponse(response);
+      console.log("🔍 Fetching posts with authentication...");
 
-      // Map the API response to match the existing Post interface used by UI components
-      const posts = data.map((post: any) => ({
-        id: post.id,
-        userId: post.user_id,
-        userName: post.display_name || "User",
-        userHandle: post.address ? `@${post.address.substring(0, 8)}` : "@user",
-        userAvatar: post.avatar_url || "https://i.pravatar.cc/150?img=1",
-        verified: post.tier === "gold" || post.tier === "diamond",
-        content: post.content,
-        createdAt: post.created_at,
-        likes: post.likes_count || 0,
-        retweets: post.reposts_count || 0,
-        comments: [], // Will be populated below
-        media: post.media_urls || [],
-        // Add metadata for paginating replies
-        _repliesMetadata: {
-          hasMoreReplies: post.replies_count > 10,
-          totalReplies: post.replies_count || 0,
-          currentPage: 0,
-        },
-      }));
-
-      // Fetch replies for each post in parallel
-      if (posts.length > 0) {
-        try {
-          const postsWithReplies = await Promise.all(
-            posts.map(async (post) => {
-              try {
-                // Get first page of replies (10 per page)
-                const replies = await postApi.getPostReplies(post.id, 0, 10);
-                return {
-                  ...post,
-                  comments: replies,
-                };
-              } catch (error) {
-                console.error(
-                  `Error fetching replies for post ${post.id}:`,
-                  error,
-                );
-                return post; // Return the post without replies if there's an error
-              }
-            }),
-          );
-          return postsWithReplies;
-        } catch (error) {
-          console.error("Error fetching replies for posts:", error);
-        }
-      }
-
+      const posts = await apiFetch<Post[]>("/api/posts");
+      console.log(`✅ Successfully fetched ${posts.length} posts`);
       return posts;
     } catch (error) {
       console.error("Error fetching posts:", error);
-      // Return empty array if API fails
       return [];
     }
   },
@@ -201,49 +269,17 @@ export const postApi = {
   },
 
   // Create a new post
-  createPost: async (
-    userId: string,
-    content: string,
-    media?: string[],
-    replyToId?: string,
-    quoteTweetId?: string,
-  ): Promise<Post> => {
+  async createPost(content: string, mediaUrls: string[] = []): Promise<Post> {
     try {
-      const postData = {
-        user_id: userId,
-        content,
-        media_urls: media,
-        reply_to_id: replyToId,
-        repost_id: quoteTweetId,
-      };
+      console.log("📝 Creating new post...");
 
-      const response = await fetch(`${API_URL}/posts`, {
+      const newPost = await apiFetch<Post>("/api/posts", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postData),
+        body: JSON.stringify({ content, mediaUrls }),
       });
 
-      const newPost = await handleResponse(response);
-
-      // Map the API response to match the existing Post interface
-      return {
-        id: newPost.id,
-        userId: newPost.user_id,
-        userName: newPost.display_name || "User",
-        userHandle: newPost.address
-          ? `@${newPost.address.substring(0, 8)}`
-          : "@user",
-        userAvatar: newPost.avatar_url || "https://i.pravatar.cc/150?img=1",
-        verified: newPost.tier === "gold" || newPost.tier === "diamond",
-        content: newPost.content,
-        createdAt: newPost.created_at,
-        likes: 0,
-        retweets: 0,
-        comments: [],
-        media: newPost.media_urls || [],
-      };
+      console.log("✅ Post created successfully");
+      return newPost;
     } catch (error) {
       console.error("Error creating post:", error);
       throw error;
@@ -275,15 +311,15 @@ export const postApi = {
   },
 
   // Like a post
-  likePost: async (userId: string, postId: string): Promise<void> => {
+  async likePost(postId: string): Promise<void> {
     try {
-      await fetch(`${API_URL}/posts/${postId}/like`, {
+      console.log(`👍 Liking post ${postId}...`);
+
+      await apiFetch<void>(`/api/posts/${postId}/like`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId }),
       });
+
+      console.log("✅ Post liked successfully");
     } catch (error) {
       console.error(`Error liking post ${postId}:`, error);
       throw error;
@@ -291,15 +327,15 @@ export const postApi = {
   },
 
   // Unlike a post
-  unlikePost: async (userId: string, postId: string): Promise<void> => {
+  async unlikePost(postId: string): Promise<void> {
     try {
-      await fetch(`${API_URL}/posts/${postId}/like`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId }),
+      console.log(`👎 Unliking post ${postId}...`);
+
+      await apiFetch<void>(`/api/posts/${postId}/unlike`, {
+        method: "POST",
       });
+
+      console.log("✅ Post unliked successfully");
     } catch (error) {
       console.error(`Error unliking post ${postId}:`, error);
       throw error;

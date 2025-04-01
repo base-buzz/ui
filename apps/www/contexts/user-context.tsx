@@ -5,14 +5,13 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { usersApi, User } from "@/lib/api-client";
+import { User } from "@/types/interfaces";
+import { useAuth } from "@/contexts/auth-context";
 
 interface UserContextType {
   user: User | null;
   isLoading: boolean;
   error: Error | null;
-  login: (address: string) => Promise<void>;
-  logout: () => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -21,90 +20,54 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
+/**
+ * UserProvider - Provides user profile data from authenticated sessions
+ * This is a simplified version that relies on the AuthContext for authentication
+ */
 export function UserProvider({ children }: UserProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const { isAuthenticated, session } = useAuth();
 
-  // Check for user on initial load (e.g., from local storage)
+  // Fetch user profile whenever authentication state changes
   useEffect(() => {
-    const checkUser = async () => {
+    const fetchUserProfile = async () => {
       try {
-        const storedUserId = localStorage.getItem("userId");
+        setIsLoading(true);
+        setError(null);
 
-        if (storedUserId) {
-          setIsLoading(true);
-
-          // Fetch user data from API
-          const userData = await usersApi.getUser(storedUserId);
-          setUser(userData);
+        if (!isAuthenticated || !session) {
+          setUser(null);
+          return;
         }
+
+        // Fetch user profile from API
+        const response = await fetch("/api/auth/user");
+        if (!response.ok) {
+          throw new Error("Failed to fetch user profile");
+        }
+
+        const userData = await response.json();
+        setUser(userData);
       } catch (err) {
-        console.error("Error fetching user:", err);
-        // Clear stored user ID if it's invalid
-        localStorage.removeItem("userId");
-        setError(err instanceof Error ? err : new Error("Failed to load user"));
+        console.error("Error fetching user profile:", err);
+        setError(err instanceof Error ? err : new Error("Unknown error"));
       } finally {
         setIsLoading(false);
       }
     };
 
-    checkUser();
-  }, []);
-
-  // Login function
-  const login = async (address: string) => {
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      // In a real app, we would:
-      // 1. Verify the wallet signature
-      // 2. Call an authentication API endpoint
-      // 3. Receive a user object or token
-
-      // For demo purposes, we'll just simulate by fetching a user
-      // or creating one if it doesn't exist
-
-      // Normally this would be part of your auth API
-      const response = await fetch("/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          address,
-          display_name: `User_${address.substring(0, 6)}`,
-        }),
-      });
-
-      if (!response.ok) throw new Error("Authentication failed");
-
-      const userData = await response.json();
-      setUser(userData);
-
-      // Store user ID for persistence
-      localStorage.setItem("userId", userData.id);
-    } catch (err) {
-      console.error("Login error:", err);
-      setError(err instanceof Error ? err : new Error("Authentication failed"));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Logout function
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("userId");
-  };
+    fetchUserProfile();
+  }, [isAuthenticated, session]);
 
   return (
-    <UserContext.Provider value={{ user, isLoading, error, login, logout }}>
+    <UserContext.Provider value={{ user, isLoading, error }}>
       {children}
     </UserContext.Provider>
   );
 }
 
-// Custom hook for using the user context
 export function useUser() {
   const context = useContext(UserContext);
 

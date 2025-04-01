@@ -14,11 +14,13 @@ import {
 import { Button } from "@/registry/new-york/ui/button";
 import { Icon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
+import { ShowPostsCount } from "@/components/home/ShowPostsCount";
 
 interface PostComponentProps {
   post: Post;
   currentUserId?: string;
   isComment?: boolean;
+  showPostCount?: boolean;
 }
 
 /**
@@ -50,6 +52,7 @@ export default function PostComponent({
   post,
   currentUserId,
   isComment = false,
+  showPostCount = false,
 }: PostComponentProps) {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
@@ -154,162 +157,166 @@ export default function PostComponent({
   const isVerified = post.verified || false;
 
   return (
-    <div
-      className={cn(
-        "cursor-pointer border-b border-border px-4 py-3 hover:bg-[rgba(0,0,0,0.03)] dark:hover:bg-[rgba(255,255,255,0.03)]",
-        isComment && "ml-12 mt-2",
-      )}
-      onClick={handlePostClick}
-    >
-      <div className="flex gap-3">
-        <Link
-          href={`/profile/${post.userId}`}
-          className="shrink-0"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <Avatar className="h-10 w-10">
-            <AvatarImage src={avatarSrc} alt={displayName} />
-            <AvatarFallback>
-              {displayName.substring(0, 2) || "U"}
-            </AvatarFallback>
-          </Avatar>
-        </Link>
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-1">
-            <Link
-              href={`/profile/${post.userId}`}
-              className="max-w-[150px] truncate font-semibold hover:underline"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {displayName}
-            </Link>
-            {isVerified && (
-              <Icon
-                name="shield-check"
-                className="h-4 w-4 shrink-0 text-primary"
-              />
-            )}
-            <span className="truncate text-sm text-muted-foreground">
-              {displayHandle}
-            </span>
-            <span className="text-sm text-muted-foreground">
-              · {post.createdAt ? formatTimeAgo(new Date(post.createdAt)) : ""}
-            </span>
-          </div>
-
-          <div className="mt-0.5">
-            <p className="whitespace-pre-wrap text-[15px] leading-[20px]">
-              {post.content}
-            </p>
-
-            {Array.isArray(post.media) && post.media.length > 0 && (
-              <div
-                className={cn(
-                  "mt-3 grid gap-2",
-                  post.media?.length === 1 && "grid-cols-1",
-                  post.media?.length === 2 && "grid-cols-2",
-                  post.media?.length === 3 && "grid-cols-2",
-                  post.media?.length === 4 && "grid-cols-2",
-                )}
+    <>
+      {showPostCount && <ShowPostsCount count={35} />}
+      <div
+        className={cn(
+          "group cursor-pointer border-b border-border px-4 py-3 transition-colors hover:bg-accent/5 dark:hover:bg-accent/5",
+          isComment && "ml-12 mt-2",
+        )}
+        onClick={handlePostClick}
+      >
+        <div className="flex gap-3">
+          <Link
+            href={`/profile/${post.userId}`}
+            className="shrink-0"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Avatar className="h-10 w-10">
+              <AvatarImage src={avatarSrc} alt={displayName} />
+              <AvatarFallback>
+                {displayName.substring(0, 2) || "U"}
+              </AvatarFallback>
+            </Avatar>
+          </Link>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-1">
+              <Link
+                href={`/profile/${post.userId}`}
+                className="max-w-[150px] truncate font-semibold hover:underline"
+                onClick={(e) => e.stopPropagation()}
               >
-                {post.media.map((media, index) => (
-                  <img
-                    key={index}
-                    src={media}
-                    alt={`Post media ${index + 1}`}
-                    className={cn(
-                      "w-full rounded-2xl object-cover",
-                      post.media?.length === 1
-                        ? "max-h-[500px]"
-                        : "max-h-[250px]",
-                      post.media?.length === 3 && index === 0 && "col-span-2",
-                    )}
-                  />
-                ))}
-              </div>
-            )}
-
-            {post.quoteTweet && (
-              <div className="mt-3 rounded-xl border p-3 hover:bg-muted/50">
-                <p className="text-sm text-muted-foreground">Quoted Post</p>
-                {/* We'd fetch and render the quoted tweet here */}
-              </div>
-            )}
-          </div>
-
-          <div className="mt-3 flex max-w-[425px] justify-between pr-8">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="flex h-[20px] items-center gap-1 rounded-[20px] p-0 text-muted-foreground hover:bg-primary/10 hover:text-primary"
-              onClick={handleComment}
-            >
-              <MessageCircle
-                className={cn(
-                  "h-[18px] w-[18px]",
-                  showComments && "text-primary",
-                )}
-              />
-              <span className="ml-0.5 text-xs">{post.comments.length}</span>
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className={cn(
-                "flex h-[20px] items-center gap-1 rounded-[20px] p-0 text-muted-foreground hover:bg-green-500/10 hover:text-green-500",
-                isRetweeted && "text-green-500",
-              )}
-              onClick={handleRetweet}
-            >
-              <Repeat className="h-[18px] w-[18px]" />
-              <span className="ml-0.5 text-xs">{retweetCount}</span>
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className={cn(
-                "flex h-[20px] items-center gap-1 rounded-[20px] p-0 text-muted-foreground hover:bg-red-500/10 hover:text-red-500",
-                isLiked && "text-red-500",
-              )}
-              onClick={handleLike}
-            >
-              <Heart
-                className={cn("h-[18px] w-[18px]", isLiked && "fill-current")}
-              />
-              <span className="ml-0.5 text-xs">{likeCount}</span>
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="flex h-[20px] items-center gap-1 rounded-[20px] p-0 text-muted-foreground hover:bg-primary/10 hover:text-primary"
-              onClick={handleShare}
-            >
-              <Share className="h-[18px] w-[18px]" />
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Comments section - only show in post detail view or when expanded */}
-      {isComment && showComments && post.comments.length > 0 && (
-        <div className="mt-3 border-t pt-3">
-          <h3 className="mb-3 font-semibold">Comments</h3>
-          <div className="space-y-3">
-            {post.comments.map((comment) => (
-              <div
-                key={comment.id}
-                className="cursor-pointer rounded-lg transition-colors hover:bg-accent/5"
-              >
-                <PostComponent
-                  post={comment}
-                  currentUserId={currentUserId}
-                  isComment={true}
+                {displayName}
+              </Link>
+              {isVerified && (
+                <Icon
+                  name="shield-check"
+                  className="h-4 w-4 shrink-0 text-primary"
                 />
-              </div>
-            ))}
+              )}
+              <span className="truncate text-sm text-muted-foreground">
+                {displayHandle}
+              </span>
+              <span className="text-sm text-muted-foreground">
+                ·{" "}
+                {post.createdAt ? formatTimeAgo(new Date(post.createdAt)) : ""}
+              </span>
+            </div>
+
+            <div className="mt-0.5">
+              <p className="whitespace-pre-wrap text-[15px] leading-[20px]">
+                {post.content}
+              </p>
+
+              {Array.isArray(post.media) && post.media.length > 0 && (
+                <div
+                  className={cn(
+                    "mt-3 grid gap-2",
+                    post.media?.length === 1 && "grid-cols-1",
+                    post.media?.length === 2 && "grid-cols-2",
+                    post.media?.length === 3 && "grid-cols-2",
+                    post.media?.length === 4 && "grid-cols-2",
+                  )}
+                >
+                  {post.media.map((media, index) => (
+                    <img
+                      key={index}
+                      src={media}
+                      alt={`Post media ${index + 1}`}
+                      className={cn(
+                        "w-full rounded-2xl object-cover",
+                        post.media?.length === 1
+                          ? "max-h-[500px]"
+                          : "max-h-[250px]",
+                        post.media?.length === 3 && index === 0 && "col-span-2",
+                      )}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {post.quoteTweet && (
+                <div className="mt-3 rounded-xl border p-3 hover:bg-muted/50">
+                  <p className="text-sm text-muted-foreground">Quoted Post</p>
+                  {/* We'd fetch and render the quoted tweet here */}
+                </div>
+              )}
+            </div>
+
+            <div className="mt-3 flex max-w-[425px] justify-between pr-8">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex h-[20px] items-center gap-1 rounded-[20px] p-0 text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                onClick={handleComment}
+              >
+                <MessageCircle
+                  className={cn(
+                    "h-[18px] w-[18px]",
+                    showComments && "text-primary",
+                  )}
+                />
+                <span className="ml-0.5 text-xs">{post.comments.length}</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className={cn(
+                  "flex h-[20px] items-center gap-1 rounded-[20px] p-0 text-muted-foreground hover:bg-green-500/10 hover:text-green-500",
+                  isRetweeted && "text-green-500",
+                )}
+                onClick={handleRetweet}
+              >
+                <Repeat className="h-[18px] w-[18px]" />
+                <span className="ml-0.5 text-xs">{retweetCount}</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className={cn(
+                  "flex h-[20px] items-center gap-1 rounded-[20px] p-0 text-muted-foreground hover:bg-red-500/10 hover:text-red-500",
+                  isLiked && "text-red-500",
+                )}
+                onClick={handleLike}
+              >
+                <Heart
+                  className={cn("h-[18px] w-[18px]", isLiked && "fill-current")}
+                />
+                <span className="ml-0.5 text-xs">{likeCount}</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex h-[20px] items-center gap-1 rounded-[20px] p-0 text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                onClick={handleShare}
+              >
+                <Share className="h-[18px] w-[18px]" />
+              </Button>
+            </div>
           </div>
         </div>
-      )}
-    </div>
+
+        {/* Comments section - only show in post detail view or when expanded */}
+        {isComment && showComments && post.comments.length > 0 && (
+          <div className="mt-3 border-t pt-3">
+            <h3 className="mb-3 font-semibold">Comments</h3>
+            <div className="space-y-3">
+              {post.comments.map((comment) => (
+                <div
+                  key={comment.id}
+                  className="cursor-pointer rounded-lg transition-colors hover:bg-accent/5"
+                >
+                  <PostComponent
+                    post={comment}
+                    currentUserId={currentUserId}
+                    isComment={true}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

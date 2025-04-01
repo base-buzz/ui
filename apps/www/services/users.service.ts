@@ -1,3 +1,14 @@
+/**
+ * Users Service - User Data Operations
+ * @file apps/www/services/users.service.ts
+ *
+ * UPDATES:
+ * - Updated getUserByAddress to use get_user_by_wallet RPC function
+ * - Improved case-insensitive wallet address lookup
+ * - Added address normalization to lowercase
+ * - Enhanced error handling
+ */
+
 import { supabaseServer } from "@/lib/supabase/server";
 import { Database } from "@/types/supabase";
 
@@ -26,14 +37,22 @@ export async function getUserById(id: string): Promise<User | null> {
 // Get a user by wallet address
 export async function getUserByAddress(address: string): Promise<User | null> {
   try {
-    const { data, error } = await supabaseServer
-      .from("users")
-      .select("*")
-      .eq("address", address)
-      .single();
+    // Normalize the wallet address to lowercase
+    const normalizedAddress = address.toLowerCase();
+
+    // Use the get_user_by_wallet Supabase function for case-insensitive search
+    const { data, error } = await supabaseServer.rpc("get_user_by_wallet", {
+      wallet_address: normalizedAddress,
+    });
 
     if (error) throw error;
-    return data;
+
+    // Function returns an array of results, we want the first match
+    if (data && data.length > 0) {
+      return data[0];
+    }
+
+    return null;
   } catch (error) {
     console.error("Error getting user by address:", error);
     return null;

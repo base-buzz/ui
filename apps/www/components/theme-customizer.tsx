@@ -17,6 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
 } from "@/registry/new-york/ui/dialog";
 import {
   Drawer,
@@ -265,25 +266,31 @@ function CopyCodeButton({
           Copy code
         </Button>
       )}
-      <Dialog>
+      <Dialog open={hasCopied} onOpenChange={setHasCopied}>
         <DialogTrigger asChild>
           <Button className={cn("hidden md:flex", className)} {...props}>
             Copy code
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-2xl outline-none">
+        <DialogContent className="gap-4">
           <DialogHeader>
-            <DialogTitle>Theme</DialogTitle>
+            <DialogTitle>Theme CSS</DialogTitle>
             <DialogDescription>
-              Copy and paste the following code into your CSS file.
+              Copy and paste the following CSS variables into your project.
             </DialogDescription>
           </DialogHeader>
-          <ThemeWrapper defaultTheme="zinc" className="relative">
-            <CustomizerCode />
-            {activeTheme && (
-              <Button
-                size="sm"
-                onClick={() => {
+          <div className="max-h-[450px] overflow-auto">
+            <pre className="rounded-md bg-zinc-950 dark:bg-zinc-900">
+              <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">
+                {activeTheme ? getThemeCode(activeTheme, config.radius) : ""}
+              </code>
+            </pre>
+          </div>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => {
+                if (activeTheme) {
                   copyToClipboardWithMeta(
                     getThemeCode(activeTheme, config.radius),
                     {
@@ -294,174 +301,16 @@ function CopyCodeButton({
                       },
                     },
                   );
-                  setHasCopied(true);
-                }}
-                className="absolute right-4 top-4 bg-muted text-muted-foreground hover:bg-muted hover:text-muted-foreground"
-              >
-                {hasCopied ? <Check /> : <Copy />}
-                Copy
-              </Button>
-            )}
-          </ThemeWrapper>
+                }
+                setHasCopied(false);
+              }}
+            >
+              {hasCopied ? "Copied!" : "Copy"}
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>
-  );
-}
-
-function CustomizerCode() {
-  const [config] = useConfig();
-  const activeTheme = baseColors.find((theme) => theme.name === config.theme);
-
-  return (
-    <ThemeWrapper defaultTheme="zinc" className="relative space-y-4">
-      <div data-rehype-pretty-code-fragment="">
-        <pre className="max-h-[450px] overflow-x-auto rounded-lg border bg-zinc-950 py-4 dark:bg-zinc-900">
-          <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">
-            <span className="line text-white">@layer base &#123;</span>
-            <span className="line text-white">&nbsp;&nbsp;:root &#123;</span>
-            <span className="line text-white">
-              &nbsp;&nbsp;&nbsp;&nbsp;--background:{" "}
-              {activeTheme?.cssVars.light["background"]};
-            </span>
-            <span className="line text-white">
-              &nbsp;&nbsp;&nbsp;&nbsp;--foreground:{" "}
-              {activeTheme?.cssVars.light["foreground"]};
-            </span>
-            {[
-              "card",
-              "popover",
-              "primary",
-              "secondary",
-              "muted",
-              "accent",
-              "destructive",
-            ].map((prefix) => (
-              <>
-                <span className="line text-white">
-                  &nbsp;&nbsp;&nbsp;&nbsp;--{prefix}:{" "}
-                  {
-                    activeTheme?.cssVars.light[
-                      prefix as keyof typeof activeTheme.cssVars.light
-                    ]
-                  }
-                  ;
-                </span>
-                <span className="line text-white">
-                  &nbsp;&nbsp;&nbsp;&nbsp;--{prefix}-foreground:{" "}
-                  {
-                    activeTheme?.cssVars.light[
-                      `${prefix}-foreground` as keyof typeof activeTheme.cssVars.light
-                    ]
-                  }
-                  ;
-                </span>
-              </>
-            ))}
-            <span className="line text-white">
-              &nbsp;&nbsp;&nbsp;&nbsp;--border:{" "}
-              {activeTheme?.cssVars.light["border"]};
-            </span>
-            <span className="line text-white">
-              &nbsp;&nbsp;&nbsp;&nbsp;--input:{" "}
-              {activeTheme?.cssVars.light["input"]};
-            </span>
-            <span className="line text-white">
-              &nbsp;&nbsp;&nbsp;&nbsp;--ring:{" "}
-              {activeTheme?.cssVars.light["ring"]};
-            </span>
-            <span className="line text-white">
-              &nbsp;&nbsp;&nbsp;&nbsp;--radius: {config.radius}rem;
-            </span>
-            {["chart-1", "chart-2", "chart-3", "chart-4", "chart-5"].map(
-              (prefix) => (
-                <>
-                  <span className="line text-white">
-                    &nbsp;&nbsp;&nbsp;&nbsp;--{prefix}:{" "}
-                    {
-                      activeTheme?.cssVars.light[
-                        prefix as keyof typeof activeTheme.cssVars.light
-                      ]
-                    }
-                    ;
-                  </span>
-                </>
-              ),
-            )}
-            <span className="line text-white">&nbsp;&nbsp;&#125;</span>
-            <span className="line text-white">&nbsp;</span>
-            <span className="line text-white">&nbsp;&nbsp;.dark &#123;</span>
-            <span className="line text-white">
-              &nbsp;&nbsp;&nbsp;&nbsp;--background:{" "}
-              {activeTheme?.cssVars.dark["background"]};
-            </span>
-            <span className="line text-white">
-              &nbsp;&nbsp;&nbsp;&nbsp;--foreground:{" "}
-              {activeTheme?.cssVars.dark["foreground"]};
-            </span>
-            {[
-              "card",
-              "popover",
-              "primary",
-              "secondary",
-              "muted",
-              "accent",
-              "destructive",
-            ].map((prefix) => (
-              <>
-                <span className="line text-white">
-                  &nbsp;&nbsp;&nbsp;&nbsp;--{prefix}:{" "}
-                  {
-                    activeTheme?.cssVars.dark[
-                      prefix as keyof typeof activeTheme.cssVars.dark
-                    ]
-                  }
-                  ;
-                </span>
-                <span className="line text-white">
-                  &nbsp;&nbsp;&nbsp;&nbsp;--{prefix}-foreground:{" "}
-                  {
-                    activeTheme?.cssVars.dark[
-                      `${prefix}-foreground` as keyof typeof activeTheme.cssVars.dark
-                    ]
-                  }
-                  ;
-                </span>
-              </>
-            ))}
-            <span className="line text-white">
-              &nbsp;&nbsp;&nbsp;&nbsp;--border:{" "}
-              {activeTheme?.cssVars.dark["border"]};
-            </span>
-            <span className="line text-white">
-              &nbsp;&nbsp;&nbsp;&nbsp;--input:{" "}
-              {activeTheme?.cssVars.dark["input"]};
-            </span>
-            <span className="line text-white">
-              &nbsp;&nbsp;&nbsp;&nbsp;--ring:{" "}
-              {activeTheme?.cssVars.dark["ring"]};
-            </span>
-            {["chart-1", "chart-2", "chart-3", "chart-4", "chart-5"].map(
-              (prefix) => (
-                <>
-                  <span className="line text-white">
-                    &nbsp;&nbsp;&nbsp;&nbsp;--{prefix}:{" "}
-                    {
-                      activeTheme?.cssVars.dark[
-                        prefix as keyof typeof activeTheme.cssVars.dark
-                      ]
-                    }
-                    ;
-                  </span>
-                </>
-              ),
-            )}
-            <span className="line text-white">&nbsp;&nbsp;&#125;</span>
-            <span className="line text-white">&#125;</span>
-          </code>
-        </pre>
-      </div>
-    </ThemeWrapper>
   );
 }
 

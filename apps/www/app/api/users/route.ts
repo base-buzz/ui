@@ -1,42 +1,89 @@
+/**
+ * Users API - User Search and Creation
+ * @file apps/www/app/api/users/route.ts
+ *
+ * UPDATES:
+ * - Updated wallet address search to use get_user_by_wallet RPC function
+ * - Improved case-insensitive wallet address lookup
+ * - Enhanced error handling and response format
+ */
+
 import { NextRequest, NextResponse } from "next/server";
 import {
   createUser,
   getUserById,
   getSuggestedUsers,
+  getUserByAddress,
 } from "@/services/users.service";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
 
-// GET: Get user by ID or get suggested users
+/**
+ * GET: Fetch users based on query parameters
+ *
+ * This endpoint allows searching for users:
+ * - By wallet address: /api/users?address=0x123...
+ * - Multiple users: /api/users?limit=10&offset=0
+ */
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const id = searchParams.get("id");
-    const suggested = searchParams.get("suggested");
+    const supabase = createRouteHandlerClient({ cookies });
+    const { searchParams } = new URL(request.url);
 
-    // If 'suggested' is provided, return suggested users
-    if (suggested && id) {
-      const suggestedUsers = await getSuggestedUsers(id);
-      return NextResponse.json(suggestedUsers);
-    }
+    // Check if we're searching by wallet address
+    const address = searchParams.get("address");
+    if (address) {
+      console.log("Searching for wallet address:", address);
 
-    // If 'id' is provided, return user by ID
-    if (id) {
-      const user = await getUserById(id);
+      // Normalize the address
+      const normalizedAddress = address.toLowerCase();
 
-      if (!user) {
+      // Use the get_user_by_wallet function for case-insensitive matching
+      const { data, error } = await supabase.rpc("get_user_by_wallet", {
+        wallet_address: normalizedAddress,
+      });
+
+      console.log("Query result:", { data, error });
+
+      if (error) {
+        console.error("Error querying users:", error);
+        return NextResponse.json(
+          { error: "Failed to fetch user" },
+          { status: 500 },
+        );
+      }
+
+      if (!data || data.length === 0) {
+        // No user found
         return NextResponse.json({ error: "User not found" }, { status: 404 });
       }
 
-      return NextResponse.json(user);
+      return NextResponse.json(data[0]);
     }
 
-    // If no parameters are provided, return error
-    return NextResponse.json(
-      { error: "Missing required parameters" },
-      { status: 400 },
-    );
+    // Default to listing users with pagination
+    const limit = parseInt(searchParams.get("limit") || "10");
+    const offset = parseInt(searchParams.get("offset") || "0");
+
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .range(offset, offset + limit - 1);
+
+    if (error) {
+      return NextResponse.json(
+        { error: "Failed to fetch users" },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json(data);
   } catch (error) {
-    console.error("Error in users API route:", error);
-    return NextResponse.json({ error: "An error occurred" }, { status: 500 });
+    console.error("Error fetching users:", error);
+    return NextResponse.json(
+      { error: "An unexpected error occurred" },
+      { status: 500 },
+    );
   }
 }
 

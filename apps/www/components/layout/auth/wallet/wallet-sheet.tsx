@@ -9,7 +9,7 @@ import { useAccount, useDisconnect, useBalance, useConfig } from "wagmi";
 import { switchNetwork } from "wagmi/actions";
 import { Sheet, SheetContent, SheetClose } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Copy, X } from "lucide-react";
+import { Copy, X, ChevronDown, ChevronUp } from "lucide-react";
 import { useClipboard } from "@/hooks/use-clipboard";
 import Link from "next/link";
 import { formatEther } from "viem";
@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { useEnsName } from "wagmi";
 import { base, baseGoerli } from "wagmi/chains";
 import { Icons } from "@/components/icons";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 interface WalletSheetProps {
   /** Controls the open state of the sheet */
@@ -40,6 +41,12 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
   const { data: ethBalance } = useBalance({ address });
   const { data: ensName } = useEnsName({ address });
   const config = useConfig();
+  const { user, loading: userLoading } = useCurrentUser();
+  const [isAuthDebugOpen, setIsAuthDebugOpen] = useState(false);
+  const [sessionData, setSessionData] = useState<any>(null);
+  const [userStats, setUserStats] = useState<any>(null);
+  const [sessionLoading, setSessionLoading] = useState(false);
+  const [statsLoading, setStatsLoading] = useState(false);
 
   // Fetch BUZZ token balance
   const buzzBalanceResult = useBalance({
@@ -50,6 +57,55 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
 
   // State for ETH price
   const [ethPrice, setEthPrice] = useState<number | null>(null);
+
+  // Fetch session data when opened
+  useEffect(() => {
+    if (open && isConnected) {
+      // Fetch session data
+      const fetchSessionData = async () => {
+        setSessionLoading(true);
+        try {
+          const response = await fetch("/api/auth/session");
+          if (response.ok) {
+            const data = await response.json();
+            setSessionData(data);
+          } else {
+            console.error("Failed to fetch session data:", response.statusText);
+            setSessionData({ error: "Failed to fetch session data" });
+          }
+        } catch (error) {
+          console.error("Error fetching session data:", error);
+          setSessionData({ error: "Error fetching session data" });
+        } finally {
+          setSessionLoading(false);
+        }
+      };
+
+      // Fetch user stats if available
+      const fetchUserStats = async () => {
+        if (!address) return;
+        setStatsLoading(true);
+        try {
+          const response = await fetch(`/api/users/stats?address=${address}`);
+          if (response.ok) {
+            const data = await response.json();
+            setUserStats(data);
+          } else {
+            console.error("Failed to fetch user stats:", response.statusText);
+            setUserStats({ error: "Failed to fetch user stats" });
+          }
+        } catch (error) {
+          console.error("Error fetching user stats:", error);
+          setUserStats({ error: "Error fetching user stats" });
+        } finally {
+          setStatsLoading(false);
+        }
+      };
+
+      fetchSessionData();
+      fetchUserStats();
+    }
+  }, [open, isConnected, address]);
 
   // Debug logging for balance updates
   useEffect(() => {
@@ -184,11 +240,148 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
           </div>
         </div>
 
+        {/* Auth diagnostic panel */}
+        <div className="mt-6 space-y-2 rounded-md border p-2">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-semibold">Auth Diagnostics</h3>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsAuthDebugOpen(!isAuthDebugOpen)}
+            >
+              {isAuthDebugOpen ? (
+                <ChevronUp size={16} />
+              ) : (
+                <ChevronDown size={16} />
+              )}
+            </Button>
+          </div>
+
+          {isAuthDebugOpen && (
+            <div className="space-y-3 text-xs">
+              {/* User Data */}
+              <div className="space-y-1 rounded-md bg-muted/50 p-2">
+                <h4 className="font-medium">User Data:</h4>
+                {userLoading ? (
+                  <p>Loading user data...</p>
+                ) : user ? (
+                  <div className="space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">ID:</span>
+                      <span className="max-w-[200px] truncate font-mono">
+                        {user.id}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Name:</span>
+                      <span>{user.display_name || "--"}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Avatar URL:</span>
+                      <span className="max-w-[200px] truncate">
+                        {user.avatar_url || "--"}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Address:</span>
+                      <span className="max-w-[200px] truncate font-mono">
+                        {user.address || "--"}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Tier:</span>
+                      <span>{user.tier || "--"}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <p>No user data found</p>
+                )}
+              </div>
+
+              {/* Session Data */}
+              <div className="space-y-1 rounded-md bg-muted/50 p-2">
+                <h4 className="font-medium">Session Status:</h4>
+                {sessionLoading ? (
+                  <p>Loading session data...</p>
+                ) : sessionData ? (
+                  <div className="space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">
+                        Authenticated:
+                      </span>
+                      <span>{sessionData.authenticated ? "Yes" : "No"}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Auth Type:</span>
+                      <span>{sessionData.auth_type || "None"}</span>
+                    </div>
+                    {sessionData.user_id && (
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">User ID:</span>
+                        <span className="max-w-[200px] truncate font-mono">
+                          {sessionData.user_id}
+                        </span>
+                      </div>
+                    )}
+                    {sessionData.wallet_address && (
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Wallet:</span>
+                        <span className="max-w-[200px] truncate font-mono">
+                          {sessionData.wallet_address}
+                        </span>
+                      </div>
+                    )}
+                    {sessionData.created_at && (
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Created:</span>
+                        <span>
+                          {new Date(sessionData.created_at).toLocaleString()}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <p>No session data available</p>
+                )}
+              </div>
+
+              {/* User Stats */}
+              <div className="space-y-1 rounded-md bg-muted/50 p-2">
+                <h4 className="font-medium">User Stats:</h4>
+                {statsLoading ? (
+                  <p>Loading user stats...</p>
+                ) : userStats ? (
+                  <div className="space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Posts:</span>
+                      <span>{userStats.posts_count || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Followers:</span>
+                      <span>{userStats.followers_count || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Following:</span>
+                      <span>{userStats.following_count || 0}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Likes:</span>
+                      <span>{userStats.likes_received || 0}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <p>No user stats available</p>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Disconnect button */}
         <div className="mt-6">
           <Button
-            variant="destructive"
-            className="w-full"
+            variant="outline"
+            className="w-full text-destructive hover:bg-destructive/10"
             onClick={() => {
               disconnect();
               handleOpenChange(false);

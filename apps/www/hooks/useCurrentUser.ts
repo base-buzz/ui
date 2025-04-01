@@ -1,7 +1,7 @@
 import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
 import { User } from "@/types/interfaces";
-import { userApi } from "@/lib/api";
+import { useAuth } from "@/contexts/auth-context";
 
 // Array of realistic profile pictures from pravatar.cc
 const PROFILE_IMAGES = [
@@ -87,11 +87,40 @@ const HEADER_IMAGES = [
 ];
 
 /**
- * Hook to get the current user's information
- * If the user is not found in the database, a placeholder is created
+ * Constants for profile image and default avatar
+ */
+const DEFAULT_AVATAR = "/anonymous-avatar.png";
+
+/**
+ * Helper function to check if a custom wallet session exists
+ */
+async function checkCustomWalletSession() {
+  try {
+    const response = await fetch("/api/auth/session");
+    if (response.ok) {
+      const data = await response.json();
+      if (data.authenticated && data.auth_type === "custom_wallet") {
+        return {
+          exists: true,
+          userId: data.user_id,
+          walletAddress: data.wallet_address,
+        };
+      }
+    }
+    return { exists: false };
+  } catch (error) {
+    console.error("Error checking custom session:", error);
+    return { exists: false };
+  }
+}
+
+/**
+ * Hook to get the current user's information from the Supabase session
+ * This is a simplified version that integrates with our wallet-based auth
  */
 export function useCurrentUser() {
   const { address, isConnected } = useAccount();
+  const { user: authUser, session, isAuthenticated } = useAuth();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -122,108 +151,155 @@ export function useCurrentUser() {
     return HEADER_IMAGES[Math.floor(Math.random() * HEADER_IMAGES.length)];
   };
 
+  // Fetch user data from API
   useEffect(() => {
-    const fetchOrCreateUser = async () => {
-      if (!isConnected || !address) {
-        setUser(null);
-        setLoading(false);
-        return;
-      }
-
+    const fetchUserData = async () => {
       try {
         setLoading(true);
         setError(null);
 
-        // Check local storage first
-        const localUserData = checkLocalStorage(address);
+        let userFromApiOrStorage: User | null = null;
+        let userId: string | undefined = authUser?.id;
+        let walletAddr = address;
 
-        if (localUserData) {
-          console.log("Using locally stored user data", localUserData);
-          setUser(localUserData);
-          setLoading(false);
+        // Check for custom wallet session if no standard session is available
+        if (!isAuthenticated || !authUser) {
+          const customSession = await checkCustomWalletSession();
+          if (customSession.exists) {
+            userId = customSession.userId;
+            walletAddr = customSession.walletAddress;
+            console.log("🔐 Using custom wallet session for user:", userId);
+          }
+        }
+
+        if (!userId && !walletAddr) {
+          setUser(null);
           return;
         }
 
-        // Fetch all users and find the one matching the current address
-        const users = await userApi.getUsers();
-
-        // Look for the user by address as ID (same as wallet address)
-        const foundUser = users.find((u) => u.id === address);
-
-        if (foundUser) {
-          setUser(foundUser);
-        } else {
-          // If user is not found, create a placeholder object
-          // This would ideally be stored in the database, but for this mock
-          // we'll just create a client-side representation
-          const placeholderUser: User = {
-            id: address,
-            alias: `user_${address.substring(0, 6)}`,
-            pfp: getRandomProfileImage(),
-            dob: new Date().toISOString().split("T")[0],
-            location: "Web3 Land",
-            headerImage: getRandomHeaderImage(),
-            bio: "Just joined BaseBuzz!",
-          };
-
-          setUser(placeholderUser);
-
-          // Save the placeholder user to local storage
-          if (typeof window !== "undefined") {
-            const localStorageKey = `basebuzz_user_${address}`;
-            localStorage.setItem(
-              localStorageKey,
-              JSON.stringify(placeholderUser),
-            );
+        // Check local storage cache first
+        if (userId) {
+          const cachedUser = checkLocalStorage(userId);
+          if (cachedUser) {
+            console.log("📋 Using cached user data from localStorage");
+            userFromApiOrStorage = cachedUser;
           }
-
-          // In a real application, we would save this user to the database
-          // await userApi.createUser(placeholderUser);
         }
+
+        // If no cached data, try to fetch from API
+        if (!userFromApiOrStorage) {
+          try {
+            // Try to get user data from the API
+            const response = await fetch(`/api/auth/user`);
+
+            if (response.ok) {
+              const userData = await response.json();
+              console.log("👤 Fetched user data from API:", userData);
+              userFromApiOrStorage = userData;
+
+              // Cache in localStorage
+              if (userId && typeof window !== "undefined") {
+                const localStorageKey = `basebuzz_user_${userId}`;
+                localStorage.setItem(localStorageKey, JSON.stringify(userData));
+              }
+            } else {
+              const errorData = await response.json();
+              console.warn("API returned error:", errorData);
+
+              // If wallet is connected but no user exists, create a placeholder user
+              if (isConnected && walletAddr) {
+                console.log(
+                  "🔄 Creating placeholder user for wallet:",
+                  walletAddr,
+                );
+                userFromApiOrStorage = {
+                  id: userId || "placeholder-id",
+                  address: walletAddr,
+                  display_name: `Wallet ${walletAddr.slice(0, 6)}`,
+                  avatar_url: getRandomProfileImage(),
+                  bio: null,
+                  email: null,
+                  tier: "blue",
+                  buzz_balance: 0,
+                  ens_name: null,
+                  location: null,
+                  header_url: getRandomHeaderImage(),
+                  created_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                };
+              }
+            }
+          } catch (err) {
+            console.error("Error fetching user:", err);
+            if (err instanceof Error) {
+              setError(err);
+            } else {
+              setError(new Error("Failed to fetch user data"));
+            }
+          }
+        }
+
+        setUser(userFromApiOrStorage);
       } catch (err) {
-        console.error("Error fetching user:", err);
-        setError(
-          err instanceof Error ? err : new Error("Failed to fetch user"),
-        );
+        console.error("Error in useCurrentUser:", err);
+        if (err instanceof Error) {
+          setError(err);
+        } else {
+          setError(new Error("An unexpected error occurred"));
+        }
       } finally {
         setLoading(false);
       }
     };
 
-    fetchOrCreateUser();
-  }, [address, isConnected]);
+    fetchUserData();
+  }, [isAuthenticated, authUser, isConnected, address]);
 
   const updateUserProfile = async (updatedData: Partial<User>) => {
     if (!user) return null;
 
     try {
-      // Create a merged user object
-      const updatedUser = {
-        ...user,
-        ...updatedData,
-      };
+      const response = await fetch(`/api/users/${user.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      });
 
-      // Save to local storage
-      if (typeof window !== "undefined") {
-        const localStorageKey = `basebuzz_user_${user.id}`;
-        localStorage.setItem(localStorageKey, JSON.stringify(updatedUser));
+      if (!response.ok) {
+        throw new Error("Failed to update user profile");
       }
 
-      // In a real app, this would call the API
-      // const apiUpdatedUser = await userApi.updateUser({
-      //   id: user.id,
-      //   ...updatedData,
-      // });
-
-      // Update the state with the local version
+      const updatedUser = await response.json();
       setUser(updatedUser);
       return updatedUser;
-    } catch (err) {
-      console.error("Error updating user:", err);
-      setError(err instanceof Error ? err : new Error("Failed to update user"));
+    } catch (error) {
+      console.error("Error updating user profile:", error);
       return null;
     }
   };
 
-  return { user, loading, error, updateUserProfile };
+  /**
+   * Helper function to consistently handle user avatar URL
+   * This ensures all components use the same avatar URL logic
+   */
+  const getUserAvatar = (user?: User | null) => {
+    if (!user) return DEFAULT_AVATAR;
+
+    // Use user's avatar_url if available
+    if (user.avatar_url) return user.avatar_url;
+
+    // Otherwise use default avatar
+    return DEFAULT_AVATAR;
+  };
+
+  return {
+    user,
+    loading,
+    error,
+    updateUserProfile,
+    checkCustomWalletSession,
+    getUserAvatar,
+  };
 }

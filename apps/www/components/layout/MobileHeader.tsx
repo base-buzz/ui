@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/sheet";
 import { WalletSheet } from "@/components/ui/wallet/wallet-sheet";
 import { X } from "lucide-react";
+import { HomeTabs } from "@/components/home/HomeTabs";
 
 interface Tab {
   id: string;
@@ -102,6 +103,9 @@ export default function MobileHeader() {
         </div>
       </div>
       <WalletSheet open={isWalletSheetOpen} onOpenChange={closeWalletSheet} />
+
+      {/* Show tabs for home routes */}
+      {pathname.startsWith("/home") && <HomeTabs variant="mobile" />}
     </header>
   );
 }

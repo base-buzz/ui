@@ -4,12 +4,18 @@
  */
 export interface User {
   id: string;
-  alias: string;
-  pfp: string; // Public URL to profile image
-  dob: string; // Date of birth (ISO string)
-  location: string;
-  headerImage: string; // Public URL to header image
-  bio: string;
+  address: string | null;
+  display_name: string | null;
+  avatar_url: string | null;
+  bio: string | null;
+  email: string | null;
+  tier: "blue" | "silver" | "gold" | "diamond";
+  buzz_balance: number;
+  ens_name: string | null;
+  location: string | null;
+  header_url: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 /**
@@ -31,6 +37,7 @@ export interface Post {
   media?: string[]; // Array of media URLs (images/videos)
   comments: Post[]; // Nested replies (each comment is a Post)
   quoteTweet?: string; // Reference to another post's id (for quote tweets)
+  showPostCount?: boolean;
 }
 
 /**

@@ -13,10 +13,22 @@
 
 import { useAccount, useDisconnect, useBalance, useConfig } from "wagmi";
 import { switchNetwork } from "wagmi/actions";
-import { Sheet, SheetContent, SheetClose } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Copy, X } from "lucide-react";
+import { Copy, ExternalLink, LogOut } from "lucide-react";
 import { useClipboard } from "@/hooks/use-clipboard";
+import { useToast } from "@/hooks/use-toast";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/registry/new-york/ui/avatar";
 import Link from "next/link";
 import { formatEther } from "viem";
 import { useEffect, useState } from "react";
@@ -28,7 +40,7 @@ interface WalletSheetProps {
   /** Controls the open state of the sheet */
   open: boolean;
   /** Callback function to handle sheet open state changes */
-  onOpenChange?: (state: boolean) => void;
+  onOpenChange: (open: boolean) => void;
 }
 
 // Constants for token addresses
@@ -39,11 +51,12 @@ const isBuzzTokenValid =
   BUZZ_ADDRESS?.startsWith("0x") && BUZZ_ADDRESS.length === 42;
 
 export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
-  // Wagmi hooks for wallet state and actions
   const { address, isConnected, chain } = useAccount();
   const { disconnect } = useDisconnect();
-  const { copy } = useClipboard();
-  const { data: ethBalance } = useBalance({ address });
+  const { data: balance } = useBalance({ address });
+  const { copy, copied } = useClipboard();
+  const { toast } = useToast();
+  const { user } = useCurrentUser();
   const { data: ensName } = useEnsName({ address });
   const config = useConfig();
 
@@ -94,249 +107,113 @@ export function WalletSheet({ open, onOpenChange }: WalletSheetProps) {
     getTokenPrice(BASE_ETH_ADDRESS.toLowerCase()).then(setEthPrice);
   }, []);
 
-  // Don't render if wallet is not connected
-  if (!isConnected) return null;
-
-  /**
-   * Handles sheet open state changes
-   * @param val - New open state
-   */
-  const handleOpenChange = (val: boolean) => {
-    console.log("WalletSheet: onOpenChange called with val=", val);
-    onOpenChange?.(val);
-  };
-
-  /**
-   * Fetches current ETH price from API
-   */
-  const fetchEthPrice = async () => {
-    // eslint-disable-next-line turbo/no-undeclared-env-vars
-    const res = await fetch(process.env.NEXT_PUBLIC_ETH_PRICE_API as string);
-    // handle response...
+  const handleCopy = () => {
+    if (address) {
+      copy(address);
+      toast({
+        title: "Address copied",
+        description: "Wallet address copied to clipboard",
+      });
+    }
   };
 
   return (
-    <Sheet open={open} onOpenChange={handleOpenChange}>
-      <SheetContent side="right" className="w-[70%] max-w-xs p-6">
-        {/* Header with close button */}
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Wallet</h2>
-          <SheetClose asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="transition hover:bg-gray-200 dark:hover:bg-gray-700"
-              onClick={() => {
-                console.log("WalletSheet: top X button clicked");
-                handleOpenChange(false);
-              }}
-            >
-              <X size={18} />
-            </Button>
-          </SheetClose>
-        </div>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Wallet</SheetTitle>
+        </SheetHeader>
 
-        {/* Wallet address section */}
-        <div className="mt-4 space-y-3">
-          <div className="flex items-center justify-between rounded-lg border p-2">
-            <span className="w-full truncate font-mono text-sm">{address}</span>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => copy(address || "")}
-              className="transition hover:text-blue-500"
-            >
-              <Copy size={16} />
-            </Button>
-          </div>
-        </div>
-
-        {/* On-chain data section */}
-        <div className="mt-6 space-y-3">
-          <h3 className="font-semibold">On-Chain Data</h3>
-          <div className="space-y-2 text-sm">
-            {/* ETH Balance */}
-            <div className="flex items-center justify-between">
-              <span className="text-gray-500 dark:text-gray-400">Base ETH</span>
-              <span className="font-medium">
-                {ethBalance
-                  ? `${parseFloat(formatEther(ethBalance.value)).toFixed(4)} ETH` +
-                    (ethPrice
-                      ? ` ($${(parseFloat(formatEther(ethBalance.value)) * ethPrice).toFixed(2)})`
-                      : "")
-                  : "--"}
-              </span>
-            </div>
-
-            {/* Various metrics (placeholder) */}
-            <div className="flex items-center justify-between">
-              <span className="text-gray-500 dark:text-gray-400">Badges</span>
-              <span className="font-medium">--</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-gray-500 dark:text-gray-400">
-                Reputation
-              </span>
-              <span className="font-medium">--</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-gray-500 dark:text-gray-400">
-                FOMO Score
-              </span>
-              <span className="font-medium">--</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-gray-500 dark:text-gray-400">LDR</span>
-              <span className="font-medium">--</span>
-            </div>
-
-            {/* BUZZ Token Balance */}
-            <div className="flex items-center justify-between">
-              <span className="text-gray-500 dark:text-gray-400">
-                BUZZ Holdings
-              </span>
-              <span className="font-medium">
-                {!isBuzzTokenValid ||
-                buzzBalance?.value === undefined ||
-                buzzBalance.value === BigInt(0) ? (
+        {isConnected && address ? (
+          <div className="mt-6 space-y-6">
+            {/* Profile Section */}
+            {user && (
+              <div className="flex items-center space-x-4">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src={user.avatar_url || undefined} />
+                  <AvatarFallback>
+                    {user.display_name?.charAt(0) || "U"}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="font-medium">{user.display_name}</p>
                   <Link
-                    // eslint-disable-next-line turbo/no-undeclared-env-vars
-                    href={process.env.NEXT_PUBLIC_UNISWAP_BUZZ_URL as string}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline"
+                    href="/settings/profile"
+                    className="text-sm text-muted-foreground hover:underline"
                   >
-                    Buy BUZZ
+                    Edit Profile
                   </Link>
-                ) : (
-                  parseFloat(formatEther(buzzBalance.value)).toFixed(2)
-                )}
-              </span>
-            </div>
+                </div>
+              </div>
+            )}
 
-            {/* Additional metrics */}
-            <div className="flex items-center justify-between">
-              <span className="text-gray-500 dark:text-gray-400">
-                Eligibility
-              </span>
-              <span className="font-medium">--</span>
-            </div>
-
-            {/* Network and ENS information */}
-            <div className="flex items-center justify-between">
-              <span className="text-gray-500 dark:text-gray-400">Network</span>
-              <div className="flex items-center gap-2">
-                <span className="font-medium">{chain?.name || "Unknown"}</span>
-                {process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" && (
+            {/* Wallet Info */}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Address</span>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm">
+                    {address.slice(0, 6)}...{address.slice(-4)}
+                  </span>
                   <Button
                     variant="ghost"
-                    size="sm"
-                    onClick={async () => {
-                      const targetChainId =
-                        chain?.id === base.id ? baseGoerli.id : base.id;
-                      try {
-                        await switchNetwork(config, { chainId: targetChainId });
-                      } catch (error) {
-                        console.error("Failed to switch network:", error);
-                      }
-                    }}
+                    size="icon"
+                    className="h-8 w-8"
+                    onClick={handleCopy}
                   >
-                    Switch to {chain?.id === base.id ? "Goerli" : "Mainnet"}
+                    {copied ? (
+                      <span className="text-green-500">✓</span>
+                    ) : (
+                      <Copy className="h-4 w-4" />
+                    )}
                   </Button>
-                )}
+                </div>
               </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-gray-500 dark:text-gray-400">ENS Name</span>
-              <span className="font-medium">{ensName || "N/A"}</span>
-            </div>
 
-            {/* Base Buzz Features */}
-            <div className="mt-6 space-y-3">
-              <h3 className="font-semibold">Base Buzz Features</h3>
-              <div className="grid grid-cols-2 gap-2">
-                <Link
-                  href="/badges"
-                  className="flex flex-col gap-1 rounded-lg border p-3 transition hover:bg-accent"
-                  onClick={() => handleOpenChange(false)}
-                >
-                  <div className="flex items-center gap-2">
-                    <Icons.badge className="h-5 w-5" />
-                    <span className="font-medium">Badges</span>
-                  </div>
-                  <span className="text-xs text-muted-foreground">
-                    View your achievements
-                  </span>
-                </Link>
-                <Link
-                  href="/benefits"
-                  className="flex flex-col gap-1 rounded-lg border p-3 transition hover:bg-accent"
-                  onClick={() => handleOpenChange(false)}
-                >
-                  <div className="flex items-center gap-2">
-                    <Icons.gift className="h-5 w-5" />
-                    <span className="font-medium">Benefits</span>
-                  </div>
-                  <span className="text-xs text-muted-foreground">
-                    Member perks
-                  </span>
-                </Link>
-                <Link
-                  href="/apps"
-                  className="flex flex-col gap-1 rounded-lg border p-3 transition hover:bg-accent"
-                  onClick={() => handleOpenChange(false)}
-                >
-                  <div className="flex items-center gap-2">
-                    <Icons.apps className="h-5 w-5" />
-                    <span className="font-medium">Apps</span>
-                  </div>
-                  <span className="text-xs text-muted-foreground">
-                    Explore Base Buzz apps
-                  </span>
-                </Link>
-                <Link
-                  href="/leaderboard"
-                  className="flex flex-col gap-1 rounded-lg border p-3 transition hover:bg-accent"
-                  onClick={() => handleOpenChange(false)}
-                >
-                  <div className="flex items-center gap-2">
-                    <Icons.trophy className="h-5 w-5" />
-                    <span className="font-medium">Leaderboard</span>
-                  </div>
-                  <span className="text-xs text-muted-foreground">
-                    Top contributors
-                  </span>
-                </Link>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted-foreground">Balance</span>
+                <span className="text-sm">
+                  {balance?.formatted} {balance?.symbol}
+                </span>
               </div>
             </div>
 
-            {/* Debug and disconnect buttons */}
-            <Link
-              href="/debug"
-              className="block w-full text-center text-sm text-blue-500 hover:underline"
-              onClick={() => {
-                console.log("WalletSheet: Debug link clicked");
-                if (onOpenChange) {
-                  onOpenChange(false);
+            {/* Actions */}
+            <div className="space-y-2">
+              <Button
+                variant="outline"
+                className="w-full justify-between"
+                onClick={() =>
+                  window.open(
+                    `https://basescan.org/address/${address}`,
+                    "_blank",
+                  )
                 }
-              }}
-            >
-              Debug Info
-            </Link>
+              >
+                View on Explorer
+                <ExternalLink className="h-4 w-4" />
+              </Button>
 
-            <Button
-              variant="outline"
-              className="mt-2 w-full"
-              onClick={() => {
-                console.log("WalletSheet: Disconnect button clicked");
-                disconnect();
-                handleOpenChange(false);
-              }}
-            >
-              Disconnect Wallet
-            </Button>
+              <Button
+                variant="destructive"
+                className="w-full justify-between"
+                onClick={() => {
+                  disconnect();
+                  onOpenChange(false);
+                }}
+              >
+                Disconnect
+                <LogOut className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex h-full items-center justify-center">
+            <p className="text-sm text-muted-foreground">
+              Please connect your wallet
+            </p>
+          </div>
+        )}
       </SheetContent>
     </Sheet>
   );

@@ -123,14 +123,13 @@ export default function CreatePostForm({
           </div>
         )}
 
-        {/* Reply settings - only show when textarea is focused or has content */}
         {(isTextareaFocused || content.length > 0) && (
           <div className="my-3">
             <Button
               type="button"
               variant="ghost"
               size="sm"
-              className="rounded-full px-3 text-sm text-primary"
+              className="rounded-full px-3 text-primary"
             >
               <Globe className="mr-1 h-4 w-4" />
               Everyone can reply
@@ -157,10 +156,50 @@ export default function CreatePostForm({
               type="button"
               variant="ghost"
               size="icon"
+              className="rounded-full text-primary"
+            >
+              {/* Add GIF icon */}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="rounded-full text-primary"
+            >
+              {/* Add Poll icon */}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
               title="Add emoji"
               className="rounded-full text-primary"
             >
               <Smile className="h-5 w-5" />
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="rounded-full text-primary"
+            >
+              {/* Add Schedule icon */}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="rounded-full text-primary"
+            >
+              {/* Add Location icon */}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="rounded-full text-primary"
+            >
+              <Globe className="h-5 w-5" />
             </Button>
           </div>
           <Button
